@@ -14,3 +14,10 @@ Project for ETI made in React Native
 -- Waitress
 - Reservations
 - Assigneds Tables
+- Modify Orders
+
+-- Admin
+- Add roles
+- View Orders
+- View Tables
+- View Waitress
