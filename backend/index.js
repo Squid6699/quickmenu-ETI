@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { middleware } from "./middleware/cors";
+import { middleware } from "./middleware/cors.js";
 
 
 if (process.env.NODE_ENV === 'production') {
