@@ -11,6 +11,7 @@ CREATE TABLE Role (
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     roleId INT,
     FOREIGN KEY (roleId) REFERENCES Role(id)
@@ -19,8 +20,8 @@ CREATE TABLE Users (
 -- Tabla de Mesas
 CREATE TABLE Tables (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nTable INT NOT NULL,
-    numClients INT DEFAULT 0
+    idUser INT,
+    FOREIGN KEY (idUser) REFERENCES Users(id)
 );
 
 -- Tabla de Menú (Platillos disponibles)
@@ -50,6 +51,7 @@ CREATE TABLE OrderDetails (
     menuId INT,
     quantity INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    status ENUM('Pendiente', 'En Preparación', 'Listo', 'Entregado') DEFAULT 'Pendiente',
     comments TEXT NULL, -- Comentarios sobre el platillo (ej. "Sin cebolla", "Extra queso")
     FOREIGN KEY (orderId) REFERENCES Orders(id),
     FOREIGN KEY (menuId) REFERENCES Menu(id)
