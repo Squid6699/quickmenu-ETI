@@ -1,11 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import CustomButton from './components/Button';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+
+      <CustomButton title="Menu" onPress={() => Alert.alert('Menu')} iconName="grid" />
+      <CustomButton title="Ordenar" onPress={() => Alert.alert('Ordenar')} iconName="add" />
+
     </View>
   );
 }
