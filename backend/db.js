@@ -1,6 +1,6 @@
 import mysql from "mysql2";
 
-export const pool = mysql.createPool({
+export const db = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.USER_DB,
     password: process.env.PASS_DB,
