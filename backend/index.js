@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import { middleware } from "./middleware/cors.js";
+import { routerLogin, routerRegister } from "./routes/login.js";
+import { routerAddRoles, routerDeleteRoles, routerGetRoles } from "./routes/role.js";
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -13,6 +15,13 @@ if (process.env.NODE_ENV === 'production') {
 
 const app = express();
 app.use(middleware);
+
+app.use("/api/auth/", routerLogin);
+app.use("/api/auth/", routerRegister);
+
+app.use("/api/", routerAddRoles);
+app.use("/api/", routerGetRoles);
+app.use("/api/", routerDeleteRoles);
 
 
 
