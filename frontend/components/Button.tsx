@@ -1,49 +1,48 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
-import { ButtonProps } from '../types';
+import { TouchableOpacity, Text, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { ButtonProps } from '../types';
 
-const CustomButton = ({ title, onPress, backgroundColor = '#007bff', textColor = '#fff', iconName, iconSize = 20, iconColor, description }: ButtonProps) => {
+const CustomButton = ({ title, onPress, backgroundColor = '#efc451', textColor = '#0a0909', iconName, iconSize = 30, iconColor = '#fff', description }: ButtonProps) => {
+    const { width } = useWindowDimensions();
+    const buttonWidth = width > 600 ? '33%' : '40%';
+
     return (
-        <View style={stylesButton.container}>
-            <TouchableOpacity
-                style={[stylesButton.button, { backgroundColor }]}
-                onPress={onPress}
-                activeOpacity={0.7}
-            >
-                {iconName &&
-                    <Icon name={iconName} size={iconSize} color={iconColor} style={stylesButton.icon} />
-                }
-                <Text style={[stylesButton.text, { color: textColor }]}>{title}</Text>
-            </TouchableOpacity>
-        </View>
-
+        <TouchableOpacity
+            style={[stylesButton.button, { backgroundColor, width: buttonWidth }]}
+            onPress={onPress}
+            activeOpacity={0.7}
+        >
+            {iconName && <Icon name={iconName} size={iconSize} color={iconColor} style={stylesButton.icon} />}
+            <Text style={[stylesButton.text, { color: textColor }]}>{title}</Text>
+            {description && <Text style={[stylesButton.description, { color: textColor }]}>{description}</Text>}
+        </TouchableOpacity>
     );
 };
 
 const stylesButton = StyleSheet.create({
-
-    container: {
-        width: "75%",
-        flexDirection: "column",
-        flexWrap: "wrap"
-    },
-
     button: {
-        flexDirection: 'row',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        aspectRatio: 1, 
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
         borderRadius: 8,
+        margin: 8,
     },
-
     text: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginLeft: 8, // Espaciado entre icono y texto
+        textAlign: 'center',
+        marginTop: 5,
     },
-    
+    description: {
+        fontSize: 14,
+        textAlign: 'center',
+        marginTop: 3,
+    },
     icon: {
-        marginRight: 5,
+        marginBottom: 5,
     },
 });
 
