@@ -2,11 +2,11 @@ import React from 'react';
 import { TouchableOpacity, Text, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ButtonProps } from '../types';
-import { stylesButton } from '../styles/ButtonStyles';
+import { stylesButton } from '../styles/ButtonsHomeStyles';
 
 const ButtonsHome = ({ title, onPress, backgroundColor = '#efc451', textColor = '#0a0909', iconName, iconSize = 30, iconColor = '#fff', description }: ButtonProps) => {
     const { width } = useWindowDimensions();
-    const buttonWidth = width > 600 ? '45%' : '40%';
+    const buttonWidth = width > 600 ? '33%' : '40%';
 
     return (
         <TouchableOpacity
