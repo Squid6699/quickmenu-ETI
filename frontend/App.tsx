@@ -1,10 +1,11 @@
 import { Alert, ScrollView, StyleSheet, View, SafeAreaView, ImageBackground, useWindowDimensions } from 'react-native';
 import ButtonsHome from './components/ButtonsHome';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   return (
-
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar hidden={true}/>
       <ImageBackground
         source={require('./assets/background.jpg')}
         style={styles.background}
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20, // Evita que los botones queden pegados a la gesture bar
   },
   container: {
-    width: "100%",
+    width: "97%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: 'center',
