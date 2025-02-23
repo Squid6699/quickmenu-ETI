@@ -1,5 +1,5 @@
 import { Alert, ScrollView, StyleSheet, View, SafeAreaView, ImageBackground, useWindowDimensions } from 'react-native';
-import CustomButton from './components/Button';
+import ButtonsHome from './components/ButtonsHome';
 
 export default function App() {
   return (
@@ -12,10 +12,10 @@ export default function App() {
       >
         <ScrollView contentContainerStyle={styles.body}>
           <View style={styles.container}>
-            <CustomButton title="Menu" description="Ver opciones" onPress={() => Alert.alert('Menu')} iconName="grid" />
-            <CustomButton title="Ordenar" description="Hacer pedido" onPress={() => Alert.alert('Ordenar')} iconName="add" />
-            <CustomButton title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
-            <CustomButton title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
+            <ButtonsHome title="Menu" description="Ver opciones" onPress={() => Alert.alert('Menu')} iconName="grid" />
+            <ButtonsHome title="Ordenar" description="Hacer pedido" onPress={() => Alert.alert('Ordenar')} iconName="add" />
+            <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
+            <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
           </View>
         </ScrollView>
       </ImageBackground>
