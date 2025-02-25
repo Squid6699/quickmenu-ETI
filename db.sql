@@ -100,9 +100,16 @@ CREATE TABLE Reservations (
 
 -- INSERTAR ROLES
 INSERT INTO Role (name) VALUES ("ADMIN");
+INSERT INTO Role (name) VALUES ("MESERO");
+INSERT INTO Role (name) VALUES ("COCINA");
+INSERT INTO Role (name) VALUES ("MESA");
 
 -- INSERTAR USUARIOS
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("admin", "admin", "admin", 1);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesero 1", "Mesero 1", "mesero1", 2);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Cocina 1", "Cocina 1", "cocina1", 3);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 1", "Mesa 1", "mesa1", 4);
+
 
 -- MENU DE EJEMPLO
 INSERT INTO Menu (name, price, description) VALUES
