@@ -20,7 +20,7 @@ CREATE TABLE Users (
 -- Tabla de Mesas
 CREATE TABLE Tables (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nTable INT NOT NULL
+    nTable INT NOT NULL,
     idUser INT,
     FOREIGN KEY (idUser) REFERENCES Users(id)
 );
