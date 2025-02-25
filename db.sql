@@ -29,7 +29,8 @@ CREATE TABLE Menu (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    description TEXT
+    description TEXT,
+    available BOOLEAN DEFAULT TRUE
 );
 
 -- Tabla de Pedidos (Órdenes de los clientes)
@@ -101,7 +102,7 @@ CREATE TABLE Reservations (
 INSERT INTO Role (name) VALUES ("ADMIN");
 
 -- INSERTAR USUARIOS
-INSERT INTO Users (Username, Password, roleId) VALUES ("admin", "admin", 1);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("admin", "admin", "admin", 1);
 
 -- MENU DE EJEMPLO
 INSERT INTO Menu (name, price, description) VALUES
