@@ -7,14 +7,14 @@ INSERT INTO Tables (idUser) VALUES
 
 -- INSERTAR MÁS PEDIDOS (ORDERS)
 INSERT INTO Orders (total, status, idTable, idWaitress) VALUES
-(540.00, 'Pendiente', 5, 3),
-(380.00, 'En Preparación', 6, 3),
-(275.00, 'Listo', 7, 3),
-(630.00, 'Entregado', 8, 3),
+(540.00, 'Pendiente', 1, 2),
+(380.00, 'En Preparación', 2, 2),
+(275.00, 'Listo', 3, 3),
+(630.00, 'Entregado', 4, 3),
 (420.00, 'Pendiente', 1, 4),
 (210.00, 'En Preparación', 2, 4),
-(345.00, 'Listo', 3, 4),
-(490.00, 'Entregado', 4, 4);
+(345.00, 'Listo', 3, 5),
+(490.00, 'Entregado', 4, 5);
 
 -- INSERTAR MÁS DETALLES DE PEDIDOS (ORDERDETAILS)
 INSERT INTO OrderDetails (orderId, menuId, quantity, price, status, comments) VALUES
@@ -70,7 +70,7 @@ INSERT INTO Assigned_Tables (idUser, idTable) VALUES
 (2, 1),
 (3, 2),
 (4, 3),
-(5, 4),
+(5, 4);
 
 
 -- INSERTAR MÁS RESERVACIONES (RESERVATIONS)
