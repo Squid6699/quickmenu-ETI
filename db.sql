@@ -106,9 +106,18 @@ INSERT INTO Role (name) VALUES ("MESA");
 
 -- INSERTAR USUARIOS
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("admin", "admin", "admin", 1);
+
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesero 1", "Mesero 1", "mesero1", 2);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesero 2", "Mesero 2", "mesero2", 2);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesero 3", "Mesero 3", "mesero3", 2);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesero 4", "Mesero 4", "mesero4", 2);
+
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("Cocina 1", "Cocina 1", "cocina1", 3);
+
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 1", "Mesa 1", "mesa1", 4);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 2", "Mesa 2", "mesa2", 4);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 3", "Mesa 3", "mesa3", 4);
+INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 4", "Mesa 4", "mesa4", 4);
 
 
 -- MENU DE EJEMPLO

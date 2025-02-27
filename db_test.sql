@@ -1,13 +1,9 @@
 -- INSERTAR MÁS MESAS
 INSERT INTO Tables (idUser) VALUES 
-(3), -- Mesero 2
+(2),
 (3),
-(3),
-(3),
-(4), -- Mesero 3
 (4),
-(4),
-(4);
+(5);
 
 -- INSERTAR MÁS PEDIDOS (ORDERS)
 INSERT INTO Orders (total, status, idTable, idWaitress) VALUES
@@ -71,14 +67,11 @@ INSERT INTO Tickets (orderId, total, separate) VALUES
 
 -- ASIGNAR MÁS MESAS A MESEROS (ASSIGNED_TABLES)
 INSERT INTO Assigned_Tables (idUser, idTable) VALUES
-(3, 5),
-(3, 6),
-(3, 7),
-(3, 8),
-(4, 1),
-(4, 2),
+(2, 1),
+(3, 2),
 (4, 3),
-(4, 4);
+(5, 4),
+
 
 -- INSERTAR MÁS RESERVACIONES (RESERVATIONS)
 -- INSERT INTO Reservations (idUser, idTable, date, numClients) VALUES
