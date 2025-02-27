@@ -4,6 +4,7 @@ import { middleware } from "./middleware/cors.js";
 import { routerLogin, routerRegister } from "./routes/login.js";
 import { routerAddRoles, routerDeleteRoles, routerGetRoles } from "./routes/role.js";
 import { routerGetOrders } from "./routes/orders.js";
+import { routerAddMenu, routerDeleteMenu, routerGetMenu, routerUpdateMenu } from "./routes/menu.js";
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -25,6 +26,12 @@ app.use("/api/", routerGetRoles);
 app.use("/api/", routerDeleteRoles);
 
 app.use("/api/", routerGetOrders);
+
+app.use("/api/", routerGetMenu);
+app.use("/api/", routerUpdateMenu);
+app.use("/api/", routerDeleteMenu);
+app.use("/api/", routerAddMenu);
+
 
 
 
