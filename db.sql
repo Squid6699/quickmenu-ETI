@@ -87,15 +87,15 @@ CREATE TABLE Assigned_Tables (
 );
 
 -- Tabla de Reservaciones (Clientes que reservan mesas)
-CREATE TABLE Reservations (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    idUser INT,
-    idTable INT,
-    date DATETIME NOT NULL,
-    numClients INT NOT NULL,
-    FOREIGN KEY (idUser) REFERENCES Users(id),
-    FOREIGN KEY (idTable) REFERENCES Tables(id)
-);
+-- CREATE TABLE Reservations (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     idUser INT,
+--     idTable INT,
+--     date DATETIME NOT NULL,
+--     numClients INT NOT NULL,
+--     FOREIGN KEY (idUser) REFERENCES Users(id),
+--     FOREIGN KEY (idTable) REFERENCES Tables(id)
+-- );
 
 
 -- INSERTAR ROLES
