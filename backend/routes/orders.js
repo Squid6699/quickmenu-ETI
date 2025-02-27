@@ -10,10 +10,12 @@ routerGetOrders.get("/getOrders", (req, res) => {
         return res.status(401).send('Unauthorized');
     }
 
-    const query = "SELECT OD.orderId, OD.menuId, OD.quantity, OD.price, OD.status, OD.comments " +
+    const query = "SELECT OD.orderId, OD.menuId, OD.quantity, OD.price, OD.status AS FOOD_STATUS, OD.comments, N.name, N.description, O.status AS ORDER_STATUS, W.username AS WAITRESS, T.username AS 'TABLE', O.total AS 'TOTAL' "+
     "FROM orderdetails OD "+
-    "INNER JOIN orders O ON OD.orderID = O.orderID " +
-    "INNER JOIN menu N ON OD.menuID = N.menuID ";
+    "INNER JOIN orders O ON OD.orderID = O.id " +
+    "INNER JOIN menu N ON OD.menuID = N.id " +
+    "INNER JOIN users W ON O.idWaitress = W.id " +
+    "INNER JOIN users T ON O.idTable = T.id";
 
     db.query(query, (err, result) => {
         if (err) {
