@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { middleware } from "./middleware/cors.js";
 import { routerLogin, routerRegister } from "./routes/login.js";
 import { routerAddRoles, routerDeleteRoles, routerGetRoles } from "./routes/role.js";
+import { routerGetOrders } from "./routes/orders.js";
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -22,6 +23,9 @@ app.use("/api/auth/", routerRegister);
 app.use("/api/", routerAddRoles);
 app.use("/api/", routerGetRoles);
 app.use("/api/", routerDeleteRoles);
+
+app.use("/api/", routerGetOrders);
+
 
 
 

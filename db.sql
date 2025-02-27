@@ -17,13 +17,6 @@ CREATE TABLE Users (
     FOREIGN KEY (roleId) REFERENCES Role(id)
 );
 
--- Tabla de Mesas
-CREATE TABLE Tables (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    idUser INT,
-    FOREIGN KEY (idUser) REFERENCES Users(id)
-);
-
 -- Tabla de Menú (Platillos disponibles)
 CREATE TABLE Menu (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -41,7 +34,7 @@ CREATE TABLE Orders (
     idTable INT,
     idWaitress INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (idTable) REFERENCES Tables(id),
+    FOREIGN KEY (idTable) REFERENCES Users(id),
     FOREIGN KEY (idWaitress) REFERENCES Users(id)
 );
 
@@ -83,7 +76,7 @@ CREATE TABLE Assigned_Tables (
     idUser INT,
     idTable INT,
     FOREIGN KEY (idUser) REFERENCES Users(id),
-    FOREIGN KEY (idTable) REFERENCES Tables(id)
+    FOREIGN KEY (idTable) REFERENCES Users(id)
 );
 
 -- Tabla de Reservaciones (Clientes que reservan mesas)
