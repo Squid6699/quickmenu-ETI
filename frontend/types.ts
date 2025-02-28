@@ -10,3 +10,13 @@ export interface ButtonProps {
     iconColor?: ColorValue
     description?: String
 }
+
+export interface InputTextProps {
+    value: string
+    label: string,
+    placeholder?: string,
+    error?: Boolean,
+    errorMsg?: string,
+    disable?: Boolean,
+    onChange: (value: string) => void
+}
