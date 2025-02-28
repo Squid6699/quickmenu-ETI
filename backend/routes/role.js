@@ -4,6 +4,7 @@ import { db } from "../db.js";
 export const routerAddRoles = express.Router();
 export const routerGetRoles = express.Router();
 export const routerDeleteRoles = express.Router();
+export const routerUpdateRoles = express.Router();
 
 
 routerAddRoles.post("/addRoles", async (req, res) => {
@@ -58,5 +59,22 @@ routerDeleteRoles.delete("/deleteRoles", async (req, res) => {
         }
 
         return res.status(200).json({success: true, msg: "ROLE DELETED"});
+    })
+})
+
+routerUpdateRoles.put("/updateRoles", async (req, res) => {
+    const { id, name } = req.body;
+
+    if (!id || !name){
+        return res.status(400).json({msg: "MISSING DATA"});
+    }
+
+    const query = "UPDATE role SET name = ? WHERE id = ?";
+
+    db.query(query, [name, id], (err, result) => {
+        if (err) {
+            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+        }
+        res.status(200).json({success: true, msg: "ROLE UPDATED"});
     })
 })
