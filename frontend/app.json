@@ -23,6 +23,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "HOST_BACKEND": "http://localhost:3001"
     }
   }
 }
