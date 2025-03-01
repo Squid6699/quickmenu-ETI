@@ -1,42 +1,74 @@
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import InputText from "../components/InputText";
 import { useState } from "react";
 import { AuthStyle } from "../styles/AuthStyles";
 import { Text } from "react-native-paper";
+import Button from "../components/Button";
+import Constants from 'expo-constants';
 
 
 const Auth = () => {
-
+    const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState({ username: "", password: "" });
 
     const handleOnchangeUsername = (value: string) => {
-        if (value) {
-            setUsername(value);
-        }
+        setUsername(value);
     }
 
     const handleOnchangePassword = (value: string) => {
-        if (value) {
-            setPassword(value);
-        }
+        setPassword(value);
     }
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
+        if (!username) {
+            setError({ ...error, username: "Username is required" });
+            return;
+        }
+
+        if (!password) {
+            setError({ ...error, password: "Password is required" });
+            return;
+        }
+
+        setError({ username: "", password: "" });
+
+        try {
+            setLoading(true);
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+            if (data.success){
+                alert(data.msg);
+                setLoading(false);
+            }else{
+                alert(data.msg);
+                setLoading(false);
+            }
+        } catch (error) {
+            alert(error);
+            setLoading(false);
+        }
 
     }
 
     return (
         <View style={AuthStyle.body}>
             <View style={AuthStyle.container}>
-                <Text style={AuthStyle.title}>Iniciar Sesión</Text>
+                <Text style={AuthStyle.title}>Autentificate</Text>
                 <View style={AuthStyle.inputContainer}>
-                    <InputText label="Username" value={username} onChange={handleOnchangeUsername} />
-                    <InputText label="Password" value={password} onChange={handleOnchangePassword} type="password" />
+                    <InputText label="Username" value={username} onChange={handleOnchangeUsername} error={error.username} />
+                    <InputText label="Password" value={password} onChange={handleOnchangePassword} error={error.password} type="password" />
+                    <Button text="Ingresar" onPress={handleLogin} loading={loading} disabled={loading} />
                 </View>
-                <TouchableOpacity style={AuthStyle.button} onPress={handleLogin}>
-                    <Text style={AuthStyle.buttonText}>Ingresar</Text>
-                </TouchableOpacity>
             </View>
         </View>
     );
