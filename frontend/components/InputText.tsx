@@ -1,8 +1,8 @@
-import { TextInput } from 'react-native-paper';
+import { TextInput, Text } from 'react-native-paper';
 import { InputTextProps } from '../types';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 
-const InputText = ({value, label, placeholder, error, errorMsg, disable, onChange}: InputTextProps) => {
+const InputText = ({ value, label, placeholder, error, errorMsg, disable, onChange, type }: InputTextProps) => {
 
   const handleInputOnchange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = event.nativeEvent.text;
@@ -11,11 +11,18 @@ const InputText = ({value, label, placeholder, error, errorMsg, disable, onChang
 
 
   return (
-    <TextInput
-      label = {label}
-      value={value}
-      onChange={handleInputOnchange}
-    />
+    <>
+      <TextInput
+        label={label}
+        value={value}
+        onChange={handleInputOnchange}
+        placeholder={placeholder}
+        disabled={disable}
+        secureTextEntry={type === "password" ? true : false}
+      />
+      {error && <Text variant="labelSmall">{errorMsg}</Text>}
+    </>
+
   );
 };
 
