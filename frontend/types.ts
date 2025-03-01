@@ -1,6 +1,6 @@
 import { ColorValue } from "react-native"
 
-export interface ButtonProps {
+export interface ButtonHomeProps {
     title: String
     onPress: any
     backgroundColor?: ColorValue
@@ -15,9 +15,16 @@ export interface InputTextProps {
     value: string
     label: string,
     placeholder?: string,
-    error?: boolean,
-    errorMsg?: string,
+    error?: string,
     disable?: boolean,
     onChange: (value: string) => void,
     type?: "text" | "password"
+}
+
+export interface ButtonProps {
+    text: string,
+    onPress: any,
+    loading?: boolean,
+    disabled?: boolean,
+    icon?: string
 }
