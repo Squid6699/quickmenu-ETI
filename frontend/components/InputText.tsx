@@ -1,8 +1,9 @@
 import { TextInput, Text } from 'react-native-paper';
 import { InputTextProps } from '../types';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import { colorError } from '../styles/Colors';
 
-const InputText = ({ value, label, placeholder, error, errorMsg, disable, onChange, type }: InputTextProps) => {
+const InputText = ({ value, label, placeholder, error, disable, onChange, type }: InputTextProps) => {
 
   const handleInputOnchange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = event.nativeEvent.text;
@@ -20,7 +21,7 @@ const InputText = ({ value, label, placeholder, error, errorMsg, disable, onChan
         disabled={disable}
         secureTextEntry={type === "password" ? true : false}
       />
-      {error && <Text variant="labelSmall">{errorMsg}</Text>}
+      {error && <Text style={{color: colorError}} variant="labelLarge">{error}</Text>}
     </>
 
   );
