@@ -15,8 +15,9 @@ export interface InputTextProps {
     value: string
     label: string,
     placeholder?: string,
-    error?: Boolean,
+    error?: boolean,
     errorMsg?: string,
-    disable?: Boolean,
-    onChange: (value: string) => void
+    disable?: boolean,
+    onChange: (value: string) => void,
+    type?: "text" | "password"
 }
