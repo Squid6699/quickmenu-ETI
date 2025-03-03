@@ -4,7 +4,8 @@ USE quickmenu;
 -- Tabla de Roles (Admin, Mesera, Cocina, etc.)
 CREATE TABLE Role (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL
+    name VARCHAR(50) NOT NULL,
+    permissions LONGTEXT NULL
 );
 
 -- Tabla de Usuarios (Meseros, Cocina, Admin)
