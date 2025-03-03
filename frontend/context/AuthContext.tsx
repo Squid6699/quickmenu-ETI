@@ -5,7 +5,9 @@ import Constants from 'expo-constants';
 // Definir los tipos de datos que manejaremos en el contexto
 interface User {
     name: string;
+    username: string;
     roleId: number;
+    permissions?: string[];
 }
 
 interface AuthContextType {
@@ -44,7 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const data = await response.json();
 
             if (data.success) {
-                const userData: User = { name: data.name, roleId: data.roleId };
+                const userData: User = { name: data.name, username: data.username, permissions: data.permissions, roleId: data.roleId };
 
                 setUser(userData);
                 setToken(data.token);
