@@ -21,3 +21,15 @@ routerGetMenu.get("/getMenu", (req, res) => {
         return res.status(200).json({success: true, msg: "MENU RETRIEVED", data: result});
     })
 })
+
+routerUpdateMenu.put("/updateMenu", (req, res) => {
+
+})
+
+routerDeleteMenu.delete("/deleteMenu", (req, res) => {
+
+})
+
+routerAddMenu.post("/addMenu", (req, res) => {
+
+})
