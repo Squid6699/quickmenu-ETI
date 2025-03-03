@@ -30,7 +30,7 @@ CREATE TABLE Menu (
 CREATE TABLE Orders (
     id INT PRIMARY KEY AUTO_INCREMENT,
     total DECIMAL(10,2) NOT NULL,
-    status ENUM('Pendiente', 'En Preparación', 'Listo', 'Entregado') DEFAULT 'Pendiente',
+    status ENUM('Pendiente', 'En Preparación', 'Listo', 'Entregado', 'Pagado') DEFAULT 'Pendiente',
     idTable INT,
     idWaitress INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -45,7 +45,7 @@ CREATE TABLE OrderDetails (
     menuId INT,
     quantity INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    status ENUM('Pendiente', 'En Preparación', 'Listo', 'Entregado') DEFAULT 'Pendiente',
+    status ENUM('Pendiente', 'En Preparación', 'Listo', 'Entregado', 'Pagado') DEFAULT 'Pendiente',
     comments TEXT NULL, -- Comentarios sobre el platillo (ej. "Sin cebolla", "Extra queso")
     FOREIGN KEY (orderId) REFERENCES Orders(id),
     FOREIGN KEY (menuId) REFERENCES Menu(id)
