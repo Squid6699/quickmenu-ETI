@@ -2,8 +2,25 @@ import { Alert, ImageBackground, ScrollView, View } from 'react-native';
 import ButtonsHome from '../components/ButtonsHome';
 import { HomeStyles } from '../styles/HomeStyles';
 import { style } from '../App';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../types';
+import Button from '../components/Button';
+import { useAuth } from '../hook/useAuth';
+
 
 const Home = () => {
+    const { logout } = useAuth();
+
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+    const handlePressMenu = () => {
+        navigation.navigate("Menu");
+    };
+
+    const handleLogOut = () => {
+        logout();
+    };
+
     return (
         <>
             <ImageBackground
@@ -12,10 +29,11 @@ const Home = () => {
             >
                 <ScrollView contentContainerStyle={HomeStyles.body}>
                     <View style={HomeStyles.container}>
-                        <ButtonsHome title="Menu" description="Ver opciones" onPress={() => Alert.alert('Menu')} iconName="grid" />
+                        <ButtonsHome title="Menu" description="Ver opciones" onPress={handlePressMenu} iconName="grid" />
                         <ButtonsHome title="Ordenar" description="Hacer pedido" onPress={() => Alert.alert('Ordenar')} iconName="add" />
                         <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
                         <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
+                        <Button text='Logout' onPress={handleLogOut}></Button>
                     </View>
                 </ScrollView>
             </ImageBackground>

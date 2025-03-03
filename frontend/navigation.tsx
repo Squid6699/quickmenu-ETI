@@ -3,8 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./pages/Home";
 import { useAuth } from "./hook/useAuth";
 import Auth from "./pages/Auth";
+import Menu from "./pages/Menu";
+import { RootStackParamList } from "./types";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
+
 
 export default function Navigation() {
   const { user } = useAuth();
@@ -13,7 +16,10 @@ export default function Navigation() {
     <Stack.Navigator>
       {
         user ? (
-          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <>
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true }} />
+          </>
         ) : (
           <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
         )
