@@ -1,25 +1,19 @@
-import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
-import Auth from './pages/Auth';
-import Home from './pages/Home';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import Navigation from './navigation';
 import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   return (
     <SafeAreaView style={style.safeArea}>
       <StatusBar hidden={true} />
-      <ImageBackground
-        source={require('./assets/background.jpg')}
-        style={style.background}
-        resizeMode='cover'
-      >
-        {/* <Home /> */}
-        <Auth />
-      </ImageBackground>
-
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
     </SafeAreaView>
-
   );
 }
+
 
 export const style = StyleSheet.create({
   safeArea: {
@@ -31,6 +25,7 @@ export const style = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center', // Centra el contenido
     alignItems: 'center', // Centra el contenido horizontalmente
+    resizeMode: 'cover',
   },
 });
 
