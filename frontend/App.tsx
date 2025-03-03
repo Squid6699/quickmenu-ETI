@@ -2,14 +2,17 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import Navigation from './navigation';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from "@react-navigation/native";
+import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
   return (
     <SafeAreaView style={style.safeArea}>
       <StatusBar hidden={true} />
+      <AuthProvider>
         <NavigationContainer>
           <Navigation />
         </NavigationContainer>
+      </AuthProvider>
     </SafeAreaView>
   );
 }
