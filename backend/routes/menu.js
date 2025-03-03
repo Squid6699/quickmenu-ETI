@@ -62,7 +62,7 @@ routerDeleteMenu.delete("/deleteMenu", (req, res) => {
 })
 
 routerAddMenu.post("/addMenu", (req, res) => {
-    const { name } = req.body;
+    const { name,price } = req.body;
 
     if (!name || !price){
         return res.status(400).json({msg: "MISSING DATA"});
