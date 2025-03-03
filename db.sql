@@ -93,10 +93,10 @@ CREATE TABLE Assigned_Tables (
 
 
 -- INSERTAR ROLES
-INSERT INTO Role (name) VALUES ("ADMIN");
-INSERT INTO Role (name) VALUES ("MESERO");
-INSERT INTO Role (name) VALUES ("COCINA");
-INSERT INTO Role (name) VALUES ("MESA");
+INSERT INTO Role (name, permissions) VALUES ("ADMIN", "{\"admin\": true}");
+INSERT INTO Role (name, permissions) VALUES ("MESERO", "{\"admin\": false}");
+INSERT INTO Role (name, permissions) VALUES ("COCINA", "{\"admin\": false}");
+INSERT INTO Role (name, permissions) VALUES ("MESA", "{\"admin\": false}");
 
 -- INSERTAR USUARIOS
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("admin", "admin", "admin", 1);
