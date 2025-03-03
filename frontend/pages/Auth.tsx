@@ -4,15 +4,14 @@ import { useState } from "react";
 import { AuthStyle } from "../styles/AuthStyles";
 import { Text } from "react-native-paper";
 import Button from "../components/Button";
-import Constants from 'expo-constants';
 import { style } from "../App";
+import { useAuth } from "../hook/useAuth";
 
 
 const Auth = () => {
-    const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
+    const { login, loading } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState({ username: "", password: "" });
 
     const handleOnchangeUsername = (value: string) => {
@@ -36,28 +35,7 @@ const Auth = () => {
 
         setError({ username: "", password: "" });
 
-        try {
-            setLoading(true);
-            const response = await fetch(`${API_URL}/api/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ username, password })
-            });
-
-            const data = await response.json();
-            if (data.success) {
-                alert(data.msg);
-                setLoading(false);
-            } else {
-                alert(data.msg);
-                setLoading(false);
-            }
-        } catch (error) {
-            alert("Error de conexión");
-            setLoading(false);
-        }
+        login(username, password);
 
     }
 
