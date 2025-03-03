@@ -1,10 +1,11 @@
-import { View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import InputText from "../components/InputText";
 import { useState } from "react";
 import { AuthStyle } from "../styles/AuthStyles";
 import { Text } from "react-native-paper";
 import Button from "../components/Button";
 import Constants from 'expo-constants';
+import { style } from "../App";
 
 
 const Auth = () => {
@@ -46,10 +47,10 @@ const Auth = () => {
             });
 
             const data = await response.json();
-            if (data.success){
+            if (data.success) {
                 alert(data.msg);
                 setLoading(false);
-            }else{
+            } else {
                 alert(data.msg);
                 setLoading(false);
             }
@@ -61,18 +62,22 @@ const Auth = () => {
     }
 
     return (
-        <View style={AuthStyle.body}>
-            <View style={AuthStyle.container}>
-                <Text style={AuthStyle.title}>Autentificate</Text>
-                <View style={AuthStyle.inputContainer}>
-                    <InputText label="Username" value={username} onChange={handleOnchangeUsername} error={error.username} />
-                    <InputText label="Password" value={password} onChange={handleOnchangePassword} error={error.password} type="password" />
-                    <Button text="Ingresar" onPress={handleLogin} loading={loading} disabled={loading} />
+        <ImageBackground
+            source={require('../assets/background.jpg')}
+            style={style.background}
+        >
+            <View style={AuthStyle.body}>
+                <View style={AuthStyle.container}>
+                    <Text style={AuthStyle.title}>Autentificate</Text>
+                    <View style={AuthStyle.inputContainer}>
+                        <InputText label="Username" value={username} onChange={handleOnchangeUsername} error={error.username} />
+                        <InputText label="Password" value={password} onChange={handleOnchangePassword} error={error.password} type="password" />
+                        <Button text="Ingresar" onPress={handleLogin} loading={loading} disabled={loading} />
+                    </View>
                 </View>
             </View>
-        </View>
+        </ImageBackground>
     );
-
 };
 
 export default Auth;
