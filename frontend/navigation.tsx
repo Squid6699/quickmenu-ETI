@@ -5,12 +5,13 @@ import { useAuth } from "./hook/useAuth";
 import Auth from "./pages/Auth";
 import Menu from "./pages/Menu";
 import { RootStackParamList } from "./types";
+import Admin from "./pages/Admin";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 
 export default function Navigation() {
-  const { user } = useAuth();
+  const { user, permissions } = useAuth();
 
   return (
     <Stack.Navigator>
@@ -19,6 +20,7 @@ export default function Navigation() {
           <>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true }} />
+            <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true }} />
           </>
         ) : (
           <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />

@@ -9,8 +9,8 @@ import { useAuth } from '../hook/useAuth';
 
 
 const Home = () => {
-    const { logout } = useAuth();
-
+    const { permissions, logout } = useAuth();
+    const permission = permissions ? JSON.parse(permissions) : null;
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const handlePressMenu = () => {
@@ -19,6 +19,10 @@ const Home = () => {
 
     const handleLogOut = () => {
         logout();
+    };
+
+    const handleAdmin = () => {
+        navigation.navigate("Admin");
     };
 
     return (
@@ -34,6 +38,8 @@ const Home = () => {
                         <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
                         <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
                         <Button text='Logout' onPress={handleLogOut}></Button>
+
+                        {permission && permission.admin && <Button text='Admin' onPress={handleAdmin}></Button>}
                     </View>
                 </ScrollView>
             </ImageBackground>

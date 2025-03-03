@@ -33,4 +33,6 @@ export type RootStackParamList = {
     Home: undefined; // No parámetros para la pantalla Home
     Menu: undefined; // No parámetros para la pantalla Menu
     Auth: undefined; // No parámetros para la pantalla Auth
+    Admin: undefined; // No parámetros para la pantalla Auth
+
 };

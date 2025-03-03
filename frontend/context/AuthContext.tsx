@@ -7,16 +7,17 @@ interface User {
     name: string;
     username: string;
     roleId: number;
-    permissions?: string[];
 }
 
 interface AuthContextType {
     user: User | null;
+    permissions: string | null;
     token: string | null;
     login: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
     loading: boolean;
 }
+
 
 // Crear el contexto con un valor por defecto
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +29,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
     const [user, setUser] = useState<User | null>(null);
+    const [permissions, setPermissions] = useState(null);
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -46,9 +48,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const data = await response.json();
 
             if (data.success) {
-                const userData: User = { name: data.name, username: data.username, permissions: data.permissions, roleId: data.roleId };
+                const userData: User = { name: data.name, username: data.username, roleId: data.roleId };
 
                 setUser(userData);
+                setPermissions(data.permissions);
                 setToken(data.token);
 
                 await AsyncStorage.setItem("user", JSON.stringify(userData));
@@ -64,6 +67,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Función para cerrar sesión
     const logout = async () => {
         setUser(null);
+        setPermissions(null);
         setToken(null);
         await AsyncStorage.removeItem("user");
         await AsyncStorage.removeItem("token");
@@ -91,7 +95,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, permissions, token, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
