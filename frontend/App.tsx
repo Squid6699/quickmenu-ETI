@@ -25,9 +25,10 @@ export const style = StyleSheet.create({
   },
 
   background: {
+    flex: 1,
     ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center', // Centra el contenido
-    alignItems: 'center', // Centra el contenido horizontalmente
+    // justifyContent: 'center', // Centra el contenido
+    // alignItems: 'center', // Centra el contenido horizontalmente
     resizeMode: 'cover',
   },
 });
