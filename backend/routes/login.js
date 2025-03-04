@@ -18,7 +18,7 @@ routerLogin.post("/login", async (req, res) => {
 
     db.query(query, [username, password], (err, result) => {
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
         if (result.length === 0){
             return res.status(401).json({success: false, msg: "LOGIN ERROR"});
@@ -38,7 +38,7 @@ routerRegister.post("/register", async (req, res) => {
     const query = "INSERT INTO users (username, password, name, roleId) VALUES (? ? ? ?)";
     db.query(query, [username, password, name, roleId], (err, result) => {
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
         if (result.affectedRows === 0){
             return res.status(401).json({success: false, msg: "REGISTER ERROR"});

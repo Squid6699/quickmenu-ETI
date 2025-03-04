@@ -19,7 +19,7 @@ routerGetOrders.get("/getOrders", (req, res) => {
 
     db.query(query, (err, result) => {
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
         return res.status(200).json({success: true, msg: "ORDERS RETRIEVED", data: result});
     })

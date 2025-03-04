@@ -16,7 +16,7 @@ routerGetMenu.get("/getMenu", (req, res) => {
     const query = "SELECT * FROM menu";
     db.query(query, (err, result) => {
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
         return res.status(200).json({success: true, msg: "MENU RETRIEVED", data: result});
     })
@@ -32,7 +32,7 @@ routerUpdateMenu.put("/updateMenu", (req, res) => {
 
     db.query(query, [name, id], (err, result) => {
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
         res.status(200).json({success: true, msg: "MENU UPDATED"});
     })
@@ -49,7 +49,7 @@ routerDeleteMenu.delete("/deleteMenu", (req, res) => {
     const query = "DELETE FROM role WHERE id = ?";
     db.query(query, [id], (err, result) => { 
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
 
         if (result.affectedRows === 0){
@@ -71,7 +71,7 @@ routerAddMenu.post("/addMenu", (req, res) => {
     const query = "INSERT INTO menu (name,price) VALUES (?,?)";
     db.query(query, [name,price], (err, result) => {
         if (err) {
-            return res.status(500).json({msg: "INTERAL SERVER ERROR"});
+            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
         return res.status(200).json({success: true, msg: "MENU ADDED"});
     })
