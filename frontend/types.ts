@@ -36,3 +36,11 @@ export type RootStackParamList = {
     Admin: undefined; // No parámetros para la pantalla Auth
 
 };
+
+export type MenuType = {
+    id: number,
+    name: string,
+    price: number,
+    description: string,
+    available: boolean
+}
