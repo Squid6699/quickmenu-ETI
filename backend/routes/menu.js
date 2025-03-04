@@ -23,14 +23,14 @@ routerGetMenu.get("/getMenu", (req, res) => {
 })
 
 routerUpdateMenu.put("/updateMenu", (req, res) => {
-    const {id,name,price} = req.body;
-    if (!id || !name || !price || !description) {
+    const {id,name,price,description,idcategory} = req.body;
+    if (!id || !name || !price || !description || !idcategory) {
         return res.status(400).json({msg:"MISSING DATA"});
     }
 
-    const query = "UPDATE menu SET name = ? ,price = ?,description = ? WHERE id = ?"
+    const query = "UPDATE menu SET name = ? ,price = ?,description = ?,idcategory = ? WHERE id = ?"
 
-    db.query(query, [id,name,price,description], (err, result) => {
+    db.query(query, [id,name,price,description,idcategory], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -62,14 +62,14 @@ routerDeleteMenu.delete("/deleteMenu", (req, res) => {
 })
 
 routerAddMenu.post("/addMenu", (req, res) => {
-    const { name,price ,description} = req.body;
+    const { name,price ,description,idcategory,available} = req.body;
 
-    if (!name || !price || !description){
+    if (!name || !price || !description || ! idcategory || !available){
         return res.status(400).json({msg: "MISSING DATA"});
     }
 
-    const query = "INSERT INTO menu (name,price,description) VALUES (?,?,?)";
-    db.query(query, [name,price,description], (err, result) => {
+    const query = "INSERT INTO menu (name,price,description,,idcategory,available) VALUES (?,?,?,?,?)";
+    db.query(query, [name,price,description,idcategory,available], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }

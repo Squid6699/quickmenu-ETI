@@ -29,9 +29,9 @@ CREATE TABLE Menu (
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     description TEXT,
-    idCategoy INT,
+    idCategory INT,
     available BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (idCategoy) REFERENCES Category(id)
+    FOREIGN KEY (idCategory) REFERENCES Category(id)
 );
 
 -- Tabla de Pedidos (Órdenes de los clientes)
