@@ -7,7 +7,8 @@ export const AuthStyle = StyleSheet.create({
         width: "75%",
         height : "100%",
         justifyContent: 'center',
-        alignItems: 'center',
+        margin  : 'auto',
+        
     },
     container: {
         width: "100%",
