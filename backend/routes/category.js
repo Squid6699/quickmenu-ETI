@@ -7,7 +7,7 @@ export const routerDeleteCategory = express.Router();
 export const routerAddCategory = express.Router();
 
 
-routerGetCategory.get("/getCategory",(req, res) => {
+routerGetCategory.get("/getCategory", (req, res) => {
 
     const customHeader = req.headers['x-frontend-header'];
 
@@ -24,57 +24,56 @@ routerGetCategory.get("/getCategory",(req, res) => {
     })
 })
 
-    routerUpdateCategory.put("/updateCategory", (req, res) => {
-        const {id,name} = req.body;
-        if (!id || !name ) {
-            return res.status(400).json({msg:"MISSING DATA"});
+routerUpdateCategory.put("/updateCategory", (req, res) => {
+    const { id, name } = req.body;
+    if (!id || !name) {
+        return res.status(400).json({ msg: "MISSING DATA" });
+    }
+
+    const query = "UPDATE Category SET name = ?  WHERE id = ?"
+
+    db.query(query, [id, name], (err, result) => {
+        if (err) {
+            return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
-    
-        const query = "UPDATE Category SET name = ?  WHERE id = ?"
-    
-        db.query(query, [id,name], (err, result) => {
-            if (err) {
-                return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-            }
-            res.status(200).json({success: true, msg: "CATEGORY UPDATED"});
-        })
+        res.status(200).json({ success: true, msg: "CATEGORY UPDATED" });
+    })
+})
+
+routerDeleteMenu.delete("/deleteCategory", (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ msg: "MISSING DATA" });
+    }
+
+    const query = "DELETE FROM Category WHERE id = ?";
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, msg: "CATEGORY NOT FOUND" });
+        }
+
+        return res.status(200).json({ success: true, msg: "CATEGORY DELETED" });
     })
 
-        routerDeleteMenu.delete("/deleteCategory", (req, res) => {
-            const { id } = req.body;
-        
-            if (!id){
-                return res.status(400).json({msg: "MISSING DATA"});
-            }
-        
-            const query = "DELETE FROM Category WHERE id = ?";
-            db.query(query, [id], (err, result) => { 
-                if (err) {
-                    return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-                }
-        
-                if (result.affectedRows === 0){
-                    return res.status(404).json({success: false, msg: "CATEGORY NOT FOUND"});
-                }
-        
-                return res.status(200).json({success: true, msg: "CATEGORY DELETED"});
-            })
-        
-        })
-        
-    routerAddMenu.post("/addCategory", (req, res) => {
-        const { name} = req.body;
-    
-        if (!name ){
-            return res.status(400).json({msg: "MISSING DATA"});
+})
+
+routerAddMenu.post("/addCategory", (req, res) => {
+    const { name } = req.body;
+
+    if (!name) {
+        return res.status(400).json({ msg: "MISSING DATA" });
+    }
+
+    const query = "INSERT INTO Category (name) VALUES (?)";
+    db.query(query, [name], (err, result) => {
+        if (err) {
+            return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
-    
-        const query = "INSERT INTO Category (name) VALUES (?)";
-        db.query(query, [name], (err, result) => {
-            if (err) {
-                return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-            }
-            return res.status(200).json({success: true, msg: "CATEGORY ADDED"});
-        })
+        return res.status(200).json({ success: true, msg: "CATEGORY ADDED" });
     })
-    
+})

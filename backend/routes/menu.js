@@ -13,7 +13,7 @@ routerGetMenu.get("/getMenu", (req, res) => {
         return res.status(401).send('Unauthorized');
     }
 
-    const query = "SELECT * FROM menu";
+    const query = "SELECT * FROM menu WHERE available = 1";
     db.query(query, (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
