@@ -6,12 +6,13 @@ import Auth from "./pages/Auth";
 import Menu from "./pages/Menu";
 import { RootStackParamList } from "./types";
 import Admin from "./pages/Admin";
+import { backgroundColor, headerColor } from "./styles/Colors";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 
 export default function Navigation() {
-  const { user, permissions } = useAuth();
+  const { user } = useAuth();
 
   return (
     <Stack.Navigator>
@@ -19,7 +20,7 @@ export default function Navigation() {
         user ? (
           <>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true }} />
+            <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
             <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true }} />
           </>
         ) : (
