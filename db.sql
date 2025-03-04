@@ -18,13 +18,20 @@ CREATE TABLE Users (
     FOREIGN KEY (roleId) REFERENCES Role(id)
 );
 
+CREATE TABLE Category (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL
+);
+
 -- Tabla de Menú (Platillos disponibles)
 CREATE TABLE Menu (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     description TEXT,
-    available BOOLEAN DEFAULT TRUE
+    idCategoy INT,
+    available BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (idCategoy) REFERENCES Category(id)
 );
 
 -- Tabla de Pedidos (Órdenes de los clientes)
@@ -114,23 +121,39 @@ INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 3", "Mesa 3",
 INSERT INTO Users (Username, name, Password, roleId) VALUES ("Mesa 4", "Mesa 4", "mesa4", 4);
 
 
+-- INSERTAR CATEGORÍAS
+INSERT INTO Category (name) VALUES
+('Hamburguesas'),
+('Pizzas'),
+('Tacos'),
+('Ensaladas'),
+('Platos Fuertes'),
+('Pastas'),
+('Postres'),
+('Bebidas');
+
 -- MENU DE EJEMPLO
-INSERT INTO Menu (name, price, description) VALUES
-('Hamburguesa Clásica', 120.00, 'Pan artesanal, carne de res, lechuga, tomate, queso cheddar y mayonesa'),
-('Hamburguesa BBQ', 135.00, 'Pan artesanal, carne de res, cebolla caramelizada, tocino, queso cheddar y salsa BBQ'),
-('Pizza Pepperoni', 180.00, 'Masa crujiente, salsa de tomate, queso mozzarella y pepperoni'),
-('Pizza Vegetariana', 170.00, 'Masa crujiente, salsa de tomate, queso mozzarella, champiñones, pimientos y aceitunas'),
-('Tacos al Pastor', 95.00, 'Tres tacos de pastor con piña, cebolla y cilantro'),
-('Tacos de Bistec', 105.00, 'Tres tacos de bistec con cebolla, cilantro y salsa'),
-('Ensalada César', 90.00, 'Lechuga romana, crutones, pollo a la parrilla, queso parmesano y aderezo César'),
-('Pechuga de Pollo a la Plancha', 150.00, 'Pechuga de pollo con guarnición de arroz y ensalada'),
-('Salmón a la Mantequilla', 250.00, 'Filete de salmón con mantequilla de ajo y puré de papa'),
-('Pasta Alfredo', 160.00, 'Pasta fetuccini con salsa Alfredo y trozos de pollo'),
-('Pastel de Chocolate', 85.00, 'Pastel de chocolate con ganache y fresas'),
-('Pay de Limón', 75.00, 'Base de galleta con crema de limón y merengue'),
-('Café Americano', 40.00, 'Café negro recién hecho'),
-('Café Capuchino', 55.00, 'Espresso con leche espumada y canela'),
-('Jugo de Naranja', 50.00, 'Jugo natural de naranja recién exprimido'),
-('Refresco', 35.00, 'Refresco de cola, limón o naranja'),
-('Cerveza', 60.00, 'Cerveza artesanal o comercial'),
-('Agua Natural', 25.00, 'Botella de agua natural 500ml');
+INSERT INTO Menu (name, price, description, idCategoy) VALUES
+('Hamburguesa Clásica', 120.00, 'Pan artesanal, carne de res, lechuga, tomate, queso cheddar y mayonesa', 1),
+('Hamburguesa BBQ', 135.00, 'Pan artesanal, carne de res, cebolla caramelizada, tocino, queso cheddar y salsa BBQ', 1),
+('Pizza Pepperoni', 180.00, 'Masa crujiente, salsa de tomate, queso mozzarella y pepperoni', 2),
+('Pizza Vegetariana', 170.00, 'Masa crujiente, salsa de tomate, queso mozzarella, champiñones, pimientos y aceitunas', 2),
+('Tacos al Pastor', 95.00, 'Tres tacos de pastor con piña, cebolla y cilantro', 3),
+('Tacos de Bistec', 105.00, 'Tres tacos de bistec con cebolla, cilantro y salsa', 3),
+('Ensalada César', 90.00, 'Lechuga romana, crutones, pollo a la parrilla, queso parmesano y aderezo César', 4),
+('Pechuga de Pollo a la Plancha', 150.00, 'Pechuga de pollo con guarnición de arroz y ensalada', 5),
+('Salmón a la Mantequilla', 250.00, 'Filete de salmón con mantequilla de ajo y puré de papa', 5),
+('Pasta Alfredo', 160.00, 'Pasta fetuccini con salsa Alfredo y trozos de pollo', 6),
+('Lasagna de Carne', 175.00, 'Capas de pasta con salsa boloñesa, queso ricotta y mozzarella gratinado', 6),
+('Pastel de Chocolate', 85.00, 'Pastel de chocolate con ganache y fresas', 7),
+('Pay de Limón', 75.00, 'Base de galleta con crema de limón y merengue', 7),
+('Cheesecake de Fresa', 95.00, 'Tarta de queso con cobertura de fresa', 7),
+('Café Americano', 40.00, 'Café negro recién hecho', 8),
+('Café Capuchino', 55.00, 'Espresso con leche espumada y canela', 8),
+('Jugo de Naranja', 50.00, 'Jugo natural de naranja recién exprimido', 8),
+('Refresco', 35.00, 'Refresco de cola, limón o naranja', 8),
+('Cerveza', 60.00, 'Cerveza artesanal o comercial', 8),
+('Agua Natural', 25.00, 'Botella de agua natural 500ml', 8),
+('Té Helado', 45.00, 'Té negro con hielo y limón', 8),
+('Limonada', 55.00, 'Jugo de limón natural con agua mineral o natural', 8),
+('Mojito sin alcohol', 70.00, 'Hierbabuena, limón, azúcar y soda', 8);
