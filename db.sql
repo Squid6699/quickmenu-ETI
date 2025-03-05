@@ -133,7 +133,7 @@ INSERT INTO Category (name) VALUES
 ('Bebidas');
 
 -- MENU DE EJEMPLO
-INSERT INTO Menu (name, price, description, idCategoy) VALUES
+INSERT INTO Menu (name, price, description, idCategory) VALUES
 ('Hamburguesa Clásica', 120.00, 'Pan artesanal, carne de res, lechuga, tomate, queso cheddar y mayonesa', 1),
 ('Hamburguesa BBQ', 135.00, 'Pan artesanal, carne de res, cebolla caramelizada, tocino, queso cheddar y salsa BBQ', 1),
 ('Pizza Pepperoni', 180.00, 'Masa crujiente, salsa de tomate, queso mozzarella y pepperoni', 2),
