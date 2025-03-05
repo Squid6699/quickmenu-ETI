@@ -1,11 +1,11 @@
 import { Alert, ImageBackground, ScrollView, View } from 'react-native';
 import ButtonsHome from '../components/ButtonsHome';
 import { HomeStyles } from '../styles/HomeStyles';
-import { style } from '../App';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import Button from '../components/Button';
 import { useAuth } from '../hook/useAuth';
+import { backgroundStyle } from '../styles/BackgroundStyles';
 
 
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
         <>
             <ImageBackground
                 source={require('../assets/background.jpg')}
-                style={style.background}
+                style={backgroundStyle.background}
             >
                 <ScrollView contentContainerStyle={HomeStyles.body}>
                     <View style={HomeStyles.container}>

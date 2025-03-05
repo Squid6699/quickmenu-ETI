@@ -35,14 +35,6 @@ export const style = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#0a0909',
-  },
-
-  background: {
-    flex: 1,
-    ...StyleSheet.absoluteFillObject,
-    // justifyContent: 'center', // Centra el contenido
-    // alignItems: 'center', // Centra el contenido horizontalmente
-    resizeMode: 'cover',
-  },
+  }
 });
 

@@ -4,8 +4,8 @@ import { useState } from "react";
 import { AuthStyle } from "../styles/AuthStyles";
 import { Text } from "react-native-paper";
 import Button from "../components/Button";
-import { style } from "../App";
 import { useAuth } from "../hook/useAuth";
+import { backgroundStyle } from "../styles/BackgroundStyles";
 
 
 const Auth = () => {
@@ -42,7 +42,7 @@ const Auth = () => {
     return (
         <ImageBackground
             source={require('../assets/background.jpg')}
-            style={style.background}
+            style={backgroundStyle.background}
         >
             <View style={AuthStyle.body}>
                 <View style={AuthStyle.container}>

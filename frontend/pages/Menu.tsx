@@ -7,6 +7,7 @@ import { MenuType } from "../types";
 import { MenuStyles } from "../styles/MenuStyles";
 import { iconColor } from "../styles/Colors";
 import { useQuery } from '@tanstack/react-query';
+import { backgroundStyle } from "../styles/BackgroundStyles";
 
 const Menu = () => {
     const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
@@ -41,7 +42,7 @@ const Menu = () => {
     return (
         <ImageBackground
             source={require('../assets/background.jpg')}
-            style={style.background}
+            style={backgroundStyle.background}
         >
             <View style={MenuStyles.container}>
                 {isLoading ? (
