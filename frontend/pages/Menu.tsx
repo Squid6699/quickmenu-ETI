@@ -2,51 +2,39 @@ import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 import { ActivityIndicator, Card, Text } from "react-native-paper";
 import { style } from "../App";
 import Constants from 'expo-constants';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MenuType } from "../types";
 import { MenuStyles } from "../styles/MenuStyles";
 import { iconColor } from "../styles/Colors";
+import { useQuery } from '@tanstack/react-query';
 
 const Menu = () => {
     const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
-    const [loading, setLoading] = useState(false);
-    const [menu, setMenu] = useState([]);
+    
+    const fetchMenu = async () => {
+        const response = await fetch(`${API_URL}/api/getMenu`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-frontend-header': 'frontend'
+            },
+        });
 
-    const getMenu = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(`${API_URL}/api/getMenu`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-frontend-header': 'frontend'
-                },
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                setMenu(data.data);
-                setLoading(false);
-            } else {
-                alert(data.message);
-                setLoading(false);
-            }
-
-        } catch (error) {
-            setLoading(false);
-        }
+        const data = await response.json();
+        if (!data.success) throw new Error(data.message);
+        return data.data;
     };
 
-    useEffect(() => {
-        getMenu();
-    }, []);
+    const { data, isLoading, isError, error, refetch } = useQuery({
+        queryKey: ['menu'],
+        queryFn: fetchMenu
+    });
 
     const [refreshing, setRefreshing] = useState(false);
 
     const handleRefresh = async () => {
         setRefreshing(true);
-        await getMenu();
+        await refetch();
         setRefreshing(false);
     };
 
@@ -55,12 +43,14 @@ const Menu = () => {
             source={require('../assets/background.jpg')}
             style={style.background}
         >
-            <View style={ MenuStyles.container }>
-                {loading ? (
-                    <ActivityIndicator color={iconColor} size={75} style= {MenuStyles.activityIndicator} />
+            <View style={MenuStyles.container}>
+                {isLoading ? (
+                    <ActivityIndicator color={iconColor} size={75} style={MenuStyles.activityIndicator} />
+                ) : isError ? (
+                    <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (
                     <FlatList
-                        data={menu}
+                        data={data}
                         keyExtractor={(item: MenuType) => item.id.toString()}
                         refreshControl={
                             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />
@@ -80,7 +70,6 @@ const Menu = () => {
                     />
                 )}
             </View>
-
         </ImageBackground>
     );
 };
