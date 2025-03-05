@@ -40,7 +40,7 @@ routerUpdateCategory.put("/updateCategory", (req, res) => {
     })
 })
 
-routerDeleteMenu.delete("/deleteCategory", (req, res) => {
+routerDeleteCategory.delete("/deleteCategory", (req, res) => {
     const { id } = req.body;
 
     if (!id) {
@@ -62,7 +62,7 @@ routerDeleteMenu.delete("/deleteCategory", (req, res) => {
 
 })
 
-routerAddMenu.post("/addCategory", (req, res) => {
+routerAddCategory.post("/addCategory", (req, res) => {
     const { name } = req.body;
 
     if (!name) {
