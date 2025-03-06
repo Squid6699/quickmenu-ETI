@@ -5,7 +5,7 @@ import { useAuth } from "./hook/useAuth";
 import Auth from "./pages/Auth";
 import Menu from "./pages/Menu";
 import { RootStackParamList } from "./types";
-import Admin from "./pages/Admin";
+import Admin from "./pages/admin/Admin";
 import { backgroundColor, headerColor } from "./styles/Colors";
 
 const Stack = createStackNavigator<RootStackParamList>();
