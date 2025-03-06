@@ -30,10 +30,14 @@ export interface ButtonProps {
 }
 
 export type RootStackParamList = {
-    Home: undefined; // No parámetros para la pantalla Home
-    Menu: undefined; // No parámetros para la pantalla Menu
-    Auth: undefined; // No parámetros para la pantalla Auth
-    Admin: undefined; // No parámetros para la pantalla Auth
+    Home: undefined; 
+    Menu: undefined; 
+    Auth: undefined; 
+    Admin: undefined;
+    "Ver Ordenes": undefined;
+    "Ver Mesas": undefined;
+    "Ver Meseros": undefined;
+    "Ver Mesas Asignadas": undefined;
 
 };
 
