@@ -38,9 +38,10 @@ export type RootStackParamList = {
 };
 
 export type MenuType = {
-    id: number,
-    name: string,
+    idMenu: string,
+    NAME_MENU: string,
     price: number,
     description: string,
+    CATEGORY_NAME: string,
     available: boolean
 }
