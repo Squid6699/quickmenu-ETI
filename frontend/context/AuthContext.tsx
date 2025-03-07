@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 
 // Definir los tipos de datos que manejaremos en el contexto
 interface User {
@@ -27,7 +28,11 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
+    // const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
+    const API_URL = Platform.OS === 'android' 
+    ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
+    : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+
     const [user, setUser] = useState<User | null>(null);
     const [permissions, setPermissions] = useState(null);
     const [token, setToken] = useState<string | null>(null);
@@ -60,7 +65,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 throw new Error(data.msg);
             }
         } catch (error) {
-            console.error("Login Error:", error);
+            console.error("Login Error:", API_URL);
         }
     };
 

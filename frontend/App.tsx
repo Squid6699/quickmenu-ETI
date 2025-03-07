@@ -18,14 +18,14 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <SafeAreaView style={style.safeArea}>
+      {/* <SafeAreaView style={style.safeArea}> */}
         <StatusBar hidden={true} />
         <AuthProvider>
           <NavigationContainer>
             <Navigation />
           </NavigationContainer>
         </AuthProvider>
-      </SafeAreaView>
+      {/* </SafeAreaView> */}
     </QueryClientProvider>
   );
 }
