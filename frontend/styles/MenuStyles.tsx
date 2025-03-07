@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { backgroundCard } from './Colors';
-import CardTitle from 'react-native-paper/lib/typescript/components/Card/CardTitle';
 
 export const MenuStyles = StyleSheet.create({
     container: {
