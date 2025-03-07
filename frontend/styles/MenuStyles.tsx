@@ -4,7 +4,7 @@ import { backgroundCard } from './Colors';
 export const MenuStyles = StyleSheet.create({
     container: {
         flex: 1, 
-        padding: 30
+        padding: 15
     },
 
     activityIndicator: {
