@@ -49,3 +49,9 @@ export type MenuType = {
     CATEGORY_NAME: string,
     available: boolean
 }
+
+export type Customize = {
+    id: string,
+    name: string,
+    color: string
+}
