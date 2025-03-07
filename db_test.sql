@@ -73,7 +73,7 @@ INSERT INTO Customize (name, color) VALUES
 ("colorError", "#ff0000"),
 ("colorSuccess", "00ff00"),
 ("headerColor", "#171717"),
-("backgroundCard", "#efc451"), 
+("backgroundCard", "#efc451");
 
 
 -- INSERTAR MÁS RESERVACIONES (RESERVATIONS)
