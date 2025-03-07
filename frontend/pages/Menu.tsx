@@ -10,11 +10,14 @@ import { MenuType } from "../types";
 import { MenuStyles } from "../styles/MenuStyles";
 import { backgroundStyle } from "../styles/BackgroundStyles";
 import { backgroundColor, headerColor, iconColor } from "../styles/Colors";
+import { Platform } from 'react-native';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
 const Menu = () => {
-    const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
+    const API_URL = Platform.OS === 'android' 
+    ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
+    : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
     const fetchMenu = async (): Promise<MenuType[]> => {
         const response = await fetch(`${API_URL}/api/getMenu`, {

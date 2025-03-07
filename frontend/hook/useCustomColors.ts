@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import Constants from 'expo-constants';
 import { Customize } from "../types";
 import { useQuery } from "@tanstack/react-query";
+import { Platform } from 'react-native';
 
 export const useCustomColors = () => {
-    const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
+    const API_URL = Platform.OS === 'android' 
+    ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
+    : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
     const [colors, setColors] = useState({
         backgroundColor: "#efc451",

@@ -28,10 +28,10 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    // const API_URL = Constants.expoConfig?.extra?.HOST_BACKEND ?? "";
     const API_URL = Platform.OS === 'android' 
     ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
     : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+    
 
     const [user, setUser] = useState<User | null>(null);
     const [permissions, setPermissions] = useState(null);

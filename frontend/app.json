@@ -26,7 +26,6 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "HOST_BACKEND": "http://10.0.2.2:3001",
       "HOST_BACKEND_ANDROID": "http://10.0.2.2:3001",
       "HOST_BACKEND_IOS": "http://192.168.100.11:3001"
     }
