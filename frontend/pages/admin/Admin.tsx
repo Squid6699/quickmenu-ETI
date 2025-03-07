@@ -28,7 +28,7 @@ const Admin = () => {
                 source={require('../../assets/background.jpg')}
                 style={backgroundStyle.background}
             >
-                <ScrollView contentContainerStyle={stylesButtonOptions.body}>
+                <ScrollView contentContainerStyle={stylesButtonOptions.container}>
                     <View style={stylesButtonOptions.container}>
                         <ButtonsOptions title="Meseros" description="Ver meseros" onPress={handlePressViewWaitress} iconName="body-outline" />
                         <ButtonsOptions title="Mesas" description="Ver mesas" onPress={handlePressViewTables} iconName="tablet-landscape-outline" />
