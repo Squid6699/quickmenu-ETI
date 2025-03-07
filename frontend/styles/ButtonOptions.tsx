@@ -1,41 +1,34 @@
 import { StyleSheet } from 'react-native';
 
 export const stylesButtonOptions = StyleSheet.create({
-    body: {
-        flexGrow: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 16, // Evita que los botones se peguen a los bordes laterales
-        paddingBottom: 20, // Evita que los botones queden pegados a la gesture bar
-    },
     container: {
-        width: "97%",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: 'center',
+        width: "100%",
+        flexDirection: "column",
         alignItems: 'center',
     },
     button: {
-        aspectRatio: 1, 
-        flexDirection: 'column',
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
-        padding: 15,
-        borderRadius: 8,
-        margin: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+        borderRadius: 6,
+        marginVertical: 6,
+    },
+    textContainer: {
+        flex: 1, // Permite que el texto ocupe el espacio restante
+        marginLeft: 10,
     },
     text: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 5,
+        textAlign: 'left',
     },
     description: {
-        fontSize: 14,
-        textAlign: 'center',
-        marginTop: 3,
+        fontSize: 12,
+        textAlign: 'left',
     },
     icon: {
-        marginBottom: 5,
+        width: 30,
+        height: 30,
     },
 });
