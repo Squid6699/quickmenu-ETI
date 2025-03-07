@@ -87,6 +87,17 @@ CREATE TABLE Assigned_Tables (
     FOREIGN KEY (idTable) REFERENCES Users(id)
 );
 
+CREATE TABLE Customize (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    backgroundColor VARCHAR(50) NOT NULL,
+    textColor VARCHAR(50) NOT NULL,
+    iconColor VARCHAR(50) NOT NULL,
+    colorError VARCHAR(50) NOT NULL,
+    colorSuccess VARCHAR(50) NOT NULL,
+    headerColor VARCHAR(50) NOT NULL,
+    backgroundCard VARCHAR(50) NOT NULL
+);
+
 -- Tabla de Reservaciones (Clientes que reservan mesas)
 -- CREATE TABLE Reservations (
 --     id INT PRIMARY KEY AUTO_INCREMENT,
