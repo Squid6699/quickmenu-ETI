@@ -6,6 +6,7 @@ import { routerAddRoles, routerDeleteRoles, routerGetRoles, routerUpdateRoles } 
 import { routerGetOrders } from "./routes/orders.js";
 import { routerAddMenu, routerDeleteMenu, routerGetMenu, routerUpdateMenu } from "./routes/menu.js";
 import { routerAddCategory, routerDeleteCategory, routerGetCategory, routerUpdateCategory } from "./routes/category.js";
+import { routerGetCustomize, routerUpdateCustomize } from "./routes/customize.js";
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -39,6 +40,8 @@ app.use("/api/", routerUpdateCategory);
 app.use("/api/", routerDeleteCategory);
 app.use("/api/", routerAddCategory);
 
+app.use("/api/", routerUpdateCustomize);
+app.use("/api/", routerGetCustomize);
 
 app.listen(process.env.PUERTO, () => {
     console.log("Conectado backend");
