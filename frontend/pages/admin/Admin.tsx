@@ -2,25 +2,27 @@ import { ImageBackground, ScrollView, View } from "react-native";
 import { backgroundStyle } from "../../styles/BackgroundStyles";
 import ButtonsOptions from "../../components/ButtonOptions";
 import { stylesButtonOptions } from "../../styles/ButtonOptions";
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from "../../types";
 
 const Admin = () => {
-
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const Style = stylesButtonOptions();
 
     const handlePressViewOrders = () => {
-        console.log("Ver Ordenes");
+        navigation.navigate("Ordenes");
     }
 
     const handlePressViewUsers = () => {
-        console.log("Ver Usuarios");
+        navigation.navigate("Usuarios");
     }
 
     const handlePressViewAssignedTables = () => {
-        console.log("Ver Mesas Asignadas");
+        navigation.navigate("Mesas Asignadas");
     }
 
     const handlePressCustomize = () => {
-        console.log("Ver Colores");
+        navigation.navigate("Personalizar");
     }
 
 
