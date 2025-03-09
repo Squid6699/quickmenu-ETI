@@ -49,7 +49,7 @@ const Customize = () => {
         queryFn: fetchCustomize
     });
 
-    alert(data)
+    console.log(JSON.stringify(data));
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: backgroundColor, padding: 10 }}>
