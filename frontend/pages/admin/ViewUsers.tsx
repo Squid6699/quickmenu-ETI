@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 
-const ViewOrders = () => {
+const ViewUsers = () => {
 
     return (
         <View>
-            <Text>ViewOrders</Text>
+            <Text>ViewUsers</Text>
         </View>
     );
 }
 
-export default ViewOrders;
+export default ViewUsers;

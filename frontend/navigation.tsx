@@ -9,7 +9,7 @@ import Admin from "./pages/admin/Admin";
 import ViewOrders from "./pages/admin/ViewOrders";
 import ViewAssignedTables from "./pages/admin/ViewAssignedTables";
 import { useCustomColors } from "./hook/useCustomColors";
-import ViewUsers from "./pages/admin/ViewOrders";
+import ViewUsers from "./pages/admin/ViewUsers";
 import Customize from "./pages/admin/Customize";
 
 const Stack = createStackNavigator<RootStackParamList>();
