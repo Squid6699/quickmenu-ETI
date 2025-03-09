@@ -60,7 +60,7 @@ export type MenuType = {
     available: boolean
 }
 
-export type Customize = {
+export type CustomizeType = {
     id: string,
     name: string,
     color: string

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Constants from 'expo-constants';
-import { Customize } from "../types";
+import { CustomizeType } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { Platform } from 'react-native';
 
@@ -19,7 +19,7 @@ export const useCustomColors = () => {
         backgroundCard: "rgba(239, 196, 81, 1.0)",
     });
 
-    const fetchCustomize = async (): Promise<Customize[]> => {
+    const fetchCustomize = async (): Promise<CustomizeType[]> => {
         const response = await fetch(`${API_URL}/api/getCustomize`, {
             method: 'GET',
             headers: {
@@ -33,7 +33,7 @@ export const useCustomColors = () => {
         return data.customize;
     };
 
-    const { data } = useQuery<Customize[]>({
+    const { data } = useQuery<CustomizeType[]>({
         queryKey: ['customizeColor'],
         queryFn: fetchCustomize
     });

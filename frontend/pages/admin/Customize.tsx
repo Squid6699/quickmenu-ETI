@@ -3,8 +3,16 @@ import { Text, Card, Button } from "react-native-paper";
 import { useCustomColors } from "../../hook/useCustomColors";
 import { useState } from "react";
 import ColorPicker from 'react-native-wheel-color-picker';
+import { useQuery } from "@tanstack/react-query";
+import { CustomizeType } from "../../types";
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 
 const Customize = () => {
+    const API_URL = Platform.OS === 'android' 
+    ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
+    : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+
     const [selectedColor, setSelectedColor] = useState<string>("#efc451");
     const [colors, setColors] = useState({
         backgroundColor: "#efc451",
@@ -21,6 +29,27 @@ const Customize = () => {
     };
 
     const { backgroundColor, backgroundCard, textColor, colorSuccess, colorError } = useCustomColors();
+
+    const fetchCustomize = async (): Promise<CustomizeType[]> => {
+        const response = await fetch(`${API_URL}/api/getCustomize`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-frontend-header': 'frontend'
+            },
+        });
+
+        const data = await response.json();
+        if (!data.success) throw new Error(data.message);
+        return data.customize;
+    };
+
+    const { data } = useQuery<CustomizeType[]>({
+        queryKey: ['customizeColor'],
+        queryFn: fetchCustomize
+    });
+
+    alert(data)
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: backgroundColor, padding: 10 }}>
