@@ -1,9 +1,11 @@
 import { TextInput, Text } from 'react-native-paper';
 import { InputTextProps } from '../types';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-import { colorError } from '../styles/Colors';
+import { useCustomColors } from '../hook/useCustomColors';
 
 const InputText = ({ value, label, placeholder, error, disable, onChange, type }: InputTextProps) => {
+
+  const { colorError } = useCustomColors();
 
   const handleInputOnchange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = event.nativeEvent.text;
