@@ -5,6 +5,8 @@ import { stylesButtonOptions } from "../../styles/ButtonOptions";
 
 const Admin = () => {
 
+    const Style = stylesButtonOptions();
+
     const handlePressViewOrders = () => {
         console.log("Ver Ordenes");
     }
@@ -28,8 +30,8 @@ const Admin = () => {
                 source={require('../../assets/background.jpg')}
                 style={backgroundStyle.background}
             >
-                <ScrollView contentContainerStyle={stylesButtonOptions.container}>
-                    <View style={stylesButtonOptions.container}>
+                <ScrollView contentContainerStyle={Style.container}>
+                    <View style={Style.container}>
                         <ButtonsOptions title="Meseros" description="Ver meseros" onPress={handlePressViewWaitress} iconName="body-outline" />
                         <ButtonsOptions title="Mesas" description="Ver mesas" onPress={handlePressViewTables} iconName="tablet-landscape-outline" />
                         <ButtonsOptions title="Ordenes" description="Ver ordenes" onPress={handlePressViewOrders} iconName="receipt" />

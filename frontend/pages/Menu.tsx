@@ -9,12 +9,14 @@ import { FlatList } from "react-native-gesture-handler";
 import { MenuType } from "../types";
 import { MenuStyles } from "../styles/MenuStyles";
 import { backgroundStyle } from "../styles/BackgroundStyles";
-import { backgroundColor, headerColor, iconColor } from "../styles/Colors";
 import { Platform } from 'react-native';
+import { useCustomColors } from "../hook/useCustomColors";
 
 const initialLayout = { width: Dimensions.get('window').width };
 
 const Menu = () => {
+    const Style = MenuStyles();
+    const { backgroundColor, headerColor, iconColor} = useCustomColors();
     const API_URL = Platform.OS === 'android' 
     ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
     : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -51,11 +53,11 @@ const Menu = () => {
             keyExtractor={(item: MenuType) => item.idMenu.toString()}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
             renderItem={({ item }) => (
-                <Card style={MenuStyles.Card}>
-                    <Card.Title title={item.NAME_MENU} titleStyle={MenuStyles.CardTitle} />
+                <Card style={Style.Card}>
+                    <Card.Title title={item.NAME_MENU} titleStyle={Style.CardTitle} />
                     <Card.Content>
-                        <Text style={MenuStyles.CardDescription}>{item.description}</Text>
-                        <Text style={MenuStyles.CardPrice}>${item.price}</Text>
+                        <Text style={Style.CardDescription}>{item.description}</Text>
+                        <Text style={Style.CardPrice}>${item.price}</Text>
                         <Text style={{ color: item.available ? "green" : "red", marginTop: 5 }}>
                             {item.available ? "Disponible" : "No disponible"}
                         </Text>
@@ -92,9 +94,9 @@ const Menu = () => {
 
     return (
         <ImageBackground source={require('../assets/background.jpg')} style={backgroundStyle.background}>
-            <View style={MenuStyles.container}>
+            <View style={Style.container}>
                 {isLoading ? (
-                    <ActivityIndicator color={iconColor} size={75} style={MenuStyles.activityIndicator} />
+                    <ActivityIndicator color={iconColor} size={75} style={Style.activityIndicator} />
                 ) : isError ? (
                     <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (

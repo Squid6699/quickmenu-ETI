@@ -9,6 +9,7 @@ import { backgroundStyle } from "../styles/BackgroundStyles";
 
 
 const Auth = () => {
+    const Style = AuthStyle();
     const { login, loading } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -44,10 +45,10 @@ const Auth = () => {
             source={require('../assets/background.jpg')}
             style={backgroundStyle.background}
         >
-            <View style={AuthStyle.body}>
-                <View style={AuthStyle.container}>
-                    <Text style={AuthStyle.title}>Autentificate</Text>
-                    <View style={AuthStyle.inputContainer}>
+            <View style={Style.body}>
+                <View style={Style.container}>
+                    <Text style={Style.title}>Autentificate</Text>
+                    <View style={Style.inputContainer}>
                         <InputText label="Username" value={username} onChange={handleOnchangeUsername} error={error.username} />
                         <InputText label="Password" value={password} onChange={handleOnchangePassword} error={error.password} type="password" />
                         <Button text="Ingresar" onPress={handleLogin} loading={loading} disabled={loading} />

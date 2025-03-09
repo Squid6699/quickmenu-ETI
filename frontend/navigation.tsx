@@ -6,16 +6,17 @@ import Auth from "./pages/Auth";
 import Menu from "./pages/Menu";
 import { RootStackParamList } from "./types";
 import Admin from "./pages/admin/Admin";
-import { backgroundColor, headerColor } from "./styles/Colors";
 import ViewOrders from "./pages/admin/ViewOrders";
 import ViewTables from "./pages/admin/ViewTables";
 import ViewWaitress from "./pages/admin/ViewWaitress";
 import ViewAssignedTables from "./pages/admin/ViewAssignedTables";
+import { useCustomColors } from "./hook/useCustomColors";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 
 export default function Navigation() {
+  const { backgroundColor, headerColor } = useCustomColors();
   const { user } = useAuth();
 
   return (

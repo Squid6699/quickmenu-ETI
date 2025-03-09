@@ -3,13 +3,14 @@ import ButtonsHome from '../components/ButtonsHome';
 import { HomeStyles } from '../styles/HomeStyles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
-import Button from '../components/Button';
 import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
+import Button from "../components/Button";
 
 
 const Home = () => {
     const { permissions, logout } = useAuth();
+    const Style = HomeStyles();
     const permission = permissions ? JSON.parse(permissions) : null;
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -31,8 +32,8 @@ const Home = () => {
                 source={require('../assets/background.jpg')}
                 style={backgroundStyle.background}
             >
-                <ScrollView contentContainerStyle={HomeStyles.body}>
-                    <View style={HomeStyles.container}>
+                <ScrollView contentContainerStyle={Style.body}>
+                    <View style={Style.container}>
                         <ButtonsHome title="Menu" description="Ver opciones" onPress={handlePressMenu} iconName="grid" />
                         <ButtonsHome title="Ordenar" description="Hacer pedido" onPress={() => Alert.alert('Ordenar')} iconName="add" />
                         <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />

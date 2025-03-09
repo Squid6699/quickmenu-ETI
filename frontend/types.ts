@@ -11,14 +11,15 @@ export interface ButtonHomeProps {
     description?: String
 }
 
-export interface InputTextProps {
-    value: string
-    label: string,
-    placeholder?: string,
-    error?: string,
-    disable?: boolean,
-    onChange: (value: string) => void,
-    type?: "text" | "password"
+export interface ButtonOptionsProps {
+    title: String
+    onPress: any
+    backgroundColor?: ColorValue
+    textColor?: ColorValue
+    iconName?: String
+    iconSize?: Number
+    iconColor?: ColorValue
+    description?: String
 }
 
 export interface ButtonProps {
@@ -27,6 +28,16 @@ export interface ButtonProps {
     loading?: boolean,
     disabled?: boolean,
     icon?: string
+}
+
+export interface InputTextProps {
+    value: string
+    label: string,
+    placeholder?: string,
+    error?: string,
+    disable?: boolean,
+    onChange: (value: string) => void,
+    type?: "text" | "password"
 }
 
 export type RootStackParamList = {
