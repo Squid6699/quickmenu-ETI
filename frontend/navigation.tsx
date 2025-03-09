@@ -10,6 +10,7 @@ import ViewOrders from "./pages/admin/ViewOrders";
 import ViewAssignedTables from "./pages/admin/ViewAssignedTables";
 import { useCustomColors } from "./hook/useCustomColors";
 import ViewUsers from "./pages/admin/ViewOrders";
+import Customize from "./pages/admin/Customize";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -31,6 +32,7 @@ export default function Navigation() {
             <Stack.Screen name="Ver Ordenes" component={ViewOrders} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
             <Stack.Screen name="Ver Usuarios" component={ViewUsers} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
             <Stack.Screen name="Ver Mesas Asignadas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
+            <Stack.Screen name="Personalizar" component={Customize} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
 
 
           </>
