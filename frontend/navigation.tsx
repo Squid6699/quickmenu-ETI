@@ -7,10 +7,9 @@ import Menu from "./pages/Menu";
 import { RootStackParamList } from "./types";
 import Admin from "./pages/admin/Admin";
 import ViewOrders from "./pages/admin/ViewOrders";
-import ViewTables from "./pages/admin/ViewTables";
-import ViewWaitress from "./pages/admin/ViewWaitress";
 import ViewAssignedTables from "./pages/admin/ViewAssignedTables";
 import { useCustomColors } from "./hook/useCustomColors";
+import ViewUsers from "./pages/admin/ViewOrders";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -30,8 +29,7 @@ export default function Navigation() {
             {/* ADMIN */}
             <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
             <Stack.Screen name="Ver Ordenes" component={ViewOrders} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
-            <Stack.Screen name="Ver Mesas" component={ViewTables} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
-            <Stack.Screen name="Ver Meseros" component={ViewWaitress} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
+            <Stack.Screen name="Ver Usuarios" component={ViewUsers} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
             <Stack.Screen name="Ver Mesas Asignadas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: {backgroundColor: headerColor}, headerTintColor: backgroundColor }} />
 
 

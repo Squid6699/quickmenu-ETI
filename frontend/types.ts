@@ -46,8 +46,7 @@ export type RootStackParamList = {
     Auth: undefined; 
     Admin: undefined;
     "Ver Ordenes": undefined;
-    "Ver Mesas": undefined;
-    "Ver Meseros": undefined;
+    "Ver Usuarios": undefined;
     "Ver Mesas Asignadas": undefined;
 
 };
