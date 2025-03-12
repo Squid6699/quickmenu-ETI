@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
-import { Text, Card, Button, ActivityIndicator } from "react-native-paper";
+import { FlatList, ImageBackground, RefreshControl, View, TextInput } from "react-native";
+import { Text, Card, Button, ActivityIndicator, Appbar } from "react-native-paper";
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 import { backgroundStyle } from "../../styles/BackgroundStyles";
@@ -17,7 +17,7 @@ interface User {
 
 const ViewUsers = () => {
     const Style = ViewUsersStyles();
-        const { iconColor} = useCustomColors();
+    const { iconColor } = useCustomColors();
     const API_URL = Platform.OS === 'android'
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -42,14 +42,44 @@ const ViewUsers = () => {
     });
 
     const [refreshing, setRefreshing] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+
     const handleRefresh = async () => {
         setRefreshing(true);
         await refetch();
         setRefreshing(false);
     };
 
+    const handleAddUser = () => {
+        console.log("Abrir formulario para agregar usuario");
+        // Aquí podrías abrir un modal o navegar a otra pantalla
+    };
+
+    const filteredData = data?.filter(user =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.username.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
+
     return (
         <ImageBackground source={require('../../assets/background.jpg')} style={backgroundStyle.background}>
+            <Appbar.Header style={Style.header}>
+                <TextInput
+                    style={Style.searchInput}
+                    placeholder="Buscar usuario..."
+                    placeholderTextColor="gray"
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                />
+                <Button 
+                    icon="plus"
+                    mode="contained"
+                    onPress={handleAddUser}
+                    style={Style.addButton}
+                >
+                    Agregar
+                </Button>
+            </Appbar.Header>
+
             <View style={Style.container}>
                 {isLoading ? (
                     <ActivityIndicator color={iconColor} size={75} style={Style.activityIndicator} />
@@ -57,7 +87,7 @@ const ViewUsers = () => {
                     <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (
                     <FlatList
-                        data={data}
+                        data={filteredData}
                         keyExtractor={(item) => item.id.toString()}
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
                         renderItem={({ item }) => (
