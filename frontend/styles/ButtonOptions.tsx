@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { useCustomColors } from '../hook/useCustomColors';
 
 export const stylesButtonOptions = () => {
+
+    const { backgroundColor } = useCustomColors();
 
     return StyleSheet.create({
         container: {
@@ -15,6 +18,8 @@ export const stylesButtonOptions = () => {
             paddingHorizontal: 15,
             borderRadius: 6,
             marginVertical: 6,
+            backgroundColor: backgroundColor,
+            width: '90%',
         },
         textContainer: {
             flex: 1, // Permite que el texto ocupe el espacio restante
