@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ButtonOptionsProps } from '../types';
 import { stylesButtonOptions } from '../styles/ButtonOptions';
 
-const ButtonsOptions = ({ title, onPress, backgroundColor = '#efc451', textColor = '#0a0909', iconName, iconSize = 25, iconColor = '#fff', description }: ButtonOptionsProps) => {
+const ButtonsOptions = ({ title, onPress, iconName, iconSize = 25, iconColor = '#fff', description }: ButtonOptionsProps) => {
     const Style = stylesButtonOptions();
 
     return (
@@ -17,9 +17,9 @@ const ButtonsOptions = ({ title, onPress, backgroundColor = '#efc451', textColor
                 <Icon name={iconName} size={iconSize} color={iconColor} style={Style.icon} />
             )}
             <View style={Style.textContainer}>
-                <Text style={[Style.text, { color: textColor }]}>{title}</Text>
+                <Text style={Style.text}>{title}</Text>
                 {description && (
-                    <Text style={[Style.description, { color: textColor }]}>{description}</Text>
+                    <Text style={Style.description}>{description}</Text>
                 )}
             </View>
         </TouchableOpacity>

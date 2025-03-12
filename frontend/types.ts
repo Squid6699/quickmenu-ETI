@@ -14,8 +14,6 @@ export interface ButtonHomeProps {
 export interface ButtonOptionsProps {
     title: String
     onPress: any
-    backgroundColor?: ColorValue
-    textColor?: ColorValue
     iconName?: String
     iconSize?: Number
     iconColor?: ColorValue
