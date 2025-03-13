@@ -63,3 +63,9 @@ export type CustomizeType = {
     name: string,
     color: string
 }
+
+export type RolesType = {
+    id: string,
+    name: string
+    permissions: string
+}
