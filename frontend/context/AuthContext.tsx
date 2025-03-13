@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     
 
     const [user, setUser] = useState<User | null>(null);
-    const [permissions, setPermissions] = useState(null);
+    const [permissions, setPermissions] = useState<string | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -61,6 +61,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
                 await AsyncStorage.setItem("user", JSON.stringify(userData));
                 await AsyncStorage.setItem("token", data.token);
+                await AsyncStorage.setItem("permissions", data.permissions);
             } else {
                 throw new Error(data.msg);
             }
@@ -76,6 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setToken(null);
         await AsyncStorage.removeItem("user");
         await AsyncStorage.removeItem("token");
+        await AsyncStorage.removeItem("permissions");
     };
 
     // Cargar usuario y token al iniciar la app
@@ -84,10 +86,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             try {
                 const storedUser = await AsyncStorage.getItem("user");
                 const storedToken = await AsyncStorage.getItem("token");
+                const storedPermissions = await AsyncStorage.getItem("permissions");
 
-                if (storedUser && storedToken) {
+                if (storedUser && storedToken && storedPermissions) {
                     setUser(JSON.parse(storedUser));
                     setToken(storedToken);
+                    setPermissions(storedPermissions);
                 }
             } catch (error) {
                 console.error("Error loading storage data:", error);
