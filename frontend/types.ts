@@ -29,7 +29,7 @@ export interface ButtonProps {
 }
 
 export interface InputTextProps {
-    value: string
+    value: string | number | undefined,
     label: string,
     placeholder?: string,
     error?: string,
@@ -70,9 +70,18 @@ export type RolesType = {
     permissions: string
 }
 
+export interface User {
+    id: number;
+    username: string;
+    name: string;
+    ROL_NAME: string;
+    password: string;
+}
+
 export type ModalUserProps = {
     isOpen: boolean;
     onDismiss: () => void;
+    roles: RolesType[] | undefined;
 };
 
 export type ModalDeleteProps = {
@@ -82,4 +91,11 @@ export type ModalDeleteProps = {
     content: string;
     api: string;
     idDelete: string | number | undefined;
+};
+
+export type ModalEditUserProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    user: User | null;
+    roles: RolesType[] | undefined;
 };

@@ -2,37 +2,17 @@ import { Button, Text, ActivityIndicator } from "react-native-paper";
 import InputText from "./InputText";
 import { Modal, Platform, View, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
 import Constants from "expo-constants";
-import { useQuery } from "@tanstack/react-query";
 import { Dropdown } from "react-native-paper-dropdown";
 import { useState } from "react";
-import { ModalUserProps, RolesType } from "../types";
+import { ModalUserProps } from "../types";
 import { ModalStyles } from "../styles/Modal";
 import { PaperProvider } from 'react-native-paper';
 
-const ModalAddUser = ({ isOpen, onDismiss }: ModalUserProps) => {
+const ModalAddUser = ({ isOpen, onDismiss, roles }: ModalUserProps) => {
     const styles = ModalStyles();
     const API_URL = Platform.OS === "android"
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
-
-    const fetchRoles = async () => {
-        const response = await fetch(`${API_URL}/api/getRoles`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "x-frontend-header": "frontend",
-            },
-        });
-
-        const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
-    };
-
-    const { data: roles, isLoading } = useQuery<RolesType[]>({
-        queryKey: ["roles"],
-        queryFn: fetchRoles,
-    });
 
     const [newUser, setNewUser] = useState({
         username: "",

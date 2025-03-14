@@ -9,13 +9,10 @@ import { useState } from "react";
 import { useCustomColors } from "../../hook/useCustomColors";
 import ModalAddUser from "../../components/ModalAddUser";
 import ModalDelete from "../../components/ModalDelete";
+import { RolesType, User } from "../../types";
+import ModalEditUser from "../../components/ModalEditUser";
 
-interface User {
-    id: number;
-    username: string;
-    name: string;
-    ROL_NAME: string;
-}
+
 
 const ViewUsers = () => {
     const Style = ViewUsersStyles();
@@ -38,9 +35,28 @@ const ViewUsers = () => {
         return data.data;
     };
 
+    const fetchRoles = async () => {
+        const response = await fetch(`${API_URL}/api/getRoles`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "x-frontend-header": "frontend",
+            },
+        });
+
+        const data = await response.json();
+        if (!data.success) throw new Error(data.message);
+        return data.data;
+    };
+
     const { data, isLoading, isError, error, refetch } = useQuery<User[]>({
         queryKey: ['menu'],
         queryFn: fetchUsers
+    });
+
+    const { data: roles } = useQuery<RolesType[]>({
+        queryKey: ["roles"],
+        queryFn: fetchRoles,
     });
 
     const [refreshing, setRefreshing] = useState(false);
@@ -53,8 +69,12 @@ const ViewUsers = () => {
     };
 
     const [openModalAddUser, setOpenModalAddUser] = useState(false);
+
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [userDelete, setUserDelete] = useState<User | null>(null);
+
+    const [openModalEditUser, setOpenModalEditUser] = useState(false);
+    const [userEdit, setUserEdit] = useState<User | null>(null);
 
     const handleOpenModalUser = () => {
         setOpenModalAddUser(true);
@@ -62,6 +82,17 @@ const ViewUsers = () => {
 
     const handleCloseOpenModalUser = () => {
         setOpenModalAddUser(false);
+        refetch();
+    }
+
+    const handleOpenModalEdit = (user: User) => {
+        setUserEdit(user);
+        setOpenModalEditUser(true);
+    }
+
+    const handleCloseOpenModalEdit = () => {
+        setUserEdit(null);
+        setOpenModalEditUser(false);
         refetch();
     }
 
@@ -117,9 +148,10 @@ const ViewUsers = () => {
                                 <Card.Content>
                                     <Text style={Style.CardContent}>USUARIO: {item.username.toUpperCase()}</Text>
                                     <Text style={Style.CardContent}>ROL: {item.ROL_NAME.toUpperCase()}</Text>
+                                    <Text style={Style.CardContent}>PASS: {item.password}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button icon="pencil" buttonColor="white" textColor="black" onPress={() => console.log(`Editar usuario ${item.id}`)}>Editar</Button>
+                                    <Button icon="pencil" buttonColor="white" textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
                                     <Button icon="trash-can" buttonColor="white" textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
@@ -127,8 +159,9 @@ const ViewUsers = () => {
                         ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay usuarios disponibles</Text>}
                     />
                 )}
-                <ModalAddUser isOpen={openModalAddUser} onDismiss={handleCloseOpenModalUser} />
-                <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseOpenModalDelete} api="deleteUsers" content={"¿Are you sure you want to delete "+userDelete?.username + " ?"} title="Delete user" idDelete={userDelete?.id}  />
+                <ModalAddUser isOpen={openModalAddUser} onDismiss={handleCloseOpenModalUser} roles={roles} />
+                <ModalEditUser isOpen={openModalEditUser} onDismiss={handleCloseOpenModalEdit} user={userEdit} roles={roles} />
+                <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseOpenModalDelete} api="deleteUsers" content={"¿Are you sure you want to delete " + userDelete?.username + " ?"} title="Delete user" idDelete={userDelete?.id} />
             </View>
         </ImageBackground>
 

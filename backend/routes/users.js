@@ -13,7 +13,7 @@ routerGetUsers.get("/getUsers", async (req, res) => {
         return res.status(401).send('Unauthorized');
     }
 
-    const query = "SELECT U.id, U.username AS username, U.name AS name, R.name AS ROL_NAME FROM users U INNER JOIN role R ON U.roleId = R.id";
+    const query = "SELECT U.id, U.username AS username, U.name AS name, R.name AS ROL_NAME, U.password AS password FROM users U INNER JOIN role R ON U.roleId = R.id";
 
     db.query(query, (err, result) => {
         if (err) {
