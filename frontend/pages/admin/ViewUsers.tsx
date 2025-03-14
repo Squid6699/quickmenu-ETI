@@ -77,8 +77,8 @@ const ViewUsers = () => {
     }
 
     const filteredData = data?.filter(user =>
-        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchQuery.toLowerCase())
+        user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.username?.toLowerCase().includes(searchQuery.toLowerCase())
     ) || [];
 
     return (

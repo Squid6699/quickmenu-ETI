@@ -16,10 +16,10 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 const Menu = () => {
     const Style = MenuStyles();
-    const { backgroundColor, headerColor, iconColor} = useCustomColors();
-    const API_URL = Platform.OS === 'android' 
-    ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID 
-    : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+    const { backgroundColor, headerColor, iconColor } = useCustomColors();
+    const API_URL = Platform.OS === 'android'
+        ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
+        : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
     const fetchMenu = async (): Promise<MenuType[]> => {
         const response = await fetch(`${API_URL}/api/getMenu`, {
@@ -50,7 +50,7 @@ const Menu = () => {
     const renderMenuList = (filter: string) => (
         <FlatList
             data={data?.filter((item: MenuType) => filter === "Todo" || item.CATEGORY_NAME === filter)}
-            keyExtractor={(item: MenuType) => item.idMenu.toString()}
+            keyExtractor={(item: MenuType) => item.idMenu ? item.idMenu.toString() : Math.random().toString()}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
             renderItem={({ item }) => (
                 <Card style={Style.Card}>
@@ -72,11 +72,17 @@ const Menu = () => {
 
     useEffect(() => {
         if (data) {
-            const categories = Array.from(new Set(data.map((item: MenuType) => item.CATEGORY_NAME)));
+            const categories = Array.from(new Set(
+                data
+                    .map((item: MenuType) => item.CATEGORY_NAME)
+                    .filter((category): category is string => typeof category === 'string')
+            ));
+
             const routesArray = categories.map((category) => ({
                 key: category.toLowerCase(),
                 title: category
             }));
+
             setRoutes([{ key: 'todo', title: 'Todo' }, ...routesArray]);
         }
     }, [data]);
