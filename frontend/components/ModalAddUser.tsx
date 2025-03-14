@@ -6,11 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Dropdown } from "react-native-paper-dropdown";
 import { useState } from "react";
 import { ModalUserProps, RolesType } from "../types";
-import { ModalAddUsersStyles } from "../styles/ModalAddUserStyles";
+import { ModalStyles } from "../styles/Modal";
 import { PaperProvider } from 'react-native-paper';
 
 const ModalAddUser = ({ isOpen, onDismiss }: ModalUserProps) => {
-    const styles = ModalAddUsersStyles();
+    const styles = ModalStyles();
     const API_URL = Platform.OS === "android"
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;

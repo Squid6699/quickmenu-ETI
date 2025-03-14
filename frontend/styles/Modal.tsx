@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { useCustomColors } from "../hook/useCustomColors";
 
-export const ModalAddUsersStyles = () => {
+export const ModalStyles = () => {
 
     const {colorError, backgroundColor, textColor} = useCustomColors();
 

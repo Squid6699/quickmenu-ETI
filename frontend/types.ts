@@ -74,3 +74,12 @@ export type ModalUserProps = {
     isOpen: boolean;
     onDismiss: () => void;
 };
+
+export type ModalDeleteProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    title: string;
+    content: string;
+    api: string;
+    idDelete: string | number | undefined;
+};

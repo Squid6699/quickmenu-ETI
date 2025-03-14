@@ -8,6 +8,7 @@ import { ViewUsersStyles } from "../../styles/ViewUsersStyles";
 import { useState } from "react";
 import { useCustomColors } from "../../hook/useCustomColors";
 import ModalAddUser from "../../components/ModalAddUser";
+import ModalDelete from "../../components/ModalDelete";
 
 interface User {
     id: number;
@@ -52,6 +53,8 @@ const ViewUsers = () => {
     };
 
     const [openModalAddUser, setOpenModalAddUser] = useState(false);
+    const [openModalDelete, setOpenModalDelete] = useState(false);
+    const [userDelete, setUserDelete] = useState<User | null>(null);
 
     const handleOpenModalUser = () => {
         setOpenModalAddUser(true);
@@ -59,6 +62,17 @@ const ViewUsers = () => {
 
     const handleCloseOpenModalUser = () => {
         setOpenModalAddUser(false);
+        refetch();
+    }
+
+    const handleOpenModalDelete = (user: User) => {
+        setUserDelete(user);
+        setOpenModalDelete(true);
+    }
+
+    const handleCloseOpenModalDelete = () => {
+        setUserDelete(null);
+        setOpenModalDelete(false);
         refetch();
     }
 
@@ -106,14 +120,15 @@ const ViewUsers = () => {
                                 </Card.Content>
                                 <Card.Actions>
                                     <Button icon="pencil" buttonColor="white" textColor="black" onPress={() => console.log(`Editar usuario ${item.id}`)}>Editar</Button>
-                                    <Button icon="trash-can" buttonColor="white" textColor="red" onPress={() => console.log(`Eliminar usuario ${item.id}`)}>Eliminar</Button>
+                                    <Button icon="trash-can" buttonColor="white" textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
                         )}
                         ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay usuarios disponibles</Text>}
                     />
                 )}
-                {<ModalAddUser isOpen={openModalAddUser} onDismiss={handleCloseOpenModalUser} />}
+                <ModalAddUser isOpen={openModalAddUser} onDismiss={handleCloseOpenModalUser} />
+                <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseOpenModalDelete} api="deleteUsers" content={"¿Are you sure you want to delete "+userDelete?.username + " ?"} title="Delete user" idDelete={userDelete?.id}  />
             </View>
         </ImageBackground>
 
