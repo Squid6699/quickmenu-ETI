@@ -40,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Función para iniciar sesión
     const login = async (username: string, password: string) => {
+        setLoading(true);
         try {
             const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
@@ -63,9 +64,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 await AsyncStorage.setItem("token", data.token);
                 await AsyncStorage.setItem("permissions", data.permissions);
             } else {
+                setLoading(false);
                 throw new Error(data.msg);
             }
         } catch (error) {
+            setLoading(false);
             console.error("Login Error:", API_URL);
         }
     };
