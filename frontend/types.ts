@@ -69,3 +69,8 @@ export type RolesType = {
     name: string
     permissions: string
 }
+
+export type ModalUserProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+};

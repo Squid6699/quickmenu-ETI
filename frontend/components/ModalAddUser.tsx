@@ -5,14 +5,9 @@ import Constants from "expo-constants";
 import { useQuery } from "@tanstack/react-query";
 import { Dropdown } from "react-native-paper-dropdown";
 import { useState } from "react";
-import { RolesType } from "../types";
+import { ModalUserProps, RolesType } from "../types";
 import { ModalAddUsersStyles } from "../styles/ModalAddUserStyles";
 import { PaperProvider } from 'react-native-paper';
-
-type ModalUserProps = {
-    isOpen: boolean;
-    onDismiss: () => void;
-};
 
 const ModalAddUser = ({ isOpen, onDismiss }: ModalUserProps) => {
     const styles = ModalAddUsersStyles();
