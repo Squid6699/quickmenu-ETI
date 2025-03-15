@@ -16,7 +16,7 @@ import ModalEditUser from "../../components/ModalEditUser";
 
 const ViewUsers = () => {
     const Style = ViewUsersStyles();
-    const { iconColor } = useCustomColors();
+    const { iconColor, buttonBackground } = useCustomColors();
     const API_URL = Platform.OS === 'android'
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -151,8 +151,8 @@ const ViewUsers = () => {
                                     <Text style={Style.CardContent}>PASS: {item.password}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button icon="pencil" buttonColor="white" textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
-                                    <Button icon="trash-can" buttonColor="white" textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
+                                    <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
+                                    <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
                         )}

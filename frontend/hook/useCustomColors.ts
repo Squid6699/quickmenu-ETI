@@ -17,6 +17,7 @@ export const useCustomColors = () => {
         colorSuccess: "#00ff00",
         headerColor: "#171717",
         backgroundCard: "rgba(239, 196, 81, 1.0)",
+        buttonBackground: "#ffff",
     });
 
     const fetchCustomize = async (): Promise<CustomizeType[]> => {
