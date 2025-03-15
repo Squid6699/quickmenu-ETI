@@ -65,16 +65,6 @@ INSERT INTO Assigned_Tables (idUser, idTable) VALUES
 (4, 9),
 (5, 10);
 
--- ASIGAR COLORES A TABLA DE CUSTOMIZACION
-INSERT INTO Customize (name, color) VALUES
-("backgroundColor", "#efc451"),
-("textColor", "#0a0909"),
-("iconColor", "##fff"),
-("colorError", "#ff0000"),
-("colorSuccess", "00ff00"),
-("headerColor", "#171717"),
-("backgroundCard", "#efc451");
-
 
 -- INSERTAR MÁS RESERVACIONES (RESERVATIONS)
 -- INSERT INTO Reservations (idUser, idTable, date, numClients) VALUES

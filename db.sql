@@ -163,3 +163,14 @@ INSERT INTO Menu (name, price, description, idCategory) VALUES
 ('Té Helado', 45.00, 'Té negro con hielo y limón', 8),
 ('Limonada', 55.00, 'Jugo de limón natural con agua mineral o natural', 8),
 ('Mojito sin alcohol', 70.00, 'Hierbabuena, limón, azúcar y soda', 8);
+
+-- ASIGAR COLORES A TABLA DE CUSTOMIZACION
+INSERT INTO Customize (name, color) VALUES
+("backgroundColor", "#efc451"),
+("textColor", "#0a0909"),
+("iconColor", "##fff"),
+("colorError", "#ff0000"),
+("colorSuccess", "00ff00"),
+("headerColor", "#171717"),
+("backgroundCard", "#efc451"),
+("buttonBackground", "ffff");
