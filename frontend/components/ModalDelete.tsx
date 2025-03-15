@@ -50,8 +50,8 @@ const ModalDelete = ({ isOpen, onDismiss, title, api, idDelete, content }: Modal
                             <Text style={styles.title}>{title}</Text>
                             <Text>{content}</Text>
                             <View style={styles.modalButtons}>
-                                <Button mode="outlined" color="white" onPress={onDismiss} style={styles.modalButtonCancel}>{"Cancel"}</Button>
-                                <Button mode="outlined" color="white" onPress={submitDelete} style={styles.modalButtonSave} disabled={loadingDelete}>
+                                <Button mode="outlined" textColor= {"white"} onPress={onDismiss} style={styles.modalButtonCancel}>{"Cancel"}</Button>
+                                <Button mode="outlined" textColor= {"white"} onPress={submitDelete} style={styles.modalButtonSave} disabled={loadingDelete}>
                                     {loadingDelete ? <ActivityIndicator color="white" /> : "Delete"}
                                 </Button>
                             </View>

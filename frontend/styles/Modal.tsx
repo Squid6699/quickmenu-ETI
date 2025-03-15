@@ -41,11 +41,15 @@ export const ModalStyles = () => {
             backgroundColor: textColor,
             alignItems: "center",
             padding: 5,
+            fontSize: 20,
+            color: "white",
         },
         modalButtonCancel: {
             alignItems: "center",
             padding: 5,
             backgroundColor: "red",
+            fontSize: 20,
+            color: "white",
         },
         errorText: {
             color: colorError,

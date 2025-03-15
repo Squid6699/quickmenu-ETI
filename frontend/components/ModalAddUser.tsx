@@ -104,7 +104,7 @@ const ModalAddUser = ({ isOpen, onDismiss, roles }: ModalUserProps) => {
                     <View style={styles.container}>
                         <KeyboardAvoidingView behavior="padding" style={styles.modal}>
                             <ScrollView contentContainerStyle={styles.modalContent}>
-                                <Text style={styles.title}>Add New User</Text>
+                                <Text style={styles.title}>ADD NEW USER</Text>
 
                                 <InputText label="Username" value={newUser.username} onChange={(value) => handleNewUser("username", value)} error={error.username} />
                                 <InputText label="Name" value={newUser.name} onChange={(text) => handleNewUser("name", text)} error={error.name} />
@@ -115,8 +115,8 @@ const ModalAddUser = ({ isOpen, onDismiss, roles }: ModalUserProps) => {
                                 {error.role && <Text style={styles.errorText}>Role is required</Text>}
 
                                 <View style={styles.modalButtons}>
-                                    <Button mode="outlined" color="white" onPress={onDismiss} style={styles.modalButtonCancel}>{"Cancel"}</Button>
-                                    <Button mode="outlined" color="white" onPress={submitAddNewUser} style={styles.modalButtonSave} disabled={loadingAddNewUser}>
+                                    <Button mode="outlined" textColor= {"white"} onPress={onDismiss} style={styles.modalButtonCancel}>Cancel</Button>
+                                    <Button mode="outlined" textColor= {"white"} onPress={submitAddNewUser} style={styles.modalButtonSave} disabled={loadingAddNewUser}>
                                         {loadingAddNewUser ? <ActivityIndicator color="white" /> : "Add"}
                                     </Button>
                                 </View>

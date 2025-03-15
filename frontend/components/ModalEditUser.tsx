@@ -129,8 +129,8 @@ const ModalEditUser = ({ isOpen, onDismiss, user, roles }: ModalEditUserProps) =
                                 <Dropdown label="Role" placeholder="Select role" options={roleOptions} value={editUser.role} onSelect={(value) => handleEditUser("role", value || '')} error={!!error.role} />
                                 {error.role && <Text style={styles.errorText}>Role is required</Text>}
                                 <View style={styles.modalButtons}>
-                                    <Button mode="outlined" color="white" onPress={onDismiss} style={styles.modalButtonCancel}>{"Cancel"}</Button>
-                                    <Button mode="outlined" color="white" onPress={submitDelete} style={styles.modalButtonSave} disabled={loadingEdit}>
+                                    <Button mode="outlined" textColor= {"white"} onPress={onDismiss} style={styles.modalButtonCancel}>{"Cancel"}</Button>
+                                    <Button mode="outlined" textColor= {"white"} onPress={submitDelete} style={styles.modalButtonSave} disabled={loadingEdit}>
                                         {loadingEdit ? <ActivityIndicator color="white" /> : "Edit"}
                                     </Button>
                                 </View>
