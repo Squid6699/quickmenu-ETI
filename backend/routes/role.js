@@ -8,14 +8,14 @@ export const routerUpdateRoles = express.Router();
 
 
 routerAddRoles.post("/addRoles", async (req, res) => {
-    const { name } = req.body;
+    const { name, permissions } = req.body;
 
     if (!name){
         return res.status(400).json({msg: "MISSING DATA"});
     }
 
-    const query = "INSERT INTO role (name) VALUES (?)";
-    db.query(query, [name], (err, result) => {
+    const query = "INSERT INTO role (name, permissions) VALUES (?, ?)";
+    db.query(query, [name, permissions], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
