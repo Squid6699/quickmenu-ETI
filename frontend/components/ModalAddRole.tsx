@@ -4,7 +4,8 @@ import { Modal, Platform, View, ScrollView, KeyboardAvoidingView, TouchableWitho
 import Constants from "expo-constants";
 import { useState } from "react";
 import { ModalStyles } from "../styles/Modal";
-import { PaperProvider } from 'react-native-paper';
+import useRolePermissions from "../hook/useRolePermissions";
+import { Role } from "../hook/useRolePermissions";
 
 interface ModalAddRoleProps {
     isOpen: boolean;
@@ -13,6 +14,7 @@ interface ModalAddRoleProps {
 
 const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
     const styles = ModalStyles();
+    const { permissions, togglePermission, roleList } = useRolePermissions();
     const API_URL = Platform.OS === "android"
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -85,30 +87,38 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
 
     return (
         <Modal animationType="slide" transparent={true} visible={isOpen}>
-            <PaperProvider>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.container}>
-                        <KeyboardAvoidingView behavior="padding" style={styles.modal}>
-                            <ScrollView contentContainerStyle={styles.modalContent}>
-                                <Text style={styles.title}>ADD NEW ROLE</Text>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <KeyboardAvoidingView behavior="padding" style={styles.modal}>
+                        <ScrollView contentContainerStyle={styles.modalContent}>
+                            <Text style={styles.title}>ADD NEW ROLE</Text>
 
-                                <InputText label="Name" value={newRole.name} onChange={(text) => handleNewRole("name", text)} error={error.name} />
-                                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                    <Text>ADMIN</Text>
-                                    <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-                                </View>
+                            <InputText label="Name" value={newRole.name} onChange={(text) => handleNewRole("name", text)} error={error.name} />
 
-                                <View style={styles.modalButtons}>
-                                    <Button mode="outlined" textColor={"white"} onPress={onDismiss} style={styles.modalButtonCancel}>Cancel</Button>
-                                    <Button mode="outlined" textColor={"white"} onPress={submitAddNewRole} style={styles.modalButtonSave} disabled={loadingAddNewRole}>
-                                        {loadingAddNewRole ? <ActivityIndicator color="white" /> : "Add"}
-                                    </Button>
-                                </View>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
-                    </View>
-                </TouchableWithoutFeedback>
-            </PaperProvider>
+                            <Text style={styles.title}>PERMISSIONS</Text>
+
+                            {
+                                Object.keys(roleList).map((role) => {
+                                    const roleKey = role as Role;
+                                    return (
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                            <Text>{role.toUpperCase()}</Text>
+                                            <Switch value={permissions[roleKey]} onValueChange={() => togglePermission(roleKey)} />
+                                        </View>
+                                    );
+                                })
+                            }
+
+                            <View style={styles.modalButtons}>
+                                <Button mode="outlined" textColor={"white"} onPress={onDismiss} style={styles.modalButtonCancel}>Cancel</Button>
+                                <Button mode="outlined" textColor={"white"} onPress={submitAddNewRole} style={styles.modalButtonSave} disabled={loadingAddNewRole}>
+                                    {loadingAddNewRole ? <ActivityIndicator color="white" /> : "Add"}
+                                </Button>
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                </View>
+            </TouchableWithoutFeedback>
         </Modal>
 
     );
