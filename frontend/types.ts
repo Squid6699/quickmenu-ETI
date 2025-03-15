@@ -46,6 +46,7 @@ export type RootStackParamList = {
     "Ordenes": undefined;
     "Usuarios": undefined;
     "Mesas Asignadas": undefined;
+    "Roles": undefined;
     "Personalizar": undefined;
 };
 
