@@ -161,7 +161,7 @@ const ViewUsers = () => {
                 )}
                 <ModalAddUser isOpen={openModalAddUser} onDismiss={handleCloseOpenModalUser} roles={roles} />
                 <ModalEditUser isOpen={openModalEditUser} onDismiss={handleCloseOpenModalEdit} user={userEdit} roles={roles} />
-                <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseOpenModalDelete} api="deleteUsers" content={"¿Are you sure you want to delete " + userDelete?.username + " ?"} title="Delete user" idDelete={userDelete?.id} />
+                <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseOpenModalDelete} api="deleteUsers" content={"¿Are you sure you want to delete " + userDelete?.username + " ?"} title="DELETE USER" idDelete={userDelete?.id} />
             </View>
         </ImageBackground>
 

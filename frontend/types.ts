@@ -100,3 +100,14 @@ export type ModalEditUserProps = {
     user: User | null;
     roles: RolesType[] | undefined;
 };
+
+export interface ModalAddRoleProps {
+    isOpen: boolean;
+    onDismiss: () => void;
+}
+
+export type ModalEditRoleProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    role: RolesType | null;
+}

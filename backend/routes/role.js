@@ -17,7 +17,7 @@ routerAddRoles.post("/addRoles", async (req, res) => {
     const query = "INSERT INTO role (name, permissions) VALUES (?, ?)";
     db.query(query, [name, permissions], (err, result) => {
 
-        if (err.code === 'ER_DUP_ENTRY') {
+        if (err?.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({msg: "ROLE ALREADY EXISTS"});
         }
 
@@ -55,6 +55,11 @@ routerDeleteRoles.delete("/deleteRoles", async (req, res) => {
 
     const query = "DELETE FROM role WHERE id = ?";
     db.query(query, [id], (err, result) => { 
+
+        if (err?.code === 'ER_ROW_IS_REFERENCED_2') {
+            return res.status(409).json({msg: "ROLE IS BEING USED"});
+        }
+
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -68,15 +73,15 @@ routerDeleteRoles.delete("/deleteRoles", async (req, res) => {
 })
 
 routerUpdateRoles.put("/updateRoles", async (req, res) => {
-    const { id, name } = req.body;
+    const { id, name, permissions } = req.body;
 
     if (!id || !name){
         return res.status(400).json({msg: "MISSING DATA"});
     }
 
-    const query = "UPDATE role SET name = ? WHERE id = ?";
+    const query = "UPDATE role SET name = ?, permissions = ? WHERE id = ?";
 
-    db.query(query, [name, id], (err, result) => {
+    db.query(query, [name, permissions, id], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }

@@ -1,23 +1,18 @@
+import useRolePermissions, { Role } from "../hook/useRolePermissions";
+import { ModalStyles } from "../styles/Modal";
+import { ModalEditRoleProps } from "../types";
+import Constants from "expo-constants";
+import { Modal, Platform, View, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Button, Text, ActivityIndicator, Switch } from "react-native-paper";
 import InputText from "./InputText";
-import { Modal, Platform, View, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
-import Constants from "expo-constants";
-import { useState } from "react";
-import { ModalStyles } from "../styles/Modal";
-import useRolePermissions from "../hook/useRolePermissions";
-import { Role } from "../hook/useRolePermissions";
-import { ModalAddRoleProps } from "../types";
+import { useEffect, useState } from "react";
 
-
-
-const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
+const ModalEditRole = ({ isOpen, onDismiss, role }: ModalEditRoleProps) => {
     const styles = ModalStyles();
     const { permissions, togglePermission, roleList, toggleFalsePermissions } = useRolePermissions();
-    const API_URL = Platform.OS === "android"
-        ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
-        : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+    const API_URL = Platform.OS === "android" ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
-    const [newRole, setNewRole] = useState({
+    const [editRole, setEditRole] = useState({
         name: "",
     });
 
@@ -25,33 +20,51 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
         name: "",
     });
 
-    const [loadingAddNewRole, setLoadingAddNewRole] = useState(false);
+    const [loadingEditRole, setLoadingEditRole] = useState(false);
 
-    const handleNewRole = (field: string, value: string) => {
-        setNewRole((prev) => ({
+    const handleEditRole = (field: string, value: string) => {
+        setEditRole((prev) => ({
             ...prev,
             [field]: value,
         }));
     };
 
-    const submitAddNewRole = async () => {
+    useEffect(() => {
+            if (role) {
+                setEditRole({
+                    name: role.name || "",
+                });
+
+                Object.keys(JSON.parse(role.permissions)).forEach((perm) => {
+                    const p = perm as Role;
+                    if (permissions[p] !== JSON.parse(role.permissions)[p]){
+                        togglePermission(p);
+                    }
+                });
+
+
+            }
+        }, [role]);
+
+    const submitEditRole = async () => {
         setError({
             name: "",
         });
 
-        if (!newRole.name) return setError((prev) => ({ ...prev, name: "Name is required" }));
+        if (!editRole.name) return setError((prev) => ({ ...prev, name: "Name is required" }));
 
         try {
-            setLoadingAddNewRole(true);
+            setLoadingEditRole(true);
             const p = JSON.stringify(permissions);
-            const response = await fetch(`${API_URL}/api/addRoles`, {
-                method: "POST",
+            const response = await fetch(`${API_URL}/api/updateRoles`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     "x-frontend-header": "frontend",
                 },
                 body: JSON.stringify({
-                    name: newRole.name,
+                    id: role?.id,
+                    name: editRole.name,
                     permissions: p
                 }),
             });
@@ -59,18 +72,19 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
             const data = await response.json();
 
             if (data.success) {
-                setNewRole({
+                setEditRole({
                     name: "",
                 });
                 toggleFalsePermissions();
                 alert(data.msg);
+                onDismiss();
             } else {
                 alert(data.msg);
             }
         } catch (error) {
             console.error(error);
         } finally {
-            setLoadingAddNewRole(false);
+            setLoadingEditRole(false);
         }
     };
 
@@ -80,15 +94,15 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
                 <View style={styles.container}>
                     <KeyboardAvoidingView behavior="padding" style={styles.modal}>
                         <ScrollView contentContainerStyle={styles.modalContent}>
-                            <Text style={styles.title}>ADD NEW ROLE</Text>
+                            <Text style={styles.title}>EDIT ROLE</Text>
 
-                            <InputText label="Name" value={newRole.name} onChange={(text) => handleNewRole("name", text)} error={error.name} />
+                            <InputText label="Name" value={editRole.name} onChange={(text) => handleEditRole("name", text)} error={error.name} />
 
                             <Text style={styles.title}>PERMISSIONS</Text>
 
                             {
-                                Object.keys(roleList).map((role) => {
-                                    const roleKey = role as Role;
+                                Object.keys(roleList).map((r) => {
+                                    const roleKey = r as Role;
                                     return (
                                         <View key={roleKey} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                                             <Text>{roleKey.toUpperCase()}</Text>
@@ -100,8 +114,8 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
 
                             <View style={styles.modalButtons}>
                                 <Button mode="outlined" textColor={"white"} onPress={onDismiss} style={styles.modalButtonCancel}>CANCEL</Button>
-                                <Button mode="outlined" textColor={"white"} onPress={submitAddNewRole} style={styles.modalButtonSave} disabled={loadingAddNewRole}>
-                                    {loadingAddNewRole ? <ActivityIndicator color="white" /> : "ADD"}
+                                <Button mode="outlined" textColor={"white"} onPress={submitEditRole} style={styles.modalButtonSave} disabled={loadingEditRole}>
+                                    {loadingEditRole ? <ActivityIndicator color="white" /> : "EDIT"}
                                 </Button>
                             </View>
                         </ScrollView>
@@ -109,8 +123,7 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
                 </View>
             </TouchableWithoutFeedback>
         </Modal>
-
     );
-};
+}
 
-export default ModalAddRole;
+export default ModalEditRole;

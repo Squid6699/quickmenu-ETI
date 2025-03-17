@@ -9,6 +9,8 @@ import { backgroundStyle } from "../../styles/BackgroundStyles";
 import { ViewUsersStyles } from "../../styles/ViewUsersStyles";
 import { useCustomColors } from "../../hook/useCustomColors";
 import ModalAddRole from "../../components/ModalAddRole";
+import ModalDelete from "../../components/ModalDelete";
+import ModalEditRole from "../../components/ModalEditRole";
 
 const ViewRoles = () => {
     const Style = ViewUsersStyles();
@@ -58,13 +60,33 @@ const ViewRoles = () => {
     const [roleDelete, setRoleDelete] = useState<RolesType | null>(null);
 
     const handleOpenModalAdd = () => setOpenModalAddRole(true);
+
     const handleCloseModalAdd = () => {
         setOpenModalAddRole(false);
         refetch();
     }
 
+    const handleOpenModalEditRole = (role: RolesType) => {
+        setRoleEdit(role);
+        setOpenModalEditRole(true);
+    }
 
+    const handleCloseModalEditRole = () => {
+        setOpenModalEditRole(false);
+        setRoleEdit(null);
+        refetch();
+    }
 
+    const handleOpenModalDeleteRole = (role: RolesType) => {
+        setRoleDelete(role);
+        setOpenModalDeleteRole(true);
+    }
+
+    const handleCloseModalDeleteRole = () => {
+        setOpenModalDeleteRole(false);
+        setRoleDelete(null);
+        refetch();
+    }
 
     return (
         <ImageBackground source={require('../../assets/background.jpg')} style={backgroundStyle.background}>
@@ -109,8 +131,8 @@ const ViewRoles = () => {
                                     </Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => console.log("EDITAR ROL") }>Editar</Button>
-                                    <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => console.log("ELIMINAR ROL")}>Eliminar</Button>
+                                    <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => handleOpenModalEditRole(item) }>Editar</Button>
+                                    <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => handleOpenModalDeleteRole(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
                         )}
@@ -118,8 +140,8 @@ const ViewRoles = () => {
                     />
                 )}
                 <ModalAddRole isOpen={openModalAddRole} onDismiss={handleCloseModalAdd} />
-                {/* <ModalEditUser isOpen={openModalEditUser} onDismiss={handleCloseOpenModalEdit} user={userEdit} roles={roles} /> */}
-                {/* <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseOpenModalDelete} api="deleteUsers" content={"¿Are you sure you want to delete " + userDelete?.username + " ?"} title="Delete user" idDelete={userDelete?.id} /> */}
+                <ModalEditRole isOpen={openModalEditRole} onDismiss={handleCloseModalEditRole} role={roleEdit} />
+                <ModalDelete isOpen={openModalDeleteRole} onDismiss={handleCloseModalDeleteRole} api="deleteRoles" content={"¿Are you sure you want to delete " + roleDelete?.name + " ?"} title="DELETE ROLE" idDelete={roleDelete?.id} />
             </View>
         </ImageBackground>
     );
