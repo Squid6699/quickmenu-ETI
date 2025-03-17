@@ -10,6 +10,7 @@ import { Platform } from 'react-native';
 import { useCustomColors } from "../../hook/useCustomColors";
 import { MenuStyles } from "../../styles/MenuStyles";
 import ModalAddMenu from "../../components/ModalAddMenu";
+import ModalDelete from "../../components/ModalDelete";
 
 const ViewMenu = () => {
     const Style = ViewUsersStyles();
@@ -78,6 +79,34 @@ const ViewMenu = () => {
         refetch();
     }
 
+    const [openModalEditMenu, setOpenModalEditMenu] = useState(false);
+    const [menuEdit, setMenuEdit] = useState<MenuType | null>(null);
+
+    const handleOpenModalEdit = (menu: MenuType) => {
+        setOpenModalEditMenu(true);
+        setMenuEdit(menu);
+    };
+
+    const handleCloseModalEdit = () => {
+        setMenuEdit(null);
+        setOpenModalEditMenu(false);
+        refetch();
+    };
+
+    const [openModalDeleteMenu, setOpenModalDeleteMenu] = useState(false);
+    const [menuDelete, setMenuDelete] = useState<MenuType | null>(null);
+
+    const handleOpenModalDelete = (menu: MenuType) => {
+        setOpenModalDeleteMenu(true);
+        setMenuDelete(menu);
+    };
+
+    const handleCloseModalDelete = () => {
+        setMenuDelete(null);
+        setOpenModalDeleteMenu(false);
+        refetch();
+    };
+
     return (
         <ImageBackground source={require('../../assets/background.jpg')} style={backgroundStyle.background}>
             <Appbar.Header style={Style.header}>
@@ -120,7 +149,7 @@ const ViewMenu = () => {
                                 </Card.Content>
                                 <Card.Actions>
                                     <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => console.log("EDITAR MENU")}>Editar</Button>
-                                    <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => console.log("ELIMINAR MENU")}>Eliminar</Button>
+                                    <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
                         )}
@@ -129,7 +158,7 @@ const ViewMenu = () => {
                 )}
                 <ModalAddMenu isOpen={openModalAddMenu} onDismiss={handleCloseModalAdd} categories={category}/>
                 {/* <ModalEditRole isOpen={openModalEditRole} onDismiss={handleCloseModalEditRole} role={roleEdit} /> */}
-                {/* <ModalDelete isOpen={openModalDeleteRole} onDismiss={handleCloseModalDeleteRole} api="deleteRoles" content={"¿Are you sure you want to delete " + roleDelete?.name + " ?"} title="DELETE ROLE" idDelete={roleDelete?.id} /> */}
+                <ModalDelete isOpen={openModalDeleteMenu} onDismiss={handleCloseModalDelete} api="deleteMenu" content={"¿Are you sure you want to delete " + menuDelete?.NAME_MENU + " ?"} title="DELETE MENU MEAL" idDelete={menuDelete?.idMenu} />
             </View>
         </ImageBackground>
     );

@@ -46,7 +46,7 @@ routerDeleteMenu.delete("/deleteMenu", (req, res) => {
         return res.status(400).json({ msg: "MISSING DATA" });
     }
 
-    const query = "DELETE FROM role WHERE id = ?";
+    const query = "DELETE FROM menu WHERE id = ?";
     db.query(query, [id], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
