@@ -16,12 +16,9 @@ const useRolePermissions = () => {
         "Llamar Mesero": false,
         "Pedir Cuenta": false,
         "Actualizar Productos": false,
-        
     }
 
     const [permissions, setPermissions] = useState(roleList);
-
-    
 
     const togglePermission = (role: Role) => {
         setPermissions(prevPermissions => ({
@@ -30,10 +27,15 @@ const useRolePermissions = () => {
         }));
     };
 
+    const toggleFalsePermissions = () => {
+        setPermissions(roleList);
+    }
+
     return {
         permissions,
         togglePermission,
-        roleList
+        roleList,
+        toggleFalsePermissions
     };
 };
 

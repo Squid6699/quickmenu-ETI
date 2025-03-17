@@ -14,19 +14,17 @@ interface ModalAddRoleProps {
 
 const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
     const styles = ModalStyles();
-    const { permissions, togglePermission, roleList } = useRolePermissions();
+    const { permissions, togglePermission, roleList, toggleFalsePermissions } = useRolePermissions();
     const API_URL = Platform.OS === "android"
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
     const [newRole, setNewRole] = useState({
         name: "",
-        permissions: "",
     });
 
     const [error, setError] = useState({
         name: "",
-        permissions: "",
     });
 
     const [loadingAddNewRole, setLoadingAddNewRole] = useState(false);
@@ -41,13 +39,13 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
     const submitAddNewRole = async () => {
         setError({
             name: "",
-            permissions: "",
         });
 
         if (!newRole.name) return setError((prev) => ({ ...prev, name: "Name is required" }));
 
         try {
             setLoadingAddNewRole(true);
+            const p = JSON.stringify(permissions);
             const response = await fetch(`${API_URL}/api/addRoles`, {
                 method: "POST",
                 headers: {
@@ -55,10 +53,8 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
                     "x-frontend-header": "frontend",
                 },
                 body: JSON.stringify({
-                    // username: newUser.username,
-                    // name: newUser.name,
-                    // password: newUser.password,
-                    // roleId: newUser.role,
+                    name: newRole.name,
+                    permissions: p
                 }),
             });
 
@@ -67,8 +63,8 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
             if (data.success) {
                 setNewRole({
                     name: "",
-                    permissions: "",
                 });
+                toggleFalsePermissions();
                 alert(data.msg);
             } else {
                 alert(data.msg);
@@ -79,11 +75,6 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
             setLoadingAddNewRole(false);
         }
     };
-
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
-
-    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-
 
     return (
         <Modal animationType="slide" transparent={true} visible={isOpen}>
@@ -101,7 +92,7 @@ const ModalAddRole = ({ isOpen, onDismiss }: ModalAddRoleProps) => {
                                 Object.keys(roleList).map((role) => {
                                     const roleKey = role as Role;
                                     return (
-                                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                        <View key={roleKey} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                                             <Text>{role.toUpperCase()}</Text>
                                             <Switch value={permissions[roleKey]} onValueChange={() => togglePermission(roleKey)} />
                                         </View>

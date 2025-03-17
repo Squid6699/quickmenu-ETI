@@ -58,7 +58,10 @@ const ViewRoles = () => {
     const [roleDelete, setRoleDelete] = useState<RolesType | null>(null);
 
     const handleOpenModalAdd = () => setOpenModalAddRole(true);
-    const handleCloseModalAdd = () => setOpenModalAddRole(false);
+    const handleCloseModalAdd = () => {
+        setOpenModalAddRole(false);
+        refetch();
+    }
 
 
 

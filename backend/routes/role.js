@@ -16,6 +16,11 @@ routerAddRoles.post("/addRoles", async (req, res) => {
 
     const query = "INSERT INTO role (name, permissions) VALUES (?, ?)";
     db.query(query, [name, permissions], (err, result) => {
+
+        if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(409).json({msg: "ROLE ALREADY EXISTS"});
+        }
+
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }

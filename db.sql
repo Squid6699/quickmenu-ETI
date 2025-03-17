@@ -6,6 +6,7 @@ CREATE TABLE Role (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     permissions LONGTEXT NULL
+    UNIQUE KEY `Nombre` (`name`)
 );
 
 -- Tabla de Usuarios (Meseros, Cocina, Admin)
