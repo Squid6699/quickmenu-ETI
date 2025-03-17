@@ -48,6 +48,8 @@ export type RootStackParamList = {
     "Mesas Asignadas": undefined;
     "Roles": undefined;
     "Personalizar": undefined;
+    "Ver Menu": undefined;
+
 };
 
 export type MenuType = {
