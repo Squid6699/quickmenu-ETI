@@ -3,7 +3,7 @@ import { InputTextProps } from '../types';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import { useCustomColors } from '../hook/useCustomColors';
 
-const InputText = ({ value, label, placeholder, error, disable, onChange, type }: InputTextProps) => {
+const InputText = ({ value, label, placeholder, error, disable, onChange, type="text" }: InputTextProps) => {
 
   const { colorError } = useCustomColors();
 
@@ -17,11 +17,15 @@ const InputText = ({ value, label, placeholder, error, disable, onChange, type }
     <>
       <TextInput
         label={label}
-        value={value}
+        value={value !== undefined ? String(value) : undefined}
         onChange={handleInputOnchange}
         placeholder={placeholder}
         disabled={disable}
         secureTextEntry={type === "password" ? true : false}
+        keyboardType={type === "number" ? "numeric" : undefined}
+        mode='outlined'
+        multiline={type === "textarea" ? true : false}
+        numberOfLines={type === "textarea" ? 5 : 1}
       />
       {error && <Text style={{color: colorError}} variant="labelLarge">{error}</Text>}
     </>

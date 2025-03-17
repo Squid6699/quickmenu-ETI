@@ -35,7 +35,7 @@ export interface InputTextProps {
     error?: string,
     disable?: boolean,
     onChange: (value: string) => void,
-    type?: "text" | "password"
+    type?: "text" | "password" | "number" | "textarea"
 }
 
 export type RootStackParamList = {
@@ -112,4 +112,15 @@ export type ModalEditRoleProps = {
     isOpen: boolean;
     onDismiss: () => void;
     role: RolesType | null;
+}
+
+export type CategoriesType = {
+    id: string,
+    name: string
+}
+
+export type ModalAddMenuProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    categories: CategoriesType[] | undefined;
 }
