@@ -11,6 +11,7 @@ import { useCustomColors } from "../../hook/useCustomColors";
 import { MenuStyles } from "../../styles/MenuStyles";
 import ModalAddMenu from "../../components/ModalAddMenu";
 import ModalDelete from "../../components/ModalDelete";
+import ModalEditMenu from "../../components/ModalEditMenu";
 
 const ViewMenu = () => {
     const Style = ViewUsersStyles();
@@ -146,9 +147,10 @@ const ViewMenu = () => {
                                     <Text style={{ color: item.available ? "green" : "red", marginTop: 5 }}>
                                         {item.available ? "Disponible" : "No disponible"}
                                     </Text>
+                                    <Text style={StyleMenu.CardPrice}>{item.CATEGORY_NAME}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => console.log("EDITAR MENU")}>Editar</Button>
+                                    <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
                                     <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
@@ -157,7 +159,7 @@ const ViewMenu = () => {
                     />
                 )}
                 <ModalAddMenu isOpen={openModalAddMenu} onDismiss={handleCloseModalAdd} categories={category}/>
-                {/* <ModalEditRole isOpen={openModalEditRole} onDismiss={handleCloseModalEditRole} role={roleEdit} /> */}
+                <ModalEditMenu isOpen={openModalEditMenu} onDismiss={handleCloseModalEdit} menu={menuEdit} categories={category} />
                 <ModalDelete isOpen={openModalDeleteMenu} onDismiss={handleCloseModalDelete} api="deleteMenu" content={"¿Are you sure you want to delete " + menuDelete?.NAME_MENU + " ?"} title="DELETE MENU MEAL" idDelete={menuDelete?.idMenu} />
             </View>
         </ImageBackground>

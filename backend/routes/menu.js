@@ -24,13 +24,14 @@ routerGetMenu.get("/getMenu", (req, res) => {
 
 routerUpdateMenu.put("/updateMenu", (req, res) => {
     const { id, name, price, description, idcategory, available } = req.body;
-    if (!id || !name || !price || !description || !idcategory || !available) {
+
+    if (!id || !name || !price || !description || !idcategory) {
         return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "UPDATE menu SET name = ? ,price = ?,description = ?,idcategory = ? ,available = ? WHERE id = ?"
 
-    db.query(query, [id, name, price, description, idcategory, available], (err, result) => {
+    db.query(query, [name, price, description, idcategory, available, id], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
@@ -63,7 +64,7 @@ routerDeleteMenu.delete("/deleteMenu", (req, res) => {
 
 routerAddMenu.post("/addMenu", (req, res) => {
     const { name, price, description, idcategory, available } = req.body;
-    
+
     if (!name || !price || !description || !idcategory || !available) {
         return res.status(400).json({ msg: "MISSING DATA" });
     }
