@@ -22,6 +22,7 @@ CREATE TABLE Users (
 CREATE TABLE Category (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL
+    UNIQUE KEY `Nombre` (`name`)
 );
 
 -- Tabla de Menú (Platillos disponibles)
