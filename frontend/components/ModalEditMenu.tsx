@@ -74,7 +74,6 @@ const ModalEditMenu = ({ isOpen, onDismiss, menu, categories }: ModalEditMenuPro
         if (editMeal.price && isNaN(Number(editMeal.price))) return setError((prev) => ({ ...prev, price: "Price must be a number" }));
 
         try {
-            console.log(editMeal);
             setLoadingEdit(true);
             const response = await fetch(`${API_URL}/api/updateMenu`, {
                 method: "PUT",
