@@ -132,3 +132,9 @@ export type ModalEditMenuProps = {
     menu: MenuType | null;
     categories: CategoriesType[] | undefined;
 }
+
+export type ModalEditCategoryProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    category: CategoriesType | null;
+}

@@ -26,14 +26,16 @@ routerGetCategory.get("/getCategory", (req, res) => {
 
 routerUpdateCategory.put("/updateCategory", (req, res) => {
     const { id, name } = req.body;
+
     if (!id || !name) {
         return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "UPDATE Category SET name = ?  WHERE id = ?"
 
-    db.query(query, [id, name], (err, result) => {
+    db.query(query, [name, id], (err, result) => {
         if (err) {
+            console.log(err);
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
         res.status(200).json({ success: true, msg: "CATEGORY UPDATED" });
