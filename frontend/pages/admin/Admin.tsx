@@ -33,6 +33,11 @@ const Admin = () => {
         navigation.navigate("Ver Menu");
     }
 
+    const handlePressViewCategories = () => {
+        navigation.navigate("Ver Categorias");
+    }
+
+
 
     return (
         <>
@@ -46,6 +51,7 @@ const Admin = () => {
                         <ButtonsOptions title="Ordenes" description="Ver ordenes" onPress={handlePressViewOrders} iconName="receipt" />
                         <ButtonsOptions title="Mesas Asignadas" description="Ver mesas asignadas" onPress={handlePressViewAssignedTables} iconName="people-outline" />
                         <ButtonsOptions title="Ver Menu" description="Ver menu" onPress={handlePressViewMenu} iconName="fast-food-outline" />
+                        <ButtonsOptions title="Ver Categorias" description="Ver categorias" onPress={handlePressViewCategories} iconName="copy-outline" />
                         <ButtonsOptions title="Roles" description="Ver roles" onPress={handlePressViewRoles} iconName="people-outline" />
                         <ButtonsOptions title="Personalizar" description="Ver colores" onPress={handlePressCustomize} iconName="cube-outline" />
                     </View>

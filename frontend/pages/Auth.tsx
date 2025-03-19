@@ -47,11 +47,11 @@ const Auth = () => {
         >
             <View style={Style.body}>
                 <View style={Style.container}>
-                    <Text style={Style.title}>Autentificate</Text>
+                    <Text style={Style.title}>LOG IN</Text>
                     <View style={Style.inputContainer}>
                         <InputText label="Username" value={username} onChange={handleOnchangeUsername} error={error.username} />
                         <InputText label="Password" value={password} onChange={handleOnchangePassword} error={error.password} type="password" />
-                        <Button text="Ingresar" onPress={handleLogin} loading={loading} disabled={loading} />
+                        <Button text="LOG IN" onPress={handleLogin} loading={loading} disabled={loading} />
                     </View>
                 </View>
             </View>

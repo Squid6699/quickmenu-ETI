@@ -49,6 +49,7 @@ export type RootStackParamList = {
     "Roles": undefined;
     "Personalizar": undefined;
     "Ver Menu": undefined;
+    "Ver Categorias": undefined;
 
 };
 
