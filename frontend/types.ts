@@ -138,3 +138,16 @@ export type ModalEditCategoryProps = {
     onDismiss: () => void;
     category: CategoriesType | null;
 }
+
+export type colorOption = {
+    name: string,
+    value: string
+}
+
+export type ModalPickColorProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    onChange: (color: string, colorName: string) => void;
+    color: colorOption | undefined | null;
+}
+

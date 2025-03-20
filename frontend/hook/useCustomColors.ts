@@ -20,6 +20,8 @@ export const useCustomColors = () => {
         buttonBackground: "#ffff",
     });
 
+    console.log(colors);
+
     const handleColorChange = (color: string, colorName: string) => {
         setColors(prev => ({ ...prev, [colorName]: color }));
     }
