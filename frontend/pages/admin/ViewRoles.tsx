@@ -14,7 +14,7 @@ import ModalEditRole from "../../components/ModalEditRole";
 
 const ViewRoles = () => {
     const Style = ViewUsersStyles();
-    const { iconColor, buttonBackground } = useCustomColors();
+    const { colors } = useCustomColors();
     const API_URL = Platform.OS === 'android'
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -110,7 +110,7 @@ const ViewRoles = () => {
 
             <View style={Style.container}>
                 {isLoading ? (
-                    <ActivityIndicator color={iconColor} size={75} style={Style.activityIndicator} />
+                    <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
                 ) : isError ? (
                     <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (
@@ -131,8 +131,8 @@ const ViewRoles = () => {
                                     </Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button icon="pencil" buttonColor={buttonBackground} textColor="black" onPress={() => handleOpenModalEditRole(item) }>Editar</Button>
-                                    <Button icon="trash-can" buttonColor={buttonBackground} textColor="red" onPress={() => handleOpenModalDeleteRole(item)}>Eliminar</Button>
+                                    <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => handleOpenModalEditRole(item) }>Editar</Button>
+                                    <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => handleOpenModalDeleteRole(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>
                         )}

@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 import { useCustomColors } from '../hook/useCustomColors';
 
 export const ButtonStyle = () => {
-    const { textColor } = useCustomColors();
+    const { colors } = useCustomColors();
     
     return StyleSheet.create({
         button: {
-            backgroundColor: textColor,
+            backgroundColor: colors.textColor,
             paddingVertical: 12,
             borderRadius: 5,
             width: "100%",

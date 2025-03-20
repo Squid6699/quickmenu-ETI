@@ -20,6 +20,10 @@ export const useCustomColors = () => {
         buttonBackground: "#ffff",
     });
 
+    const handleColorChange = (color: string, colorName: string) => {
+        setColors(prev => ({ ...prev, [colorName]: color }));
+    }
+
     const fetchCustomize = async (): Promise<CustomizeType[]> => {
         const response = await fetch(`${API_URL}/api/getCustomize`, {
             method: 'GET',
@@ -50,5 +54,5 @@ export const useCustomColors = () => {
         }
     }, [data]);
 
-    return colors;
+    return {colors, handleColorChange};
 };

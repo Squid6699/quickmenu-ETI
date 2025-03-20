@@ -5,7 +5,7 @@ import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import { useCustomColors } from '../hook/useCustomColors';
 
 const InputText = ({ value, label, placeholder, error, disable, onChange, type = "text" }: InputTextProps) => {
-  const { colorError, textColor } = useCustomColors();
+  const { colors } = useCustomColors();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleInputOnchange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -34,9 +34,9 @@ const InputText = ({ value, label, placeholder, error, disable, onChange, type =
             />
           ) : undefined
         }
-        activeOutlineColor={textColor}
+        activeOutlineColor={colors.textColor}
       />
-      {error && <Text style={{ color: colorError }} variant="labelLarge">{error}</Text>}
+      {error && <Text style={{ color: colors.colorError }} variant="labelLarge">{error}</Text>}
     </>
   );
 };

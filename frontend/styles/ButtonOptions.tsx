@@ -3,7 +3,7 @@ import { useCustomColors } from '../hook/useCustomColors';
 
 export const stylesButtonOptions = () => {
 
-    const { backgroundColor, textColor } = useCustomColors();
+    const { colors } = useCustomColors();
 
     return StyleSheet.create({
         container: {
@@ -18,7 +18,7 @@ export const stylesButtonOptions = () => {
             paddingHorizontal: 15,
             borderRadius: 6,
             marginVertical: 6,
-            backgroundColor: backgroundColor,
+            backgroundColor: colors.backgroundColor,
             width: '90%',
         },
         textContainer: {
@@ -29,12 +29,12 @@ export const stylesButtonOptions = () => {
             fontSize: 16,
             fontWeight: 'bold',
             textAlign: 'left',
-            color: textColor,
+            color: colors.textColor,
         },
         description: {
             fontSize: 12,
             textAlign: 'left',
-            color: textColor,
+            color: colors.textColor,
         },
         icon: {
             width: 30,

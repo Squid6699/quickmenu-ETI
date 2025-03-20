@@ -16,7 +16,7 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 const Menu = () => {
     const Style = MenuStyles();
-    const { backgroundColor, headerColor, iconColor } = useCustomColors();
+    const { colors } = useCustomColors();
     const API_URL = Platform.OS === 'android'
         ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID
         : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -102,7 +102,7 @@ const Menu = () => {
         <ImageBackground source={require('../assets/background.jpg')} style={backgroundStyle.background}>
             <View style={Style.container}>
                 {isLoading ? (
-                    <ActivityIndicator color={iconColor} size={75} style={Style.activityIndicator} />
+                    <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
                 ) : isError ? (
                     <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (
@@ -112,7 +112,7 @@ const Menu = () => {
                         onIndexChange={setIndex}
                         initialLayout={initialLayout}
                         renderTabBar={props => (
-                            <TabBar {...props} indicatorStyle={{ backgroundColor: backgroundColor }} style={{ backgroundColor: headerColor }} />
+                            <TabBar {...props} indicatorStyle={{ backgroundColor: colors.backgroundColor }} style={{ backgroundColor: colors.headerColor }} />
                         )}
                     />
                 )}

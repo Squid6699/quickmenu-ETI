@@ -4,7 +4,7 @@ import { useCustomColors } from '../hook/useCustomColors';
 
 export const AuthStyle = () => {
 
-    const {backgroundColor, textColor} = useCustomColors();
+    const {colors} = useCustomColors();
 
     return StyleSheet.create({
 
@@ -24,13 +24,13 @@ export const AuthStyle = () => {
             shadowOpacity: 0.2,
             shadowRadius: 4,
             alignItems: 'center',
-            backgroundColor: backgroundColor,
+            backgroundColor: colors.backgroundColor,
         },
         title: {
             fontSize: 24,
             fontWeight: 'bold',
             marginBottom: 16,
-            color: textColor,
+            color: colors.textColor,
         },
         inputContainer: {
             width: "100%",

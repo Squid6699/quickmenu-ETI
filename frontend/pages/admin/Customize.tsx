@@ -1,13 +1,13 @@
-import { View, Text, StyleSheet } from "react-native";
-
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import ColorPicker from 'react-native-wheel-color-picker'
+import { useCustomColors } from '../../hook/useCustomColors';
 
 const Customize = () => {
-    
+    const { colors } = useCustomColors();
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Selecciona un color:</Text>
-            <View style={styles.colorPreview} />
+        <View>
+            <Text>ViewAssignedTables</Text>
         </View>
     );
 };

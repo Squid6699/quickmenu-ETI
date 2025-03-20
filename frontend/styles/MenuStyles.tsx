@@ -3,7 +3,7 @@ import { useCustomColors } from '../hook/useCustomColors';
 
 
 export const MenuStyles = () => {
-    const { backgroundCard } = useCustomColors();
+    const { colors } = useCustomColors();
 
     return StyleSheet.create({
         container: {
@@ -19,7 +19,7 @@ export const MenuStyles = () => {
         Card: {
             marginVertical: 8,
             padding: 10,
-            backgroundColor: backgroundCard
+            backgroundColor: colors.backgroundCard
         },
 
         CardTitle: {

@@ -3,7 +3,7 @@ import { useCustomColors } from "../hook/useCustomColors";
 
 export const ModalStyles = () => {
 
-    const {colorError, backgroundColor, textColor} = useCustomColors();
+    const {colors} = useCustomColors();
 
     return StyleSheet.create({
         container: {
@@ -15,7 +15,7 @@ export const ModalStyles = () => {
             width: "100%",
         },
         modal: {
-            backgroundColor: backgroundColor,
+            backgroundColor: colors.backgroundColor,
             borderRadius: 10,
             padding: 20,
             width: "90%",
@@ -38,7 +38,7 @@ export const ModalStyles = () => {
             marginTop: 20,
         },
         modalButtonSave: { 
-            backgroundColor: textColor,
+            backgroundColor: colors.textColor,
             alignItems: "center",
             padding: 5,
             fontSize: 20,
@@ -52,7 +52,7 @@ export const ModalStyles = () => {
             color: "white",
         },
         errorText: {
-            color: colorError,
+            color: colors.colorError,
             fontSize: 12,
             marginTop: 5,
         },

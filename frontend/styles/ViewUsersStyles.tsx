@@ -3,7 +3,7 @@ import { useCustomColors } from "../hook/useCustomColors";
 
 export const ViewUsersStyles = () => {
 
-    const { backgroundCard, backgroundColor, headerColor } = useCustomColors();
+    const { colors } = useCustomColors();
 
     return StyleSheet.create({
         container: {
@@ -19,7 +19,7 @@ export const ViewUsersStyles = () => {
         Card: {
             marginVertical: 8,
             padding: 10,
-            backgroundColor: backgroundCard
+            backgroundColor: colors.backgroundCard
         },
 
         CardTitle: {
@@ -38,7 +38,7 @@ export const ViewUsersStyles = () => {
             justifyContent: "space-between",
             paddingHorizontal: 10,
             paddingVertical: 5,
-            backgroundColor: headerColor,
+            backgroundColor: colors.headerColor,
             elevation: 4,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
@@ -55,7 +55,7 @@ export const ViewUsersStyles = () => {
         },
 
         addButton: {
-            backgroundColor: backgroundColor,
+            backgroundColor: colors.backgroundColor,
             borderRadius: 10,
         },
     });
