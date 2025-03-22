@@ -39,6 +39,7 @@ export const stylesButtonOptions = () => {
         icon: {
             width: 30,
             height: 30,
+            color: colors.iconColor,
         },
     });
 }

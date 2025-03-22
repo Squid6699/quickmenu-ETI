@@ -1,13 +1,8 @@
-import { ColorValue } from "react-native"
-
 export interface ButtonHomeProps {
     title: String
     onPress: any
-    backgroundColor?: ColorValue
-    textColor?: ColorValue
     iconName?: String
     iconSize?: Number
-    iconColor?: ColorValue
     description?: String
 }
 
@@ -16,7 +11,6 @@ export interface ButtonOptionsProps {
     onPress: any
     iconName?: String
     iconSize?: Number
-    iconColor?: ColorValue
     description?: String
 }
 
@@ -139,15 +133,10 @@ export type ModalEditCategoryProps = {
     category: CategoriesType | null;
 }
 
-export type colorOption = {
-    name: string,
-    value: string
-}
-
 export type ModalPickColorProps = {
     isOpen: boolean;
     onDismiss: () => void;
-    onChange: (color: string, colorName: string) => void;
-    color: colorOption | undefined | null;
+    color: CustomizeType | undefined | null;
+    updateCustomize: (id: string | undefined, color: string) => void;
 }
 

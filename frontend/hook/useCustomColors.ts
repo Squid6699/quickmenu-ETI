@@ -20,12 +20,6 @@ export const useCustomColors = () => {
         buttonBackground: "#ffff",
     });
 
-    console.log(colors);
-
-    const handleColorChange = (color: string, colorName: string) => {
-        setColors(prev => ({ ...prev, [colorName]: color }));
-    }
-
     const fetchCustomize = async (): Promise<CustomizeType[]> => {
         const response = await fetch(`${API_URL}/api/getCustomize`, {
             method: 'GET',
@@ -40,10 +34,25 @@ export const useCustomColors = () => {
         return data.customize;
     };
 
-    const { data } = useQuery<CustomizeType[]>({
+    const { data, refetch } = useQuery<CustomizeType[]>({
         queryKey: ['customizeColor'],
         queryFn: fetchCustomize
     });
+
+    const updateCustomize = async (id:string | undefined, color: string) => {
+        const response = await fetch(`${API_URL}/api/updateCustomize`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-frontend-header': 'frontend'
+            },
+            body: JSON.stringify({ id: id, color: color })
+        });
+
+        const data = await response.json();
+        if (!data.success) throw new Error(data.message);
+        refetch();
+    }
 
     useEffect(() => {
         if (data) {
@@ -56,5 +65,5 @@ export const useCustomColors = () => {
         }
     }, [data]);
 
-    return {colors, handleColorChange};
+    return {colors, data, updateCustomize};
 };

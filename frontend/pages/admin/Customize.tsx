@@ -1,36 +1,20 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { useCustomColors } from '../../hook/useCustomColors';
 import { backgroundStyle } from '../../styles/BackgroundStyles';
 import { Button } from 'react-native-paper';
 import ModalPickColor from '../../components/ModalPickColor';
-import { colorOption } from '../../types';
+import { CustomizeType } from '../../types';
 
 const Customize = () => {
 
-    const { colors, handleColorChange } = useCustomColors();
-    const [isModalOpen, setIsModalOpen] = useState(false); // Controlar la visibilidad del modal
-    const [selectedColorOption, setSelectedColorOption] = useState<colorOption | null>(null); // Para saber qué color se seleccionó
+    const { data, updateCustomize } = useCustomColors();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedColorOption, setSelectedColorOption] = useState<CustomizeType | null>(null);
 
-    const colorOptions = [
-        { name: 'Background Color', value: colors.backgroundColor },
-        { name: 'Text Color', value: colors.textColor },
-        { name: 'Icon Color', value: colors.iconColor },
-        { name: 'Error Color', value: colors.colorError },
-        { name: 'Success Color', value: colors.colorSuccess },
-        { name: 'Header Color', value: colors.headerColor },
-        { name: 'Card Background', value: colors.backgroundCard },
-        { name: 'Button Background', value: colors.buttonBackground }
-    ];
-
-    const handleColorChangeWrapper = (color: string, colorName: string) => {
-        handleColorChange(color, colorName); // Llama a la función del hook
-    };
-
-    // Función para abrir el modal y seleccionar un color
-    const openModal = (colorOption:colorOption) => {
-        setSelectedColorOption(colorOption); // Almacena la opción seleccionada
-        setIsModalOpen(true); // Abre el modal
+    const openModal = (colorOption:CustomizeType) => {
+        setSelectedColorOption(colorOption);
+        setIsModalOpen(true);
     };
 
     const closeModal = () => {
@@ -41,23 +25,22 @@ const Customize = () => {
     return (
         <ImageBackground source={require('../../assets/background.jpg')} style={backgroundStyle.background}>
             <View style={styles.container}>
-                {colorOptions.map((colorOption, index) => (
-                    <View key={index} style={styles.card}>
+                {data?.map((colorOption) => (
+                    <View key={colorOption.id} style={styles.card}>
                         <View style={styles.colorInfo}>
                             <Text style={styles.text}>{colorOption.name}</Text>
-                            <View style={[styles.colorPreview, { backgroundColor: colorOption.value }]} />
+                            <View style={[styles.colorPreview, { backgroundColor: colorOption.color }]} />
                         </View>
-                        <Button onPress={() => openModal(colorOption)}>SELECCIONAR</Button> {/* Abre el modal con la opción seleccionada */}
+                        <Button onPress={() => openModal(colorOption)}>SELECCIONAR</Button>
                     </View>
                 ))}
             </View>
 
-            {/* Modal para cambiar el color */}
             <ModalPickColor
                 isOpen={isModalOpen} 
                 onDismiss={closeModal} 
-                onChange={handleColorChangeWrapper}
                 color={selectedColorOption}
+                updateCustomize={updateCustomize}
             />
         </ImageBackground>
     );

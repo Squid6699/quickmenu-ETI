@@ -1,11 +1,18 @@
 import ColorPicker from "react-native-wheel-color-picker";
 import { ModalStyles } from "../styles/Modal";
 import { ModalPickColorProps } from "../types";
-import { Modal, View, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { Button, Text, ActivityIndicator } from "react-native-paper";
+import { Modal, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Button, Text } from "react-native-paper";
+import { useState } from "react";
 
-const ModalPickColor = ({ isOpen, onDismiss, onChange, color }: ModalPickColorProps) => {
+const ModalPickColor = ({ isOpen, onDismiss, color, updateCustomize }: ModalPickColorProps) => {
     const styles = ModalStyles();
+    const [colorSelected, setColorSelected] = useState<string>("");
+
+    const handleSaveColor = () => {
+        updateCustomize(color?.id, colorSelected);
+        onDismiss();
+    }
 
     return (
         <Modal animationType="slide" transparent={true} visible={isOpen}>
@@ -15,12 +22,13 @@ const ModalPickColor = ({ isOpen, onDismiss, onChange, color }: ModalPickColorPr
                             <Text style={styles.title}>CHANGE COLOR</Text>
 
                             <ColorPicker
-                                color={color?.value}
-                                onColorChange={(color) => onChange(color, color)}
+                                color={color?.color}
+                                onColorChange={(color) => setColorSelected(color)}
                             />
 
                             <View style={styles.modalButtons}>
-                                <Button mode="outlined" textColor={"white"} onPress={onDismiss} style={styles.modalButtonSave}>CLOSE</Button>
+                                <Button mode="outlined" textColor={"white"} onPress={onDismiss} style={styles.modalButtonCancel}>CLOSE</Button>
+                                <Button mode="outlined" textColor={"white"} onPress={() => handleSaveColor()} style={styles.modalButtonSave}>SAVE</Button>
                             </View>
                     </KeyboardAvoidingView>
                 </View>
