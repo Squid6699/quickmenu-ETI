@@ -141,3 +141,8 @@ export type ModalPickColorProps = {
     updateCustomize: (id: string | undefined, color: string) => void;
 }
 
+export type ModalAddOrderProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    menu: MenuType | null | undefined;
+}
