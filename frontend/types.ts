@@ -37,6 +37,7 @@ export type RootStackParamList = {
     Menu: undefined; 
     Auth: undefined; 
     Admin: undefined;
+    Ordenar: undefined;
     "Ordenes": undefined;
     "Usuarios": undefined;
     "Mesas Asignadas": undefined;

@@ -7,7 +7,7 @@ import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
 import Button from "../components/Button";
 import { Text } from 'react-native-paper';
-import { handleAdmin, handlePressMenu } from '../navigationsHandle';
+import { handleAdmin, handleOrder, handlePressMenu } from '../navigationsHandle';
 
 const Home = () => {
     const { permissions, logout, user } = useAuth();
@@ -32,7 +32,7 @@ const Home = () => {
 
                     <View style={Style.container}>
                         <ButtonsHome title="Menu" description="Ver opciones" onPress={() => handlePressMenu(navigation)} iconName="grid" />
-                        {permission && permission["Ordenar Productos"] && <ButtonsHome title="Ordenar" description="Hacer pedido" onPress={() => Alert.alert('Ordenar')} iconName="add" />}
+                        {permission && permission["Ordenar Productos"] && <ButtonsHome title="Ordenar" description="Hacer pedido" onPress={() => handleOrder(navigation)} iconName="add" />}
                         <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
                         <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
                         <Button text='Logout' onPress={handleLogOut} />

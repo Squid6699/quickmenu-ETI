@@ -36,3 +36,7 @@ export const handlePressMenu = (navigation: NavigationProp<RootStackParamList>) 
 export const handleAdmin = (navigation: NavigationProp<RootStackParamList>) => {
   navigation.navigate("Admin");
 };
+
+export const handleOrder = (navigation: NavigationProp<RootStackParamList>) => {
+  navigation.navigate("Ordenar");
+};

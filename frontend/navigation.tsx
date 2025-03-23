@@ -14,7 +14,7 @@ import Customize from "./pages/admin/Customize";
 import ViewRoles from "./pages/admin/ViewRoles";
 import ViewMenu from "./pages/admin/ViewMenu";
 import ViewCategory from "./pages/admin/ViewCategory";
-import { NavigationProp } from '@react-navigation/native';
+import Order from "./pages/Order";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,6 +28,8 @@ export default function Navigation() {
         <>
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Ordenar" component={Order} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+
 
           <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Ordenes" component={ViewOrders} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />

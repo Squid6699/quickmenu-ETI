@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             }
         } catch (error) {
             setLoading(false);
-            console.error("Login Error:", API_URL);
+            // console.error("Login Error:", API_URL);
         }
     };
 
