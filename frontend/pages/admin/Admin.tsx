@@ -2,42 +2,14 @@ import { ImageBackground, ScrollView, View } from "react-native";
 import { backgroundStyle } from "../../styles/BackgroundStyles";
 import ButtonsOptions from "../../components/ButtonOptions";
 import { stylesButtonOptions } from "../../styles/ButtonOptions";
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from "../../types";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { handlePressCustomize, handlePressViewAssignedTables, handlePressViewCategories, handlePressViewMenu, handlePressViewOrders, handlePressViewRoles, handlePressViewUsers } from "../../navigationsHandle";
+
 
 const Admin = () => {
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const Style = stylesButtonOptions();
-
-    const handlePressViewOrders = () => {
-        navigation.navigate("Ordenes");
-    }
-
-    const handlePressViewUsers = () => {
-        navigation.navigate("Usuarios");
-    }
-
-    const handlePressViewAssignedTables = () => {
-        navigation.navigate("Mesas Asignadas");
-    }
-
-    const handlePressViewRoles = () => {
-        navigation.navigate("Roles");
-    }
-
-    const handlePressCustomize = () => {
-        navigation.navigate("Personalizar");
-    }
-
-    const handlePressViewMenu = () => {
-        navigation.navigate("Ver Menu");
-    }
-
-    const handlePressViewCategories = () => {
-        navigation.navigate("Ver Categorias");
-    }
-
-
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     return (
         <>
@@ -47,13 +19,13 @@ const Admin = () => {
             >
                 <ScrollView contentContainerStyle={Style.container}>
                     <View style={Style.container}>
-                        <ButtonsOptions title="Usuarios" description="Ver usuarios" onPress={handlePressViewUsers} iconName="body-outline" />
-                        <ButtonsOptions title="Ordenes" description="Ver ordenes" onPress={handlePressViewOrders} iconName="receipt" />
-                        <ButtonsOptions title="Mesas Asignadas" description="Ver mesas asignadas" onPress={handlePressViewAssignedTables} iconName="people-outline" />
-                        <ButtonsOptions title="Ver Menu" description="Ver menu" onPress={handlePressViewMenu} iconName="fast-food-outline" />
-                        <ButtonsOptions title="Ver Categorias" description="Ver categorias" onPress={handlePressViewCategories} iconName="copy-outline" />
-                        <ButtonsOptions title="Roles" description="Ver roles" onPress={handlePressViewRoles} iconName="people-outline" />
-                        <ButtonsOptions title="Personalizar" description="Ver colores" onPress={handlePressCustomize} iconName="cube-outline" />
+                        <ButtonsOptions title="Usuarios" description="Ver usuarios" onPress={() => handlePressViewUsers(navigation)} iconName="body-outline" />
+                        <ButtonsOptions title="Ordenes" description="Ver ordenes" onPress={() => handlePressViewOrders(navigation)} iconName="receipt" />
+                        <ButtonsOptions title="Mesas Asignadas" description="Ver mesas asignadas" onPress={() => handlePressViewAssignedTables(navigation)} iconName="people-outline" />
+                        <ButtonsOptions title="Ver Menu" description="Ver menu" onPress={() => handlePressViewMenu(navigation)} iconName="fast-food-outline" />
+                        <ButtonsOptions title="Ver Categorias" description="Ver categorias" onPress={() => handlePressViewCategories(navigation)} iconName="copy-outline" />
+                        <ButtonsOptions title="Roles" description="Ver roles" onPress={() => handlePressViewRoles(navigation)} iconName="people-outline" />
+                        <ButtonsOptions title="Personalizar" description="Ver colores" onPress={() => handlePressCustomize(navigation)} iconName="cube-outline" />
                     </View>
                 </ScrollView>
             </ImageBackground>

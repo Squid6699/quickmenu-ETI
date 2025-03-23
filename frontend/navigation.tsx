@@ -14,9 +14,9 @@ import Customize from "./pages/admin/Customize";
 import ViewRoles from "./pages/admin/ViewRoles";
 import ViewMenu from "./pages/admin/ViewMenu";
 import ViewCategory from "./pages/admin/ViewCategory";
+import { NavigationProp } from '@react-navigation/native';
 
 const Stack = createStackNavigator<RootStackParamList>();
-
 
 export default function Navigation() {
   const { colors } = useCustomColors();
@@ -24,26 +24,23 @@ export default function Navigation() {
 
   return (
     <Stack.Navigator>
-      {
-        user ? (
-          <>
-            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+      {user ? (
+        <>
+          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name="Menu" component={Menu} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
 
-            <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Ordenes" component={ViewOrders} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Usuarios" component={ViewUsers} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Mesas Asignadas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Roles" component={ViewRoles} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Personalizar" component={Customize} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Ver Menu" component={ViewMenu} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-            <Stack.Screen name="Ver Categorias" component={ViewCategory} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-
-          </>
-        ) : (
-          <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
-        )
-      }
+          <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Ordenes" component={ViewOrders} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Usuarios" component={ViewUsers} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Mesas Asignadas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Roles" component={ViewRoles} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Personalizar" component={Customize} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Ver Menu" component={ViewMenu} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Ver Categorias" component={ViewCategory} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+        </>
+      ) : (
+        <Stack.Screen name="Auth" component={Auth} options={{ headerShown: false }} />
+      )}
     </Stack.Navigator>
   );
 }
