@@ -146,3 +146,18 @@ export type ModalAddOrderProps = {
     onDismiss: () => void;
     menu: MenuType | null | undefined;
 }
+
+export type OrdersType = {
+    idOrder: string;
+    idMenu: string;
+    menuQuiality: number;
+    FOOD_TOTAL: number;
+    FOOD_STATUS: string;
+    FOOD_COMMENTS: string;
+    menuName: string;
+    menuDescription: string;
+    ORDER_STATUS: string;
+    WAITRESS: string;
+    TABLE: string;
+    TOTAL: number;
+}

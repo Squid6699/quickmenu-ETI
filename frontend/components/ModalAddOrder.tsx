@@ -61,6 +61,12 @@ const ModalAddOrder = ({ isOpen, onDismiss, menu }: ModalAddOrderProps) => {
             orders.push(order);
             await AsyncStorage.setItem("orders", JSON.stringify(orders));
 
+            setOrder((prev) => ({
+                ...prev,
+                quantity: 1,
+                comment: "",
+            }));
+
             setLoadingAddOrder(false);
             onDismiss();
             alert("Order added successfully");

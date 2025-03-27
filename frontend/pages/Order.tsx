@@ -7,15 +7,18 @@ import { FlatList } from "react-native-gesture-handler";
 import { Platform } from "react-native";
 import { useCustomColors } from "../hook/useCustomColors";
 import { backgroundStyle } from "../styles/BackgroundStyles";
-import { MenuType } from "../types";
+import { MenuType, RootStackParamList } from "../types";
 import { OrderStyles } from "../styles/OrderStyles";
 import ButtonsOptions from "../components/ButtonOptions";
 import ModalAddOrder from "../components/ModalAddOrder";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { handlePressViewOrders } from "../navigationsHandle";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const Order = () => {
     const Style = OrderStyles();
     const { colors } = useCustomColors();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const API_URL = Platform.OS === "android" ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
     const fetchMenu = async () => {
@@ -74,11 +77,15 @@ const Order = () => {
         console.log(order);
     }
 
+    const handleViewOrder = () => {
+        handlePressViewOrders(navigation);
+    }
+
     return (
         <ImageBackground source={require("../assets/background.jpg")} style={backgroundStyle.background}>
             <View style={Style.container}>
                 <View style={{ alignSelf: "center" }}>
-                    <ButtonsOptions title={"Ver orden"} description={"Visualiza tu orden y su estado"} iconName={"fast-food-outline"} onPress={() => getOrder()} />
+                    <ButtonsOptions title={"Ver orden"} description={"Visualiza tu orden y su estado"} iconName={"fast-food-outline"} onPress={() => handleViewOrder()} />
                 </View>
 
                 {isLoading ? (
@@ -94,7 +101,7 @@ const Order = () => {
                                 <List.Accordion key={category} title={category} style={{ backgroundColor: colors.backgroundCard }}>
                                     <FlatList
                                         data={data?.filter((item: MenuType) => item.CATEGORY_NAME === category)}
-                                        keyExtractor={(item: MenuType) => item.idMenu?.toString() || Math.random().toString()}
+                                        keyExtractor={(item: MenuType) => item.idMenu?.toString()}
                                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
                                         renderItem={renderItem}
                                         style={{ flexGrow: 1 }}
