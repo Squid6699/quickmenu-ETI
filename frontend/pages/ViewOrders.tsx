@@ -9,14 +9,17 @@ import { OrderStyles } from "../styles/OrderStyles";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
 import { useQuery } from "@tanstack/react-query";
-import { MenuType, OrdersType } from "../types";
+import { confirmOrder, OrdersType } from "../types";
 import { HomeStyles } from "../styles/HomeStyles";
+import { useAuth } from "../hook/useAuth";
+import ModalEditOrder from "../components/ModalEditOrder";
 
 const ViewOrders = () => {
+    const { user } = useAuth();
     const Style = OrderStyles();
     const StyleHome = HomeStyles();
     const { colors } = useCustomColors();
-    const [recipes, setRecipes] = useState<MenuType[]>([]);
+    const [recipes, setRecipes] = useState<confirmOrder[]>([]);
     const [refreshing, setRefreshing] = useState(false);
     const [loadingViewOrders, setLoadingViewOrders] = useState(false);
     const API_URL = Platform.OS === "android" ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
@@ -26,7 +29,7 @@ const ViewOrders = () => {
     }, []);
 
     const fetchOrders = async () => {
-        const response = await fetch(`${API_URL}/api/getOrders`, {
+        const response = await fetch(`${API_URL}/api/getOrders?q=${user?.id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -55,6 +58,26 @@ const ViewOrders = () => {
         await fetchRecipes();
         setRefreshing(false);
     };
+    
+    const [openModalEdit, setOpenModalEdit] = useState(false);
+    const [confirmOrderSelected, setConfirmOrderSelected] = useState<confirmOrder | null>(null);
+
+    const handleOpenModalEdit = (order: confirmOrder) => {
+        setConfirmOrderSelected(order);
+        setOpenModalEdit(true);
+    };
+
+    const handleCloseModalEdit = () => {
+        setConfirmOrderSelected(null);
+        setOpenModalEdit(false);
+        fetchRecipes();
+    }
+
+    const handleDeleteConfirmOrder = async (id: string) => {
+        const newRecipes = recipes.filter((recipe) => recipe.id !== id);
+        setRecipes(newRecipes);
+        await AsyncStorage.setItem("orders", JSON.stringify(newRecipes));
+    }
 
 
     return (
@@ -94,37 +117,45 @@ const ViewOrders = () => {
                 )} */}
 
                 {/* ORDENES EN LOCAL */}
-
-
-                <>
+                {recipes.length === 0 && !loadingViewOrders ? (
                     <View style={StyleHome.titleContainer}>
-                        <Text style={StyleHome.title}>ORDENES SIN CONFIRMAR</Text>
+                        <Text style={StyleHome.title}>SIN ORDENES POR CONFIRMAR</Text>
                     </View>
-                    <FlatList
-                        data={recipes}
-                        keyExtractor={(_, index) => index.toString()}
-                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
-                        renderItem={({ item }) => (
-                            <Card style={Style.Card}>
-                                <Card.Title title={item.NAME_MENU} titleStyle={Style.CardTitle} />
-                                <Card.Content>
-                                    <Text style={Style.CardDescription}>{item.description}</Text>
-                                </Card.Content>
-                                <Card.Actions>
-                                    <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
-                                        <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => console.log("PERMISOS PARA EDITAR")}>Editar</Button>
-                                        <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => console.log("PERMISOS PARA EDITAR")}>Eliminar</Button>
-                                        <Button icon="check" buttonColor={colors.buttonBackground} textColor="green" onPress={() => console.log("PERMISOS PARA EDITAR")}>Confirmar</Button>
-                                    </View>
-                                </Card.Actions>
-                            </Card>
-                        )}
-                        ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}
-                    />
-                </>
-
+                ) :
+                    <>
+                        <View style={StyleHome.titleContainer}>
+                            <Text style={StyleHome.title}>ORDENES SIN CONFIRMAR</Text>
+                        </View>
+                        <FlatList
+                            data={recipes}
+                            keyExtractor={(item) => item.id.toString()}
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
+                            renderItem={({ item }) => (
+                                <Card style={Style.Card}>
+                                    <Card.Title title={item.order?.NAME_MENU} titleStyle={Style.CardTitle} />
+                                    <Card.Content>
+                                        <Text style={Style.CardPrice}>{item.order?.CATEGORY_NAME}</Text>
+                                        <Text style={Style.CardDescription}>{item.order?.description}</Text>
+                                        <Text style={Style.CardDescription}>Cantidad: {item.quantity}</Text>
+                                        <Text style={Style.CardDescription}>Comentario: {item.comment ? item.comment : "Sin comentario"}</Text>
+                                        <Text style={Style.CardPrice}>${item.order?.price}</Text>
+                                    </Card.Content>
+                                    <Card.Actions>
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+                                            <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
+                                            <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => handleDeleteConfirmOrder(item.id)}>Eliminar</Button>
+                                            <Button icon="check" buttonColor={colors.buttonBackground} textColor="green" onPress={() => console.log("PERMISOS PARA EDITAR")}>Confirmar</Button>
+                                        </View>
+                                    </Card.Actions>
+                                </Card>
+                            )}
+                            ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}
+                        />
+                    </>
+                }
 
             </View>
+            <ModalEditOrder isOpen={openModalEdit} onDismiss={handleCloseModalEdit} order={confirmOrderSelected} />
         </ImageBackground>
     );
 };

@@ -5,6 +5,7 @@ import { Platform } from 'react-native';
 
 // Definir los tipos de datos que manejaremos en el contexto
 interface User {
+    id: string,
     name: string;
     username: string;
     roleId: number;
@@ -54,7 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const data = await response.json();
 
             if (data.success) {
-                const userData: User = { name: data.name, username: data.username, roleId: data.roleId };
+                const userData: User = {id: data.id, name: data.name, username: data.username, roleId: data.roleId };
 
                 setUser(userData);
                 setPermissions(data.permissions);

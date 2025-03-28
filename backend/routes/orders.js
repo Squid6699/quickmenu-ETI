@@ -4,6 +4,7 @@ import { db } from "../db.js";
 export const routerGetOrders = express.Router();
 
 routerGetOrders.get("/getOrders", (req, res) => {
+    const {idUser} = req.query;
     const customHeader = req.headers['x-frontend-header'];
 
     if (customHeader !== 'frontend') {
@@ -15,9 +16,9 @@ routerGetOrders.get("/getOrders", (req, res) => {
     "INNER JOIN orders O ON OD.orderID = O.id " +
     "INNER JOIN menu N ON OD.menuID = N.id " +
     "INNER JOIN users W ON O.idWaitress = W.id " +
-    "INNER JOIN users T ON O.idTable = T.id";
+    "INNER JOIN users T ON O.idTable = T.id WHERE idTable = ?";
 
-    db.query(query, (err, result) => {
+    db.query(query,[idUser], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }

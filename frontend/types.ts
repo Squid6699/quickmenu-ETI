@@ -33,9 +33,9 @@ export interface InputTextProps {
 }
 
 export type RootStackParamList = {
-    Home: undefined; 
-    Menu: undefined; 
-    Auth: undefined; 
+    Home: undefined;
+    Menu: undefined;
+    Auth: undefined;
     Admin: undefined;
     Ordenar: undefined;
     "Ordenes": undefined;
@@ -160,4 +160,18 @@ export type OrdersType = {
     WAITRESS: string;
     TABLE: string;
     TOTAL: number;
+}
+
+export type confirmOrder = {
+    id: string,
+    comment: string,
+    quantity: number,
+    total: number,
+    order: MenuType | undefined | null
+}
+
+export type ModalEditConfirmOrderProps = {
+    isOpen: boolean;
+    onDismiss: () => void;
+    order: confirmOrder | null | undefined;
 }

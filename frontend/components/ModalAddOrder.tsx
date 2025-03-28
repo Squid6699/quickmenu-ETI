@@ -5,6 +5,7 @@ import { Modal, View, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback
 import InputText from "./InputText";
 import { ActivityIndicator, Button, Text } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from 'react-native-uuid';
 
 const ModalAddOrder = ({ isOpen, onDismiss, menu }: ModalAddOrderProps) => {
     const styles = ModalStyles();
@@ -18,6 +19,7 @@ const ModalAddOrder = ({ isOpen, onDismiss, menu }: ModalAddOrderProps) => {
     }, [menu]);
 
     const [order, setOrder] = useState({
+        id: uuid.v4(),
         order: menu,
         quantity: 1,
         comment: "",
@@ -53,18 +55,22 @@ const ModalAddOrder = ({ isOpen, onDismiss, menu }: ModalAddOrderProps) => {
             return;
         }
 
-        //GUARDAR EN ASYNC STORAGE
         setLoadingAddOrder(true);
         try {
             const storedOrders = await AsyncStorage.getItem("orders");
             const orders = storedOrders ? JSON.parse(storedOrders) : [];
-            orders.push(order);
+            
+            const newOrder = { ...order, id: uuid.v4() };
+            orders.push(newOrder);
             await AsyncStorage.setItem("orders", JSON.stringify(orders));
 
             setOrder((prev) => ({
                 ...prev,
+                id: uuid.v4(),
+                order: menu,
                 quantity: 1,
                 comment: "",
+                total: menu?.price,
             }));
 
             setLoadingAddOrder(false);
@@ -111,7 +117,6 @@ const ModalAddOrder = ({ isOpen, onDismiss, menu }: ModalAddOrderProps) => {
             </TouchableWithoutFeedback>
         </Modal>
     );
-
 };
 
 export default ModalAddOrder;

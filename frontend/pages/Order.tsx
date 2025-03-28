@@ -70,14 +70,8 @@ const Order = () => {
         setOpenModalOrder(false);
     }
 
-
-    const getOrder = async () => {
-        // await AsyncStorage.removeItem("orders");
-        const order = await AsyncStorage.getItem("orders");
-        console.log(order);
-    }
-
     const handleViewOrder = () => {
+        // await AsyncStorage.removeItem("orders");
         handlePressViewOrders(navigation);
     }
 

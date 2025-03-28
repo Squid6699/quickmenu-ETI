@@ -27,7 +27,7 @@ const Home = () => {
             >
                 <ScrollView contentContainerStyle={Style.body}>
                     <View style={Style.titleContainer}>
-                        <Text style={Style.title}>{user?.name}</Text>
+                        <Text style={Style.title}>{user?.name.toUpperCase()}</Text>
                     </View>
 
                     <View style={Style.container}>
