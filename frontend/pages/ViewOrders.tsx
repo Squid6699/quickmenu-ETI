@@ -13,6 +13,7 @@ import { confirmOrder, OrdersType } from "../types";
 import { HomeStyles } from "../styles/HomeStyles";
 import { useAuth } from "../hook/useAuth";
 import ModalEditOrder from "../components/ModalEditOrder";
+import ButtonsOptions from "../components/ButtonOptions";
 
 const ViewOrders = () => {
     const { user } = useAuth();
@@ -58,7 +59,7 @@ const ViewOrders = () => {
         await fetchRecipes();
         setRefreshing(false);
     };
-    
+
     const [openModalEdit, setOpenModalEdit] = useState(false);
     const [confirmOrderSelected, setConfirmOrderSelected] = useState<confirmOrder | null>(null);
 
@@ -144,13 +145,17 @@ const ViewOrders = () => {
                                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
                                             <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
                                             <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => handleDeleteConfirmOrder(item.id)}>Eliminar</Button>
-                                            <Button icon="check" buttonColor={colors.buttonBackground} textColor="green" onPress={() => console.log("PERMISOS PARA EDITAR")}>Confirmar</Button>
                                         </View>
                                     </Card.Actions>
                                 </Card>
                             )}
+
                             ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}
                         />
+                        <View style={{ alignSelf: "center" }}>
+                            <ButtonsOptions title={"Confirmar Orden"} description={"Confirmar orden"} iconName={"checkmark-outline"} onPress={() => console.log("ORDEN CONFIRMADA")} />
+                        </View>
+
                     </>
                 }
 
