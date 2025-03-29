@@ -15,7 +15,7 @@ routerGetUsers.get("/getUsers", async (req, res) => {
 
     const query = "SELECT U.id, U.username AS username, U.name AS name, R.name AS ROL_NAME, U.password AS password FROM users U INNER JOIN role R ON U.roleId = R.id";
 
-    db.query(query, (err, result) => {
+    db.execute(query, (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -31,7 +31,7 @@ routerAddUsers.post("/addUsers", async (req, res) => {
     }
 
     const query = "INSERT INTO users (username, name, password, roleId) VALUES (?, ?, ?, ?)";
-    db.query(query, [username, name, password, roleId], (err, result) => {
+    db.execute(query, [username, name, password, roleId], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -47,7 +47,7 @@ routerUpdateUsers.put("/updateUsers", async (req, res) => {
     }
 
     const query = "UPDATE users SET username = ?, name = ?, password = ?, roleId = ? WHERE id = ?";
-    db.query(query, [username, name, password, roleId, id], (err, result) => {
+    db.execute(query, [username, name, password, roleId, id], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -68,7 +68,7 @@ routerDeleteUsers.delete("/deleteUsers", async (req, res) => {
     }
 
     const query = "DELETE FROM users WHERE id = ?";
-    db.query(query, [id], (err, result) => { 
+    db.execute(query, [id], (err, result) => { 
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }

@@ -14,7 +14,7 @@ routerGetMenu.get("/getMenu", (req, res) => {
     }
 
     const query = "SELECT M.id AS idMenu, M.name AS NAME_MENU, M.price, M.description, C.name AS CATEGORY_NAME, M.available FROM menu M INNER JOIN category C ON M.idCategory = C.id WHERE M.available = 1";
-    db.query(query, (err, result) => {
+    db.execute(query, (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
@@ -31,7 +31,7 @@ routerUpdateMenu.put("/updateMenu", (req, res) => {
 
     const query = "UPDATE menu SET name = ? ,price = ?,description = ?,idcategory = ? ,available = ? WHERE id = ?"
 
-    db.query(query, [name, price, description, idcategory, available, id], (err, result) => {
+    db.execute(query, [name, price, description, idcategory, available, id], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
@@ -48,7 +48,7 @@ routerDeleteMenu.delete("/deleteMenu", (req, res) => {
     }
 
     const query = "DELETE FROM menu WHERE id = ?";
-    db.query(query, [id], (err, result) => {
+    db.execute(query, [id], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
@@ -70,7 +70,7 @@ routerAddMenu.post("/addMenu", (req, res) => {
     }
 
     const query = "INSERT INTO menu (name,price,description,idcategory,available) VALUES (?,?,?,?,?)";
-    db.query(query, [name, price, description, idcategory, available], (err, result) => {
+    db.execute(query, [name, price, description, idcategory, available], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }

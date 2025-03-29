@@ -80,6 +80,40 @@ const ViewOrders = () => {
         await AsyncStorage.setItem("orders", JSON.stringify(newRecipes));
     }
 
+    const handleConfirmOrder = async () => {
+        try{
+            const response = await fetch(`${API_URL}/api/confirmOrder`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-frontend-header": "frontend"
+                },
+                body: JSON.stringify({
+                    idTable: user?.id,
+                    orders: recipes.map((item) => ({
+                        menuId: item.order?.idMenu,
+                        quantity: item.quantity,
+                        price: item.order?.price,
+                        comments: item.comment,
+                    })),
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                Alert.alert("Orden confirmada", "La orden ha sido confirmada correctamente");
+                setRecipes([]);
+                await AsyncStorage.removeItem("orders");
+                fetchRecipes();
+            }else{
+                Alert.alert("Error", data.msg);
+            }
+
+        }catch(error){
+            console.log(error);
+        }
+    }
+
 
     return (
         <ImageBackground source={require("../assets/background.jpg")} style={backgroundStyle.background}>
@@ -140,6 +174,7 @@ const ViewOrders = () => {
                                         <Text style={Style.CardDescription}>Cantidad: {item.quantity}</Text>
                                         <Text style={Style.CardDescription}>Comentario: {item.comment ? item.comment : "Sin comentario"}</Text>
                                         <Text style={Style.CardPrice}>${item.order?.price}</Text>
+                                        <Text style={Style.CardPrice}>Total: ${item.total}</Text>
                                     </Card.Content>
                                     <Card.Actions>
                                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
@@ -153,7 +188,7 @@ const ViewOrders = () => {
                             ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}
                         />
                         <View style={{ alignSelf: "center" }}>
-                            <ButtonsOptions title={"Confirmar Orden"} description={"Confirmar orden"} iconName={"checkmark-outline"} onPress={() => console.log("ORDEN CONFIRMADA")} />
+                            <ButtonsOptions title={"Confirmar Orden"} description={"Confirmar orden"} iconName={"checkmark-outline"} onPress={() => handleConfirmOrder()} />
                         </View>
 
                     </>

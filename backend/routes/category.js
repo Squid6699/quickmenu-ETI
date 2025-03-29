@@ -16,7 +16,7 @@ routerGetCategory.get("/getCategory", (req, res) => {
     }
 
     const query = "SELECT * FROM Category";
-    db.query(query, (err, result) => {
+    db.execute(query, (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
@@ -33,7 +33,7 @@ routerUpdateCategory.put("/updateCategory", (req, res) => {
 
     const query = "UPDATE Category SET name = ?  WHERE id = ?"
 
-    db.query(query, [name, id], (err, result) => {
+    db.execute(query, [name, id], (err, result) => {
         if (err) {
             console.log(err);
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
@@ -50,7 +50,7 @@ routerDeleteCategory.delete("/deleteCategory", (req, res) => {
     }
 
     const query = "DELETE FROM Category WHERE id = ?";
-    db.query(query, [id], (err, result) => {
+    db.execute(query, [id], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
@@ -72,7 +72,7 @@ routerAddCategory.post("/addCategory", (req, res) => {
     }
 
     const query = "INSERT INTO Category (name) VALUES (?)";
-    db.query(query, [name], (err, result) => {
+    db.execute(query, [name], (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }

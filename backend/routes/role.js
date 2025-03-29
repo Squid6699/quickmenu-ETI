@@ -15,7 +15,7 @@ routerAddRoles.post("/addRoles", async (req, res) => {
     }
 
     const query = "INSERT INTO role (name, permissions) VALUES (?, ?)";
-    db.query(query, [name, permissions], (err, result) => {
+    db.execute(query, [name, permissions], (err, result) => {
 
         if (err?.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({msg: "ROLE ALREADY EXISTS"});
@@ -38,7 +38,7 @@ routerGetRoles.get("/getRoles", async (req, res) => {
 
     const query = "SELECT * FROM role";
 
-    db.query(query, (err, result) => {
+    db.execute(query, (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -54,7 +54,7 @@ routerDeleteRoles.delete("/deleteRoles", async (req, res) => {
     }
 
     const query = "DELETE FROM role WHERE id = ?";
-    db.query(query, [id], (err, result) => { 
+    db.execute(query, [id], (err, result) => { 
 
         if (err?.code === 'ER_ROW_IS_REFERENCED_2') {
             return res.status(409).json({msg: "ROLE IS BEING USED"});
@@ -81,7 +81,7 @@ routerUpdateRoles.put("/updateRoles", async (req, res) => {
 
     const query = "UPDATE role SET name = ?, permissions = ? WHERE id = ?";
 
-    db.query(query, [name, permissions, id], (err, result) => {
+    db.execute(query, [name, permissions, id], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }

@@ -9,7 +9,7 @@ routerUpdateCustomize.put("/updateCustomize", async (req, res) => {
 
     const query = "UPDATE customize SET color = ? WHERE id = ?";
 
-    db.query(query, [color, id], (err, result) => {
+    db.execute(query, [color, id], (err, result) => {
         if (err) {
             return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
         }
@@ -30,7 +30,7 @@ routerGetCustomize.get("/getCustomize", async (req, res) => {
 
     const query = "SELECT * FROM customize";
 
-    db.query(query, (err, result) => {
+    db.execute(query, (err, result) => {
         if (err) {
             return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
         }
