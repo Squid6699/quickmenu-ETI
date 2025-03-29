@@ -150,9 +150,10 @@ export type ModalAddOrderProps = {
 }
 
 export type OrdersType = {
+    idOrderDetails: string;
     idOrder: string;
     idMenu: string;
-    menuQuiality: number;
+    menuQuantity: number;
     FOOD_TOTAL: number;
     FOOD_STATUS: string;
     FOOD_COMMENTS: string;

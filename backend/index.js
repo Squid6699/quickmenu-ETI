@@ -29,8 +29,8 @@ app.use("/api/", routerGetRoles);
 app.use("/api/", routerDeleteRoles);
 app.use("/api/", routerUpdateRoles);
 
-// app.use("/api/", routerGetOrders);
-// app.use("/api/", routerConfirmOrder);
+app.use("/api/", routerGetOrders);
+app.use("/api/", routerConfirmOrder);
 
 app.use("/api/", routerGetMenu);
 app.use("/api/", routerUpdateMenu);

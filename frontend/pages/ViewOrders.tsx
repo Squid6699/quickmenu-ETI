@@ -43,7 +43,7 @@ const ViewOrders = () => {
         return data.data;
     };
 
-    const { data: OrdersDB, isLoading, isError, error, refetch } = useQuery({ queryKey: ["ordersDB"], queryFn: fetchOrders });
+    const { data: OrdersDB, isLoading, isError, error, refetch } = useQuery<OrdersType[]>({ queryKey: ["ordersDB"], queryFn: fetchOrders });
 
     const fetchRecipes = async () => {
         setLoadingViewOrders(true);
@@ -51,6 +51,7 @@ const ViewOrders = () => {
         if (storedRecipes) {
             setRecipes(JSON.parse(storedRecipes));
         }
+        refetch();
         setLoadingViewOrders(false);
     };
 
@@ -81,7 +82,7 @@ const ViewOrders = () => {
     }
 
     const handleConfirmOrder = async () => {
-        try{
+        try {
             const response = await fetch(`${API_URL}/api/confirmOrder`, {
                 method: "POST",
                 headers: {
@@ -98,18 +99,18 @@ const ViewOrders = () => {
                     })),
                 })
             });
-            
+
             const data = await response.json();
             if (data.success) {
-                Alert.alert("Orden confirmada", "La orden ha sido confirmada correctamente");
+                Alert.alert("ORDER CONFIRMED", "ORDER CONFIRMED SUCCESSFULLY");
                 setRecipes([]);
                 await AsyncStorage.removeItem("orders");
                 fetchRecipes();
-            }else{
+            } else {
                 Alert.alert("Error", data.msg);
             }
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
     }
@@ -119,37 +120,45 @@ const ViewOrders = () => {
         <ImageBackground source={require("../assets/background.jpg")} style={backgroundStyle.background}>
             <View style={Style.container}>
 
-                {/* {isLoading ? (
-                    <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
-                ) : isError ? (
-                    <Text style={{ color: "red" }}>Error: {error.message}</Text>
-                ) : (
-                    <>
-                        <Text style={Style.CardTitle}>ORDENES</Text> */}
-                {/* FALTA AGREGAR NUMERO DE MESA Y MESERO ASIGNADO */}
-                {/* <FlatList
-                            data={OrdersDB}
-                            keyExtractor={(item) => item.id.toString()}
-                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
-                            renderItem={({ item }) => (
-                                <Card style={Style.Card}>
-                                    <Card.Title title={item.name.toUpperCase()} titleStyle={Style.CardTitle} />
-                                    <Card.Content>
-                                        <Text style={Style.CardContent}>USUARIO: {item.username.toUpperCase()}</Text>
-                                        <Text style={Style.CardContent}>ROL: {item.ROL_NAME.toUpperCase()}</Text>
-                                        <Text style={Style.CardContent}>PASS: {item.password}</Text>
-                                    </Card.Content>
-                                    <Card.Actions>
-                                        <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => console.log("PERMISOS PARA EDITAR")}>Editar</Button>
-                                        <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => console.log("PERMISOS PARA EDITAR")}>Eliminar</Button>
-                                    </Card.Actions>
-                                </Card>
-                            )}
-                            ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}
-                        /> */}
-                {/* </>
+                {
+                    (OrdersDB ?? []).length > 0 && (
 
-                )} */}
+                        isLoading ? (
+                            <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
+                        ) : isError ? (
+                            <Text style={{ color: "red" }}>Error: {error.message}</Text>
+                        ) : (
+                            <>
+                                <Text style={StyleHome.title}>ORDENES</Text>
+                                {/* FALTA AGREGAR NUMERO DE MESA Y MESERO ASIGNADO */}
+                                <FlatList
+                                    data={OrdersDB}
+                                    keyExtractor={(item) => item.idOrderDetails.toString()}
+                                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} colors={["red"]} />}
+                                    renderItem={({ item }) => (
+                                        <Card style={Style.Card}>
+                                            <Card.Title title={item.menuName} titleStyle={Style.CardTitle} />
+                                            <Card.Content>
+                                                <Text style={Style.CardDescription}>{item.menuDescription}</Text>
+                                                <Text style={Style.CardDescription}>Cantidad: {item.menuQuantity}</Text>
+                                                <Text style={Style.CardDescription}>Comentario: {item.FOOD_COMMENTS ? item.FOOD_COMMENTS : "Sin comentario"}</Text>
+                                                <Text style={Style.CardPrice}>${item.FOOD_TOTAL}</Text>
+                                                <Text style={Style.CardPrice}>Total: ${item.FOOD_TOTAL * item.menuQuantity}</Text>
+                                                <Text style={Style.CardPrice}>Status: {item.ORDER_STATUS}</Text>
+                                            </Card.Content>
+                                            {/* <Card.Actions>
+                                    <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+                                        <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
+                                        <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => handleDeleteConfirmOrder(item.id)}>Eliminar</Button>
+                                    </View>
+                                </Card.Actions> */}
+                                        </Card>
+                                    )}
+                                    ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}
+                                />
+                            </>
+
+                        ))}
 
                 {/* ORDENES EN LOCAL */}
                 {recipes.length === 0 && !loadingViewOrders ? (
