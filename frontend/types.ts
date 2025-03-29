@@ -12,6 +12,8 @@ export interface ButtonOptionsProps {
     iconName?: String
     iconSize?: Number
     description?: String
+    loading?: boolean
+    disabled?: boolean
 }
 
 export interface ButtonProps {

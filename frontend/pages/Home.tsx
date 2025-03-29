@@ -5,9 +5,9 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
-import Button from "../components/Button";
 import { Text } from 'react-native-paper';
 import { handleAdmin, handleOrder, handlePressMenu } from '../navigationsHandle';
+import ButtonsOptions from '../components/ButtonOptions';
 
 const Home = () => {
     const { permissions, logout, user } = useAuth();
@@ -35,9 +35,10 @@ const Home = () => {
                         {permission && permission["Ordenar Productos"] && <ButtonsHome title="Ordenar" description="Hacer pedido" onPress={() => handleOrder(navigation)} iconName="add" />}
                         <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
                         <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
-                        <Button text='Logout' onPress={handleLogOut} />
 
-                        {permission && permission.admin && <Button text='Admin' onPress={() => handleAdmin(navigation)} />}
+                        <ButtonsOptions title="Logout" description="Cerrar sesion" onPress={handleLogOut} iconName="log-out-outline" />
+                        {permission && permission.admin && <ButtonsOptions title={"Admin"} description="Ver opciones de admin" onPress={() => handleAdmin(navigation)} iconName="settings-outline" />}
+
                     </View>
                 </ScrollView>
             </ImageBackground>

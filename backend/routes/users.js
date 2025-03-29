@@ -13,70 +13,84 @@ routerGetUsers.get("/getUsers", async (req, res) => {
         return res.status(401).send('Unauthorized');
     }
 
-    const query = "SELECT U.id, U.username AS username, U.name AS name, R.name AS ROL_NAME, U.password AS password FROM users U INNER JOIN role R ON U.roleId = R.id";
+    const query = `
+        SELECT 
+            U.id, 
+            U.username AS username, 
+            U.name AS name, 
+            R.name AS ROL_NAME, 
+            U.password AS password 
+        FROM users U 
+        INNER JOIN role R ON U.roleId = R.id
+    `;
 
-    db.execute(query, (err, result) => {
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-        }
-        return res.status(200).json({success: true, msg: "USERS RETRIEVED", data: result});
-    })
-})
+    try {
+        const [result] = await db.execute(query);
+        return res.status(200).json({ success: true, msg: "USERS RETRIEVED", data: result });
+    } catch (err) {
+        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR"});
+    }
+});
 
 routerAddUsers.post("/addUsers", async (req, res) => {
     const { username, name, password, roleId } = req.body;
 
-    if (!username || !name || !password || !roleId){
-        return res.status(400).json({msg: "MISSING DATA"});
+    if (!username || !name || !password || !roleId) {
+        return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "INSERT INTO users (username, name, password, roleId) VALUES (?, ?, ?, ?)";
-    db.execute(query, [username, name, password, roleId], (err, result) => {
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-        }
-        return res.status(200).json({success: true, msg: "USER ADDED"});
-    })
-})
+
+    try {
+        const [result] = await db.execute(query, [username, name, password, roleId]);
+
+        return res.status(200).json({ success: true, msg: "USER ADDED", insertedId: result.insertId });
+    } catch (err) {
+        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR" });
+    }
+});
 
 routerUpdateUsers.put("/updateUsers", async (req, res) => {
     const { id, username, name, password, roleId } = req.body;
 
-    if (!id || !username || !name || !password || !roleId){
-        return res.status(400).json({msg: "MISSING DATA"});
+    if (!id || !username || !name || !password || !roleId) {
+        return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "UPDATE users SET username = ?, name = ?, password = ?, roleId = ? WHERE id = ?";
-    db.execute(query, [username, name, password, roleId, id], (err, result) => {
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
+
+    try {
+        const [result] = await db.execute(query, [username, name, password, roleId, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, msg: "USER NOT FOUND" });
         }
 
-        if (result.affectedRows === 0){
-            return res.status(404).json({success: false, msg: "USER NOT FOUND"});
-        }
+        return res.status(200).json({ success: true, msg: "USER UPDATED" });
+    } catch (err) {
+        return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
+    }
+});
 
-        return res.status(200).json({success: true, msg: "USER UPDATED"});
-    })
-})
 
 routerDeleteUsers.delete("/deleteUsers", async (req, res) => {
     const { id } = req.body;
 
-    if (!id){
-        return res.status(400).json({msg: "MISSING DATA"});
+    if (!id) {
+        return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "DELETE FROM users WHERE id = ?";
-    db.execute(query, [id], (err, result) => { 
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
+
+    try {
+        const [result] = await db.execute(query, [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, msg: "USER NOT FOUND" });
         }
 
-        if (result.affectedRows === 0){
-            return res.status(404).json({success: false, msg: "USER NOT FOUND"});
-        }
-
-        return res.status(200).json({success: true, msg: "USER DELETED"});
-    })
-})
+        return res.status(200).json({ success: true, msg: "USER DELETED" });
+    } catch (err) {
+        return res.status(500).json({ msg: "INTERNAL SERVER ERROR"});
+    }
+});

@@ -3,9 +3,9 @@ import InputText from "../components/InputText";
 import { useState } from "react";
 import { AuthStyle } from "../styles/AuthStyles";
 import { Text } from "react-native-paper";
-import Button from "../components/Button";
 import { useAuth } from "../hook/useAuth";
 import { backgroundStyle } from "../styles/BackgroundStyles";
+import ButtonsOptions from "../components/ButtonOptions";
 
 
 const Auth = () => {
@@ -51,8 +51,11 @@ const Auth = () => {
                     <View style={Style.inputContainer}>
                         <InputText label="Username" value={username} onChange={handleOnchangeUsername} error={error.username} />
                         <InputText label="Password" value={password} onChange={handleOnchangePassword} error={error.password} type="password" />
-                        <Button text="LOG IN" onPress={handleLogin} loading={loading} disabled={loading} />
                     </View>
+
+                </View>
+                <View style = {{alignSelf: "center"}}>
+                    <ButtonsOptions title={"LOG IN"} onPress={handleLogin} iconName="log-in-outline" iconSize={30} description="Log in to your account" loading={loading} disabled={loading} />
                 </View>
             </View>
         </ImageBackground>

@@ -10,23 +10,24 @@ export const routerUpdateRoles = express.Router();
 routerAddRoles.post("/addRoles", async (req, res) => {
     const { name, permissions } = req.body;
 
-    if (!name){
-        return res.status(400).json({msg: "MISSING DATA"});
+    if (!name) {
+        return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "INSERT INTO role (name, permissions) VALUES (?, ?)";
-    db.execute(query, [name, permissions], (err, result) => {
 
-        if (err?.code === 'ER_DUP_ENTRY') {
-            return res.status(409).json({msg: "ROLE ALREADY EXISTS"});
-        }
+    try {
+        const [result] = await db.execute(query, [name, permissions]);
 
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
+        return res.status(200).json({ success: true, msg: "ROLE ADDED", insertedId: result.insertId });
+    } catch (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+            return res.status(409).json({ success: false, msg: "ROLE ALREADY EXISTS" });
         }
-        return res.status(200).json({success: true, msg: "ROLE ADDED"});
-    })
-})
+        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR" });
+    }
+});
+
 
 routerGetRoles.get("/getRoles", async (req, res) => {
     
@@ -38,53 +39,57 @@ routerGetRoles.get("/getRoles", async (req, res) => {
 
     const query = "SELECT * FROM role";
 
-    db.execute(query, (err, result) => {
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-        }
-        return res.status(200).json({success: true, msg: "ROLES RETRIEVED", data: result});
-    })
+    try {
+        const [result] = await db.execute(query);
+        return res.status(200).json({ success: true, msg: "ROLES RETRIEVED", data: result });
+    } catch (err) {
+        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR" });
+    }
 })
 
 routerDeleteRoles.delete("/deleteRoles", async (req, res) => {
     const { id } = req.body;
 
-    if (!id){
-        return res.status(400).json({msg: "MISSING DATA"});
+    if (!id) {
+        return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "DELETE FROM role WHERE id = ?";
-    db.execute(query, [id], (err, result) => { 
 
-        if (err?.code === 'ER_ROW_IS_REFERENCED_2') {
-            return res.status(409).json({msg: "ROLE IS BEING USED"});
+    try {
+        const [result] = await db.execute(query, [id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, msg: "ROLE NOT FOUND" });
         }
 
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
+        return res.status(200).json({ success: true, msg: "ROLE DELETED" });
+    } catch (err) {
+        if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+            return res.status(409).json({ success: false, msg: "ROLE IS BEING USED" });
         }
-
-        if (result.affectedRows === 0){
-            return res.status(404).json({success: false, msg: "ROLE NOT FOUND"});
-        }
-
-        return res.status(200).json({success: true, msg: "ROLE DELETED"});
-    })
-})
+        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR"});
+    }
+});
 
 routerUpdateRoles.put("/updateRoles", async (req, res) => {
     const { id, name, permissions } = req.body;
 
-    if (!id || !name){
-        return res.status(400).json({msg: "MISSING DATA"});
+    if (!id || !name) {
+        return res.status(400).json({ msg: "MISSING DATA" });
     }
 
     const query = "UPDATE role SET name = ?, permissions = ? WHERE id = ?";
 
-    db.execute(query, [name, permissions, id], (err, result) => {
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
+    try {
+        const [result] = await db.execute(query, [name, permissions, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, msg: "ROLE NOT FOUND OR NOT UPDATED" });
         }
-        res.status(200).json({success: true, msg: "ROLE UPDATED"});
-    })
-})
+
+        return res.status(200).json({ success: true, msg: "ROLE UPDATED" });
+    } catch (err) {
+        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR" });
+    }
+});

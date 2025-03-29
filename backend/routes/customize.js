@@ -7,21 +7,27 @@ export const routerUpdateCustomize = express.Router();
 routerUpdateCustomize.put("/updateCustomize", async (req, res) => {
     const { id, color } = req.body;
 
+    if (!id || !color) {
+        return res.status(400).json({ msg: "MISSING DATA" });
+    }
+
     const query = "UPDATE customize SET color = ? WHERE id = ?";
 
-    db.execute(query, [color, id], (err, result) => {
-        if (err) {
-            return res.status(500).json({msg: "INTERNAL SERVER ERROR"});
-        }
+    try {
+        const [result] = await db.execute(query, [color, id]);
+
         if (result.affectedRows === 0) {
-            return res.status(404).json({ success: false, msg: "CATEGORY NOT FOUND" });
+            return res.status(404).json({ success: false, msg: "CUSTOMIZE NOT FOUND" });
         }
-        res.status(200).json({ success: true, msg: "CATEGORY UPDATED" });
-    });
+
+        return res.status(200).json({ success: true, msg: "CUSTOMIZE UPDATED" });
+    } catch (err) {
+        return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
+    }
 });
 
+
 routerGetCustomize.get("/getCustomize", async (req, res) => {
-    
     const customHeader = req.headers['x-frontend-header'];
 
     if (customHeader !== 'frontend') {
@@ -30,10 +36,11 @@ routerGetCustomize.get("/getCustomize", async (req, res) => {
 
     const query = "SELECT * FROM customize";
 
-    db.execute(query, (err, result) => {
-        if (err) {
-            return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
-        }
+    try {
+        const [result] = await db.execute(query);
+
         return res.status(200).json({ success: true, customize: result });
-    });
+    } catch (err) {
+        return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
+    }
 });

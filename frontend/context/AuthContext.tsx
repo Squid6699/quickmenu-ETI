@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [permissions, setPermissions] = useState<string | null>(null);
     const [token, setToken] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
     // Función para iniciar sesión
     const login = async (username: string, password: string) => {
@@ -82,6 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         await AsyncStorage.removeItem("user");
         await AsyncStorage.removeItem("token");
         await AsyncStorage.removeItem("permissions");
+        setLoading(false);
     };
 
     // Cargar usuario y token al iniciar la app
