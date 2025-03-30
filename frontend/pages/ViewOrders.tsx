@@ -9,7 +9,7 @@ import { OrderStyles } from "../styles/OrderStyles";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
 import { useQuery } from "@tanstack/react-query";
-import { confirmOrder, OrdersType } from "../types";
+import { AssignedWaitress, confirmOrder, OrdersType } from "../types";
 import { HomeStyles } from "../styles/HomeStyles";
 import { useAuth } from "../hook/useAuth";
 import ModalEditOrder from "../components/ModalEditOrder";
@@ -26,7 +26,7 @@ const ViewOrders = () => {
     const API_URL = Platform.OS === "android" ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
     useEffect(() => {
-        fetchRecipes();
+        handleRefreshOrders();
     }, []);
 
     const fetchOrders = async () => {
@@ -43,7 +43,28 @@ const ViewOrders = () => {
         return data.data;
     };
 
-    const { data: OrdersDB, isLoading, isError, error, refetch } = useQuery<OrdersType[]>({ queryKey: ["ordersDB"], queryFn: fetchOrders });
+    const fetchAssignedWaitress = async () => {
+        const response = await fetch(`${API_URL}/api/getAssignedWaitress?id=${user?.id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "x-frontend-header": "frontend"
+            },
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            return data.data;
+        } else {
+            Alert.alert("Error", data.msg);
+
+        }
+        return data.data;
+    }
+
+    const { data: OrdersDB, isLoading, isError, error, refetch: refetchOrders } = useQuery<OrdersType[]>({ queryKey: ["ordersDB"], queryFn: fetchOrders });
+    const { data: Waitress } = useQuery<AssignedWaitress>({ queryKey: ["assignedWaitress"], queryFn: fetchAssignedWaitress });
 
     const fetchRecipes = async () => {
         setLoadingViewOrders(true);
@@ -51,15 +72,19 @@ const ViewOrders = () => {
         if (storedRecipes) {
             setRecipes(JSON.parse(storedRecipes));
         }
-        refetch();
         setLoadingViewOrders(false);
     };
 
     const handleRefresh = async () => {
         setRefreshing(true);
-        await fetchRecipes();
+        await handleRefreshOrders();
         setRefreshing(false);
     };
+
+    const handleRefreshOrders = async () => {
+        await refetchOrders();
+        await fetchRecipes();
+    }
 
     const [openModalEdit, setOpenModalEdit] = useState(false);
     const [confirmOrderSelected, setConfirmOrderSelected] = useState<confirmOrder | null>(null);
@@ -72,7 +97,7 @@ const ViewOrders = () => {
     const handleCloseModalEdit = () => {
         setConfirmOrderSelected(null);
         setOpenModalEdit(false);
-        fetchRecipes();
+        handleRefreshOrders();
     }
 
     const handleDeleteConfirmOrder = async (id: string) => {
@@ -91,6 +116,7 @@ const ViewOrders = () => {
                 },
                 body: JSON.stringify({
                     idTable: user?.id,
+                    idWaitress: Waitress?.idWaitressAssigned,
                     orders: recipes.map((item) => ({
                         menuId: item.order?.idMenu,
                         quantity: item.quantity,
@@ -105,7 +131,7 @@ const ViewOrders = () => {
                 Alert.alert("ORDER CONFIRMED", "ORDER CONFIRMED SUCCESSFULLY");
                 setRecipes([]);
                 await AsyncStorage.removeItem("orders");
-                fetchRecipes();
+                handleRefreshOrders();
             } else {
                 Alert.alert("Error", data.msg);
             }
@@ -130,7 +156,8 @@ const ViewOrders = () => {
                         ) : (
                             <>
                                 <Text style={StyleHome.title}>ORDENES</Text>
-                                {/* FALTA AGREGAR NUMERO DE MESA Y MESERO ASIGNADO */}
+                                <Text style={StyleHome.title}>{user?.name}</Text>
+                                <Text style={StyleHome.title}>{Waitress?.userName ? Waitress?.userName : "SIN ASIGNACION"}</Text>
                                 <FlatList
                                     data={OrdersDB}
                                     keyExtractor={(item) => item.idOrderDetails.toString()}
@@ -144,14 +171,8 @@ const ViewOrders = () => {
                                                 <Text style={Style.CardDescription}>Comentario: {item.FOOD_COMMENTS ? item.FOOD_COMMENTS : "Sin comentario"}</Text>
                                                 <Text style={Style.CardPrice}>${item.FOOD_TOTAL}</Text>
                                                 <Text style={Style.CardPrice}>Total: ${item.FOOD_TOTAL * item.menuQuantity}</Text>
-                                                <Text style={Style.CardPrice}>Status: {item.ORDER_STATUS}</Text>
+                                                <Text style={Style.CardPrice}>Status: {item.FOOD_STATUS}</Text>
                                             </Card.Content>
-                                            {/* <Card.Actions>
-                                    <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
-                                        <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => handleOpenModalEdit(item)}>Editar</Button>
-                                        <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => handleDeleteConfirmOrder(item.id)}>Eliminar</Button>
-                                    </View>
-                                </Card.Actions> */}
                                         </Card>
                                     )}
                                     ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay ordenes disponibles</Text>}

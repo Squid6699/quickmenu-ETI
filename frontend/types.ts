@@ -178,3 +178,8 @@ export type ModalEditConfirmOrderProps = {
     onDismiss: () => void;
     order: confirmOrder | null | undefined;
 }
+
+export type AssignedWaitress = {
+    userName: string,
+    idWaitressAssigned: string
+}

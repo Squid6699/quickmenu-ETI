@@ -72,12 +72,13 @@ routerConfirmOrder.post("/confirmOrder", async (req, res) => {
             orderId = existingOrder[0].id;
         } else {
             // 3️⃣ Si no hay orden en servicio, crear una nueva
-            const orderResult = await db.execute(
+            const [orderResult] = await db.execute(
                 "INSERT INTO orders (total, idTable, idWaitress) VALUES (?, ?, ?)",
                 [total, idTable, waitressId]
             );
             orderId = orderResult.insertId;
         }
+
 
         // 4️⃣ Agregar los nuevos platillos a OrderDetails
         const orderDetailsPromises = orders.map((order) =>
