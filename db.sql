@@ -84,7 +84,7 @@ CREATE TABLE Tickets (
 CREATE TABLE Assigned_Tables (
     id INT PRIMARY KEY AUTO_INCREMENT,
     idUser INT,
-    idTable INT,
+    idTable INT UNIQUE,
     FOREIGN KEY (idUser) REFERENCES Users(id),
     FOREIGN KEY (idTable) REFERENCES Users(id)
 );
