@@ -8,7 +8,7 @@ import { routerAddMenu, routerDeleteMenu, routerGetMenu, routerUpdateMenu } from
 import { routerAddCategory, routerDeleteCategory, routerGetCategory, routerUpdateCategory } from "./routes/category.js";
 import { routerGetCustomize, routerUpdateCustomize } from "./routes/customize.js";
 import { routerAddUsers, routerDeleteUsers, routerGetUsers, routerUpdateUsers } from "./routes/users.js";
-import { routerGetAssignedWaitress } from "./routes/waitress.js";
+import { routerGetAssignedTables, routerGetAssignedWaitress } from "./routes/waitress.js";
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -51,6 +51,7 @@ app.use("/api/", routerAddUsers);
 app.use("/api/", routerDeleteUsers);
 app.use("/api/", routerUpdateUsers);
 
+app.use("/api/", routerGetAssignedTables);
 app.use("/api/", routerGetAssignedWaitress);
 
 
