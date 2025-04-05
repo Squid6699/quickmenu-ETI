@@ -3,6 +3,9 @@ import { db } from "../db.js";
 
 export const routerGetAssignedWaitress = express.Router();
 export const routerGetAssignedTables = express.Router();
+export const routerAssignedTableAdd = express.Router();
+export const routerAssignedTableUpdate = express.Router();
+export const routerAssignedTableDelete = express.Router();
 
 routerGetAssignedTables.get("/getAssignedTables", async (req, res) => {
 
@@ -70,3 +73,4 @@ routerGetAssignedWaitress.get("/getAssignedWaitress", async (req, res) => {
         return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
     }
 })
+
