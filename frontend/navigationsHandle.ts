@@ -9,8 +9,8 @@ export const handlePressViewUsers = (navigation: NavigationProp<RootStackParamLi
   navigation.navigate("Usuarios");
 };
 
-export const handlePressViewAssignedTables = (navigation: NavigationProp<RootStackParamList>) => {
-  navigation.navigate("Mesas Asignadas");
+export const handlePressViewAssignTables = (navigation: NavigationProp<RootStackParamList>) => {
+  navigation.navigate("Asignar Mesas");
 };
 
 export const handlePressViewRoles = (navigation: NavigationProp<RootStackParamList>) => {

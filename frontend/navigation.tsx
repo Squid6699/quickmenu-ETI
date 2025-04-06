@@ -7,7 +7,7 @@ import Menu from "./pages/Menu";
 import { RootStackParamList } from "./types";
 import Admin from "./pages/admin/Admin";
 import ViewOrders from "./pages/ViewOrders";
-import ViewAssignedTables from "./pages/ViewAssignedTables";
+import ViewAssignTables from "./pages/ViewAssignTables";
 import { useCustomColors } from "./hook/useCustomColors";
 import ViewUsers from "./pages/admin/ViewUsers";
 import Customize from "./pages/admin/Customize";
@@ -34,8 +34,8 @@ export default function Navigation() {
           <Stack.Screen name="Admin" component={Admin} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Ordenes" component={ViewOrders} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Usuarios" component={ViewUsers} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-          <Stack.Screen name="Mesas Asignadas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
-          <Stack.Screen name="Asignar Mesas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          {/* <Stack.Screen name="Mesas Asignadas" component={ViewAssignedTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} /> */}
+          <Stack.Screen name="Asignar Mesas" component={ViewAssignTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Roles" component={ViewRoles} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Personalizar" component={Customize} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Ver Menu" component={ViewMenu} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />

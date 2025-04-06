@@ -43,6 +43,7 @@ export type RootStackParamList = {
     "Ordenes": undefined;
     "Usuarios": undefined;
     "Mesas Asignadas": undefined;
+    "Asignar Mesas": undefined;
     "Roles": undefined;
     "Personalizar": undefined;
     "Ver Menu": undefined;
@@ -182,4 +183,10 @@ export type ModalEditConfirmOrderProps = {
 export type AssignedWaitress = {
     userName: string,
     idWaitressAssigned: string
+}
+
+export type AssignedTable = {
+    idWaitress: string,
+    Waitress: string,
+    Tables: string
 }

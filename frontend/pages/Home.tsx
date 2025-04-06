@@ -6,7 +6,7 @@ import { RootStackParamList } from '../types';
 import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
 import { Text } from 'react-native-paper';
-import { handleAdmin, handleOrder, handlePressMenu, handlePressViewAssignedTables } from '../navigationsHandle';
+import { handleAdmin, handleOrder, handlePressMenu, handlePressViewAssignTables } from '../navigationsHandle';
 import ButtonsOptions from '../components/ButtonOptions';
 
 const Home = () => {
@@ -44,8 +44,8 @@ const Home = () => {
                         {(permission && (permission["Asignar Mesas"] || permission["admin"])) && (
                             <ButtonsHome
                                 title={"Asignar Mesas"}
-                                description={"Asignar mesas a meseros"}
-                                onPress={() => handlePressViewAssignedTables(navigation)}
+                                description={"Asignar Mesas a Meseros"}
+                                onPress={() => handlePressViewAssignTables(navigation)}
                                 iconName="people"
                             />
                         )}
