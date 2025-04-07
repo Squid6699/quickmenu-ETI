@@ -19,7 +19,8 @@ routerGetUsers.get("/getUsers", async (req, res) => {
             U.username AS username, 
             U.name AS name, 
             R.name AS ROL_NAME, 
-            U.password AS password 
+            U.password AS password,
+            R.permissions AS permissions
         FROM users U 
         INNER JOIN role R ON U.roleId = R.id
     `;

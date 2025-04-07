@@ -10,18 +10,22 @@ export const routerAssignedTableDelete = express.Router();
 routerAssignedTableDelete.delete("/assignedTableDelete", async (req, res) => {
     const { id } = req.body;
 
+
     if (!id) {
         return res.status(400).json({ success: false, msg: "MISSING DATA" });
     }
 
-    const query = `DELETE FROM assigned_tables WHERE id = ?`;
+    const ids = JSON.parse(id).map(item => item.id);
+    const placeholders = ids.map(() => '?').join(',');
+
+    const query = `DELETE FROM assigned_tables WHERE id IN (${placeholders})`;
 
     try {
-        const [result] = await db.execute(query, [id]);
+        const [result] = await db.execute(query, ids);
         if (result.affectedRows === 0) {
-            return res.status(404).json({ success: false, msg: "ASSIGNED TABLE NOT FOUND" });
+            return res.status(404).json({ success: false, msg: "NO ASSIGNED TABLES FOUND" });
         }
-        return res.status(200).json({ success: true, msg: "ASSIGNED TABLE DELETED" });
+        return res.status(200).json({ success: true, msg: `${result.affectedRows} ASSIGNED TABLE(S) DELETED` });
     } catch (error) {
         return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR" });
     }
@@ -63,7 +67,7 @@ routerAssignedTableAdd.post("/assignedTableAdd", async (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({ success: false, msg: "ASSIGNED TABLE NOT FOUND" });
         }
-        
+
         return res.status(200).json({ success: true, msg: "ASSIGNED TABLE ADDED" });
     } catch (error) {
         if (error.code === 'ER_DUP_ENTRY') {
@@ -126,7 +130,16 @@ routerGetAssignedTables.get("/getAssignedTables", async (req, res) => {
         return res.status(401).send('Unauthorized');
     }
 
-    const query = `SELECT 
+    const query = `SELECT
+	CONCAT(
+        '[', 
+        GROUP_CONCAT(
+            CONCAT('{ "id": ', AT.id, ' }')
+            ORDER BY T.id
+            SEPARATOR ', '
+        ), 
+        ']'
+    ) AS ids,
     AT.idUser AS idWaitress,
     U.username AS Waitress,
     CONCAT(

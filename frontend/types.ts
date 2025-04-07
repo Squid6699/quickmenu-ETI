@@ -78,6 +78,7 @@ export interface User {
     name: string;
     ROL_NAME: string;
     password: string;
+    permissions: string;
 }
 
 export type ModalUserProps = {
@@ -92,7 +93,7 @@ export type ModalDeleteProps = {
     title: string;
     content: string;
     api: string;
-    idDelete: string | number | undefined;
+    idDelete: string | number | undefined | string[] | number[];
 };
 
 export type ModalEditUserProps = {
@@ -186,6 +187,7 @@ export type AssignedWaitress = {
 }
 
 export type AssignedTable = {
+    ids: string,
     idWaitress: string,
     Waitress: string,
     Tables: string
