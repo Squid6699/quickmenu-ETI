@@ -10,12 +10,11 @@ export const routerAssignedTableDelete = express.Router();
 routerAssignedTableDelete.delete("/assignedTableDelete", async (req, res) => {
     const { id } = req.body;
 
-
     if (!id) {
         return res.status(400).json({ success: false, msg: "MISSING DATA" });
     }
 
-    const ids = JSON.parse(id).map(item => item.id);
+    const ids = id.map(item => item.id ?? item);
     const placeholders = ids.map(() => '?').join(',');
 
     const query = `DELETE FROM assigned_tables WHERE id IN (${placeholders})`;

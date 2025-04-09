@@ -8,8 +8,8 @@ import { ViewUsersStyles } from "../styles/ViewUsersStyles";
 import { useCustomColors } from "../hook/useCustomColors";
 import { useState } from "react";
 import { backgroundStyle } from "../styles/BackgroundStyles";
-import ModalDelete from "../components/ModalDelete";
 import ModalAddAssignTable from "../components/ModalAddAssignTable";
+import ModalDeleteAssignTable from "../components/ModalDeleteAssignTable";
 
 const ViewAssignedTables = () => {
     const Style = ViewUsersStyles();
@@ -49,7 +49,7 @@ const ViewAssignedTables = () => {
         queryFn: fetchGetAssinedTablesAll,
     });
 
-    const { data: Users, isLoading: isLoadingUsers, error: errorUsers, isError: isErrorUsers, refetch: refetchUsers } = useQuery<User>({
+    const { data: Users, isLoading: isLoadingUsers, error: errorUsers, isError: isErrorUsers, refetch: refetchUsers } = useQuery<User[]>({
         queryKey: ["Users"],
         queryFn: fetchGetUsers,
     });
@@ -115,6 +115,8 @@ const ViewAssignedTables = () => {
             <View style={Style.container}>
                 {isLoadingTableAll ? (
                     <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
+                ) : assignedTablesAll?.length == 0 ? (
+                    <Text>No hay asignaciones.</Text>
                 ) : isErrorTableAll ? (
                     <Text style={{ color: 'red' }}>Error: {errorTableAll.message}</Text>
                 ) : (
@@ -127,24 +129,14 @@ const ViewAssignedTables = () => {
                                 <Card.Title title={item.Waitress.toUpperCase()} titleStyle={Style.CardTitle} />
                                 <Card.Content>
                                     <Text style={Style.CardContent}>
-                                        {/* <Text style={{ fontWeight: "bold" }}>{"MESAS: \n"} </Text> */}
                                         {JSON.parse(item.Tables).map((table: any, index: number) => (
-                                            // <Text key={table.id}>
-                                            //     {table.table}
-                                            //     {index !== JSON.parse(item.Tables).length - 1 ? '\n ' : ''}
-                                            // </Text>
                                             <Chip
                                                 key={table.id}
                                                 icon="tablet"
-                                                onPress={() => console.log('Pressed')}
+                                                onPress={() => console.log("ORDEN MESA" + table.id)}
                                             >{table.table}
                                             </Chip >
                                         ))}
-                                        <Chip
-                                            icon="plus"
-                                            onPress={() => console.log('Pressed')}
-                                        >{"Add Table"}
-                                        </Chip>
                                     </Text>
                                 </Card.Content>
                                 <Card.Actions>
@@ -157,8 +149,7 @@ const ViewAssignedTables = () => {
                     />
                 )}
                 <ModalAddAssignTable isOpen={openModalAdd} onDismiss={handleCloseModalAdd} users={Users} />
-                {/* <ModalEditRole isOpen={openModalEditRole} onDismiss={handleCloseModalEditRole} role={roleEdit} /> */}
-                <ModalDelete isOpen={openModalDelete} onDismiss={handleCloseModalDelete} api="assignedTableDelete" content={"¿Are you sure you want to delete " + assingDelete?.Waitress + " ?"} title="ASSIGN DELETE" idDelete={assingDelete?.ids} />
+                <ModalDeleteAssignTable isOpen={openModalDelete} onDismiss={handleCloseModalDelete} assingDelete={assingDelete} />
             </View>
         </ImageBackground>
     );

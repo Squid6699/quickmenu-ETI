@@ -6,7 +6,7 @@ import { Dropdown } from "react-native-paper-dropdown";
 import { useState } from "react";
 import { User } from "../types";
 
-const ModalAddAssignTable = ({ isOpen, onDismiss, users }: { isOpen: boolean, onDismiss: () => void, users: User | undefined }) => {
+const ModalAddAssignTable = ({ isOpen, onDismiss, users }: { isOpen: boolean, onDismiss: () => void, users: User[] | undefined }) => {
     const API_URL = Platform.OS === "android" ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
     const styles = ModalStyles();
 
@@ -29,30 +29,64 @@ const ModalAddAssignTable = ({ isOpen, onDismiss, users }: { isOpen: boolean, on
         tables: "",
     });
 
-    const usersOption = users
-        ?.filter((user) => {
-            try {
-                const perms = JSON.parse(user.permissions);
-                return perms.admin === true;
-            } catch (e) {
-                // Si no se puede parsear, descartamos el usuario
-                return false;
-            }
-        })
-        .map((user) => ({
-            label: user.name,
-            value: user.id,
-        })) || [];
+    const usersOption = users?.filter((user: User) => {
+        const perms = JSON.parse(user.permissions);
+        return perms["Asignable"] === true;
+    }).map((user: User) => ({
+        label: user.name,
+        value: user.id.toString(),
+    })) || [];
 
-    const waitressOption = users
-        ?.filter((user) => user.permissions)
-        .map((user) => ({
-            label: user.name,
-            value: user.id,
-        })) || [];
+    const waitressOption = users?.filter((user) => {
+        const perms = JSON.parse(user.permissions);
+        return perms["Ser Asignado"] === true;
+    }).map((user: User) => ({
+        label: user.name,
+        value: user.id.toString(),
+    })) || [];
 
     const submitAddNewUser = async () => {
+        
+        setError({tables: "", waitress: ""});
 
+        if (!newUser.waitress) {
+            setError((prev) => ({ ...prev, waitress: "Waitress is required" }));
+            return;
+        }
+
+        if (!newUser.table) {
+            setError((prev) => ({ ...prev, tables: "Table is required" }));
+            return;
+        }
+
+        try {
+            setLoadingAddNewUser(true);
+
+            const response = await fetch(`${API_URL}/api/assignedTableAdd`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idUser: newUser.waitress,
+                    idTable: newUser.table,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.success){
+                setLoadingAddNewUser(false);
+                alert(data.msg);
+                onDismiss();
+            }else{
+                setLoadingAddNewUser(false);
+                alert(data.msg);
+            }
+
+        } catch (error) {
+            setLoadingAddNewUser(false);
+        }
     }
 
     return (
@@ -64,11 +98,10 @@ const ModalAddAssignTable = ({ isOpen, onDismiss, users }: { isOpen: boolean, on
                             <ScrollView contentContainerStyle={styles.modalContent}>
                                 <Text style={styles.title}>ADD NEW ASSIGN</Text>
 
-
                                 <Dropdown label="Mesero" placeholder="Select waitress" options={usersOption} value={newUser.waitress} onSelect={(value) => handleNewUser("waitress", value || '')} error={!error.waitress} />
                                 {error.waitress && <Text style={styles.errorText}>Waitress is required</Text>}
 
-                                <Dropdown label="Mesa" placeholder="Select table" options={usersOption} value={newUser.table} onSelect={(value) => handleNewUser("table", value || '')} error={!error.tables} />
+                                <Dropdown label="Mesa" placeholder="Select table" options={waitressOption} value={newUser.table} onSelect={(value) => handleNewUser("table", value || '')} error={!error.tables} />
                                 {error.tables && <Text style={styles.errorText}>Table is required</Text>}
 
                                 <View style={styles.modalButtons}>
