@@ -1,3 +1,5 @@
+//NO TERMINADO
+
 import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 import { Text, Card, Button, ActivityIndicator, Appbar, Searchbar, Chip } from "react-native-paper";
 import Constants from 'expo-constants';
@@ -10,14 +12,16 @@ import { useState } from "react";
 import { backgroundStyle } from "../styles/BackgroundStyles";
 import ModalAddAssignTable from "../components/ModalAddAssignTable";
 import ModalDeleteAssignTable from "../components/ModalDeleteAssignTable";
+import { useAuth } from "../hook/useAuth";
 
-const ViewAssignTables = () => {
+const ViewAssignedTables = () => {
     const Style = ViewUsersStyles();
     const { colors } = useCustomColors();
     const API_URL = Platform.OS === 'android' ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+    const { user } = useAuth();
 
-    const fetchGetAssinedTablesAll = async () => {
-        const response = await fetch(`${API_URL}/api/getAssignedTables`, {
+    const fetchGetAssinedTables = async () => {
+        const response = await fetch(`${API_URL}/api/getAssignedTablesWaitress?id=${user?.id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -30,28 +34,9 @@ const ViewAssignTables = () => {
         return data.data;
     }
 
-    const fetchGetUsers = async () => {
-        const response = await fetch(`${API_URL}/api/getUsers`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "x-frontend-header": "frontend",
-            },
-        });
-
-        const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
-    }
-
-    const { data: assignedTablesAll, isLoading: isLoadingTableAll, error: errorTableAll, isError: isErrorTableAll, refetch: refetchTableAll } = useQuery<AssignedTable[]>({
-        queryKey: ["assignedTablesAll"],
-        queryFn: fetchGetAssinedTablesAll,
-    });
-
-    const { data: Users, isLoading: isLoadingUsers, error: errorUsers, isError: isErrorUsers, refetch: refetchUsers } = useQuery<User[]>({
-        queryKey: ["Users"],
-        queryFn: fetchGetUsers,
+    const { data, isLoading, error, isError, refetch } = useQuery<AssignedTable[]>({
+        queryKey: ["assignedTables"],
+        queryFn: fetchGetAssinedTables,
     });
 
     const [refreshing, setRefreshing] = useState(false);
@@ -59,15 +44,14 @@ const ViewAssignTables = () => {
 
     const handleRefresh = async () => {
         setRefreshing(true);
-        await refetchTableAll();
+        await refetch();
         setRefreshing(false);
     };
 
-    const filteredData = assignedTablesAll?.filter(table =>
-        table.Waitress?.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredData = data?.filter(d =>
+        d.Waitress?.toLowerCase().includes(searchQuery.toLowerCase())
     ) || [];
 
-    const [openModalAdd, setOpenModalAdd] = useState(false);
     const [openModalDelete, setOpenModalDelete] = useState(false);
     const [assingDelete, setAssingDelete] = useState<AssignedTable | null>(null);
 
@@ -79,46 +63,29 @@ const ViewAssignTables = () => {
     const handleCloseModalDelete = () => {
         setOpenModalDelete(false);
         setAssingDelete(null);
-        refetchTableAll();
+        refetch();
     };
-
-    const handleOpenModalAdd = () => {
-        setOpenModalAdd(true);
-    };
-
-    const handleCloseModalAdd = () => {
-        setOpenModalAdd(false);
-        refetchTableAll();
-    }
 
     return (
         <ImageBackground source={require('../assets/background.jpg')} style={backgroundStyle.background}>
             <Appbar.Header style={Style.header}>
                 <Searchbar
                     style={Style.searchInput}
-                    placeholder="Buscar mesero..."
+                    placeholder="Buscar mesa..."
                     placeholderTextColor="gray"
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                 />
-                <Button
-                    icon="plus"
-                    mode="contained"
-                    onPress={() => { handleOpenModalAdd() }}
-                    style={Style.addButton}
-                >
-                    Agregar
-                </Button>
             </Appbar.Header>
 
 
             <View style={Style.container}>
-                {isLoadingTableAll ? (
+                {isLoading ? (
                     <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
-                ) : assignedTablesAll?.length == 0 ? (
-                    <Text>No hay asignaciones.</Text>
-                ) : isErrorTableAll ? (
-                    <Text style={{ color: 'red' }}>Error: {errorTableAll.message}</Text>
+                ) : data?.length == 0 ? (
+                    <Text>No tienes asignaciones.</Text>
+                ) : isError ? (
+                    <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (
                     <FlatList
                         data={filteredData}
@@ -148,11 +115,10 @@ const ViewAssignTables = () => {
                         ListEmptyComponent={() => <Text style={{ textAlign: "center", marginTop: 20 }}>No hay usuarios disponibles</Text>}
                     />
                 )}
-                <ModalAddAssignTable isOpen={openModalAdd} onDismiss={handleCloseModalAdd} users={Users} />
-                <ModalDeleteAssignTable isOpen={openModalDelete} onDismiss={handleCloseModalDelete} assingDelete={assingDelete} />
+                {/* <ModalDeleteAssignTable isOpen={openModalDelete} onDismiss={handleCloseModalDelete} assingDelete={assingDelete} /> */}
             </View>
         </ImageBackground>
     );
 }
 
-export default ViewAssignTables;
+export default ViewAssignedTables;

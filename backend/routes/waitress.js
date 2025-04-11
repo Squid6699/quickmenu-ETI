@@ -81,7 +81,16 @@ routerGetAssignedTablesWaitress.get("/getAssignedTablesWaitress", async (req, re
         return res.status(400).json({ msg: "MISSING DATA" });
     }
 
-    const query = `SELECT 
+    const query = `SELECT
+	CONCAT(
+        '[', 
+        GROUP_CONCAT(
+            CONCAT('{ "id": ', AT.id, ' }')
+            ORDER BY T.id
+            SEPARATOR ', '
+        ), 
+        ']'
+    ) AS ids,
     AT.idUser AS idWaitress,
     U.username AS Waitress,
     CONCAT(

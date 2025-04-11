@@ -40,3 +40,7 @@ export const handleAdmin = (navigation: NavigationProp<RootStackParamList>) => {
 export const handleOrder = (navigation: NavigationProp<RootStackParamList>) => {
   navigation.navigate("Ordenar");
 };
+
+export const handlePressViewAssignedTables = (navigation: NavigationProp<RootStackParamList>) => {
+  navigation.navigate("Ver Mesas Asignadas");
+};
