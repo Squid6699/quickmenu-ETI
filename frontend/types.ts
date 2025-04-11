@@ -182,8 +182,8 @@ export type ModalEditConfirmOrderProps = {
 }
 
 export type AssignedWaitress = {
-    userName: string,
-    idWaitressAssigned: string
+    idWaitress: string,
+    username: string
 }
 
 export type AssignedTable = {

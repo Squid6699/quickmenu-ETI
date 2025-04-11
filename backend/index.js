@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { middleware } from "./middleware/cors.js";
 import { routerLogin, routerRegister } from "./routes/login.js";
 import { routerAddRoles, routerDeleteRoles, routerGetRoles, routerUpdateRoles } from "./routes/role.js";
-import { routerConfirmOrder, routerGetOrders } from "./routes/orders.js";
+import { routerConfirmOrder, routerGetAssignedWaitress, routerGetOrders } from "./routes/orders.js";
 import { routerAddMenu, routerDeleteMenu, routerGetMenu, routerUpdateMenu } from "./routes/menu.js";
 import { routerAddCategory, routerDeleteCategory, routerGetCategory, routerUpdateCategory } from "./routes/category.js";
 import { routerGetCustomize, routerUpdateCustomize } from "./routes/customize.js";
@@ -32,6 +32,7 @@ app.use("/api/", routerUpdateRoles);
 
 app.use("/api/", routerGetOrders);
 app.use("/api/", routerConfirmOrder);
+app.use("/api/", routerGetAssignedWaitress);
 
 app.use("/api/", routerGetMenu);
 app.use("/api/", routerUpdateMenu);
@@ -54,7 +55,6 @@ app.use("/api/", routerUpdateUsers);
 app.use("/api/", routerGetAssignedTablesWaitress);
 app.use("/api/", routerGetAssignedTables);
 app.use("/api/", routerAssignedTableAdd);
-app.use("/api/", routerAssignedTableUpdate);
 app.use("/api/", routerAssignedTableDelete);
 
 

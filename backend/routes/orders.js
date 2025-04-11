@@ -3,6 +3,7 @@ import { db } from "../db.js";
 
 export const routerGetOrders = express.Router();
 export const routerConfirmOrder = express.Router();
+export const routerGetAssignedWaitress = express.Router();
 
 routerGetOrders.get("/getOrders", async (req, res) => {
     const { q } = req.query;
@@ -32,7 +33,7 @@ routerGetOrders.get("/getOrders", async (req, res) => {
             INNER JOIN menu N ON OD.menuID = N.id
             LEFT JOIN users W ON O.idWaitress = W.id
             INNER JOIN users T ON O.idTable = T.id
-        WHERE idTable = ?`;
+        WHERE idTable = ? AND O.status != 'Pagado' LIMIT 1`;
 
     try {
         const [result] = await db.execute(query, [q]);
@@ -96,3 +97,35 @@ routerConfirmOrder.post("/confirmOrder", async (req, res) => {
         res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
     }
 });
+
+routerGetAssignedWaitress.get("/getAssignedWaitress", async (req, res) => {
+    const { id } = req.query;
+    const customHeader = req.headers['x-frontend-header'];
+
+    if (customHeader !== 'frontend') {
+        return res.status(401).send('Unauthorized');
+    }
+
+    const query = `
+        SELECT U.id AS idWaitress, U.username AS username
+        FROM assigned_tables AT
+        INNER JOIN users U ON U.id = AT.idUser
+        WHERE AT.idTable = ?
+    `;
+
+    try {
+        const [result] = await db.execute(query, [id]);
+
+        if (result.length === 0) {
+            return res.status(404).json({ msg: "WAITRESS NOT FOUND" });
+        }
+
+        console.log(result);
+
+        return res.status(200).json({ success: true, msg: "WAITRESS RETRIEVED", data: result[0] });
+
+    }catch (err) {
+        return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
+    }
+
+})

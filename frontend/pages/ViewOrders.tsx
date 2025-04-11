@@ -57,7 +57,8 @@ const ViewOrders = () => {
         if (data.success) {
             return data.data;
         } else {
-            Alert.alert("Error", data.msg);
+            return [];
+            // Alert.alert("Error", data.msg);
 
         }
         return data.data;
@@ -116,7 +117,7 @@ const ViewOrders = () => {
                 },
                 body: JSON.stringify({
                     idTable: user?.id,
-                    idWaitress: Waitress?.idWaitressAssigned,
+                    idWaitress: Waitress?.idWaitress,
                     orders: recipes.map((item) => ({
                         menuId: item.order?.idMenu,
                         quantity: item.quantity,
@@ -157,7 +158,7 @@ const ViewOrders = () => {
                             <>
                                 <Text style={StyleHome.title}>ORDENES</Text>
                                 <Text style={StyleHome.title}>{user?.name}</Text>
-                                <Text style={StyleHome.title}>{Waitress?.userName ? Waitress?.userName : "SIN ASIGNACION"}</Text>
+                                <Text style={StyleHome.title}>{Waitress?.username ? Waitress?.username : "Sin asignacion"}</Text>
                                 <FlatList
                                     data={OrdersDB}
                                     keyExtractor={(item) => item.idOrderDetails.toString()}

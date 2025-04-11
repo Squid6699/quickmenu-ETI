@@ -30,42 +30,32 @@ routerAssignedTableDelete.delete("/assignedTableDelete", async (req, res) => {
     }
 });
 
-routerAssignedTableUpdate.put("/assignedTableUpdate", async (req, res) => {
-
-    const { id, idUser, idTable } = req.body;
-
-    if (!id || !idUser || !idTable) {
-        return res.status(400).json({ success: false, msg: "MISSING DATA" });
-    }
-
-    const query = `UPDATE assigned_tables SET idUser = ?, idTable = ? WHERE id = ?`;
-
-    try {
-        const [result] = await db.execute(query, [idUser, idTable, id]);
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ success: false, msg: "ASSIGNED TABLE NOT FOUND" });
-        }
-        return res.status(200).json({ success: true, msg: "ASSIGNED TABLE UPDATED" });
-    } catch (error) {
-        if (error.code === 'ER_DUP_ENTRY') {
-            return res.status(409).json({ success: false, msg: "ASSIGNED TABLE ALREADY EXISTS" });
-        }
-        return res.status(500).json({ success: false, msg: "INTERNAL SERVER ERROR" });
-    }
-
-});
-
 routerAssignedTableAdd.post("/assignedTableAdd", async (req, res) => {
 
     const { idUser, idTable } = req.body;
 
     const query = `INSERT INTO assigned_tables (idUser, idTable) VALUES (?, ?)`;
 
+    const orderExist = `
+        SELECT id FROM orders WHERE idTable = ? AND status != 'pagado';
+    `;
+
+    const orderUpdateWaitress = `
+        UPDATE orders SET idWaitress = ? WHERE id = ?;
+    `
+
     try {
         const [result] = await db.execute(query, [idUser, idTable]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ success: false, msg: "ASSIGNED TABLE NOT FOUND" });
         }
+
+        const [orderResult] = await db.execute(orderExist, [idTable]);
+
+        if (orderResult.length > 0) {
+            const [updateOrder] = await db.execute(orderUpdateWaitress, [idUser, orderResult[0].id]);
+        }
+
 
         return res.status(200).json({ success: true, msg: "ASSIGNED TABLE ADDED" });
     } catch (error) {
