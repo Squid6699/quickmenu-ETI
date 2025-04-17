@@ -49,8 +49,13 @@ export type RootStackParamList = {
     "Ver Menu": undefined;
     "Ver Categorias": undefined;
     "Ver Mesas Asignadas": undefined;
-
+    "Ver Orden de Mesa Asignada": {mesa: Mesa};
 };
+
+export type Mesa = {
+    id: string
+    table: string
+}
 
 export type MenuType = {
     idMenu: string,

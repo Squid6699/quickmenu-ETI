@@ -44,3 +44,10 @@ export const handleOrder = (navigation: NavigationProp<RootStackParamList>) => {
 export const handlePressViewAssignedTables = (navigation: NavigationProp<RootStackParamList>) => {
   navigation.navigate("Ver Mesas Asignadas");
 };
+
+export const handleViewOrderTable = (
+  navigation: NavigationProp<RootStackParamList>,
+  item: any
+) => {
+  navigation.navigate("Ver Orden de Mesa Asignada", { mesa: item });
+};

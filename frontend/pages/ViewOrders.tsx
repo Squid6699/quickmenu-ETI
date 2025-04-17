@@ -61,7 +61,6 @@ const ViewOrders = () => {
             // Alert.alert("Error", data.msg);
 
         }
-        return data.data;
     }
 
     const { data: OrdersDB, isLoading, isError, error, refetch: refetchOrders } = useQuery<OrdersType[]>({ queryKey: ["ordersDB"], queryFn: fetchOrders });
