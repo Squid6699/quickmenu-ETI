@@ -11,7 +11,6 @@ import { MenuType, RootStackParamList } from "../types";
 import { OrderStyles } from "../styles/OrderStyles";
 import ButtonsOptions from "../components/ButtonOptions";
 import ModalAddOrder from "../components/ModalAddOrder";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { handlePressViewOrders } from "../navigationsHandle";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
@@ -74,7 +73,6 @@ const Order = () => {
     }
 
     const handleViewOrder = () => {
-        // await AsyncStorage.removeItem("orders");
         handlePressViewOrders(navigation);
     }
 
