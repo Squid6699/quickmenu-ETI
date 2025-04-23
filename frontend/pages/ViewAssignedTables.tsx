@@ -2,7 +2,7 @@ import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 import { Text, Card, Button, ActivityIndicator, Appbar, Searchbar } from "react-native-paper";
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
-import { AssignedTable, RootStackParamList, User } from "../types";
+import { AssignedTable, RootStackParamList } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { ViewUsersStyles } from "../styles/ViewUsersStyles";
 import { useCustomColors } from "../hook/useCustomColors";
@@ -29,8 +29,12 @@ const ViewAssignedTables = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     }
 
     const { data, isLoading, error, isError, refetch } = useQuery<AssignedTable[]>({
@@ -78,7 +82,7 @@ const ViewAssignedTables = () => {
                 {isLoading ? (
                     <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
                 ) : data?.length == 0 ? (
-                    <Text>No tienes asignaciones.</Text>
+                    <Text style={Style.textCenter}>No tienes asignaciones.</Text>
                 ) : isError ? (
                     <Text style={{ color: 'red' }}>Error: {error.message}</Text>
                 ) : (

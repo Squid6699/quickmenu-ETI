@@ -2,7 +2,7 @@ import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 import { Text, Card, Button, ActivityIndicator, Appbar, Searchbar, Chip } from "react-native-paper";
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
-import { AssignedTable, User } from "../types";
+import { AssignedTable, RootStackParamList, User } from "../types";
 import { useQuery } from "@tanstack/react-query";
 import { ViewUsersStyles } from "../styles/ViewUsersStyles";
 import { useCustomColors } from "../hook/useCustomColors";
@@ -10,11 +10,14 @@ import { useState } from "react";
 import { backgroundStyle } from "../styles/BackgroundStyles";
 import ModalAddAssignTable from "../components/ModalAddAssignTable";
 import ModalDeleteAssignTable from "../components/ModalDeleteAssignTable";
+import { handleViewOrderTable } from "../navigationsHandle";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const ViewAssignTables = () => {
     const Style = ViewUsersStyles();
     const { colors } = useCustomColors();
     const API_URL = Platform.OS === 'android' ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const fetchGetAssinedTablesAll = async () => {
         const response = await fetch(`${API_URL}/api/getAssignedTables`, {
@@ -26,8 +29,11 @@ const ViewAssignTables = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     }
 
     const fetchGetUsers = async () => {
@@ -40,8 +46,11 @@ const ViewAssignTables = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     }
 
     const { data: assignedTablesAll, isLoading: isLoadingTableAll, error: errorTableAll, isError: isErrorTableAll, refetch: refetchTableAll } = useQuery<AssignedTable[]>({
@@ -116,7 +125,7 @@ const ViewAssignTables = () => {
                 {isLoadingTableAll ? (
                     <ActivityIndicator color={colors.iconColor} size={75} style={Style.activityIndicator} />
                 ) : assignedTablesAll?.length == 0 ? (
-                    <Text>No hay asignaciones.</Text>
+                    <Text style={Style.textCenter}>No hay asignaciones.</Text>
                 ) : isErrorTableAll ? (
                     <Text style={{ color: 'red' }}>Error: {errorTableAll.message}</Text>
                 ) : (
@@ -133,14 +142,13 @@ const ViewAssignTables = () => {
                                             <Chip
                                                 key={table.id}
                                                 icon="tablet"
-                                                onPress={() => console.log("ORDEN MESA" + table.id)}
+                                                onPress={() => handleViewOrderTable(navigation, table)}
                                             >{table.table}
                                             </Chip >
                                         ))}
                                     </Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    {/* <Button icon="pencil" buttonColor={colors.buttonBackground} textColor="black" onPress={() => console.log(item)}>Editar</Button> */}
                                     <Button icon="trash-can" buttonColor={colors.buttonBackground} textColor="red" onPress={() => handleOpenModalDelete(item)}>Eliminar</Button>
                                 </Card.Actions>
                             </Card>

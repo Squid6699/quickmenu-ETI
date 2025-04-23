@@ -29,8 +29,11 @@ const ViewMenu = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     };
 
     const fetchCategory = async () => {

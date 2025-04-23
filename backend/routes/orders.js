@@ -120,8 +120,6 @@ routerGetAssignedWaitress.get("/getAssignedWaitress", async (req, res) => {
             return res.status(404).json({ msg: "WAITRESS NOT FOUND" });
         }
 
-        console.log(result);
-
         return res.status(200).json({ success: true, msg: "WAITRESS RETRIEVED", data: result[0] });
 
     }catch (err) {

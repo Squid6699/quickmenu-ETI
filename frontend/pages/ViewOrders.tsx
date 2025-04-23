@@ -39,8 +39,11 @@ const ViewOrders = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     };
 
     const fetchAssignedWaitress = async () => {
@@ -137,7 +140,7 @@ const ViewOrders = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 

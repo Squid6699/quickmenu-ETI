@@ -108,7 +108,7 @@ const ModalEditUser = ({ isOpen, onDismiss, user, roles }: ModalEditUserProps) =
                 alert(data.msg);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             setLoadingEdit(false);
         }
 

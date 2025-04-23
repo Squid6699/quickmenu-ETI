@@ -31,8 +31,11 @@ const ViewUsers = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     };
 
     const fetchRoles = async () => {
@@ -45,8 +48,11 @@ const ViewUsers = () => {
         });
 
         const data = await response.json();
-        if (!data.success) throw new Error(data.message);
-        return data.data;
+        if (data.success) {
+            return data.data;
+        } else {
+            return []
+        }
     };
 
     const { data, isLoading, isError, error, refetch } = useQuery<User[]>({

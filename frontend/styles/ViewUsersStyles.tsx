@@ -58,5 +58,12 @@ export const ViewUsersStyles = () => {
             backgroundColor: colors.backgroundColor,
             borderRadius: 10,
         },
+
+        textCenter: {
+            textAlign: "center",
+            marginTop: 20,
+            fontSize: 18,
+            color: colors.iconColor
+        }
     });
 }

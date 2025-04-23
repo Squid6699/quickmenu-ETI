@@ -106,7 +106,7 @@ const ModalEditMenu = ({ isOpen, onDismiss, menu, categories }: ModalEditMenuPro
                 alert(data.msg);
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         } finally {
             setLoadingEdit(false);
         }
