@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export type Role = "Asignable" | "Ser Asignado" | "Ordenar Productos" | "admin" | "Asignar Mesas" | "Generar Tickets" | "Ver Tickets" | "Ver Mesas" | "Actualizar Ordenes" | "Ver Ordenes" | "Pagar Ordenes" | "Llamar Mesero" | "Pedir Cuenta" | "Actualizar Productos";
+export type Role = "Asignable" | "Ser Asignado" | "Ordenar Productos" | "admin" | "Asignar Mesas" | "Generar Tickets" | "Ver Tickets" | "Ver Mesas" | "Actualizar Ordenes" | "Ver todas las ordenes" | "Pagar Ordenes" | "Llamar Mesero" | "Pedir Cuenta" | "Actualizar Productos";
 
 const useRolePermissions = () => {
 
@@ -13,7 +13,7 @@ const useRolePermissions = () => {
         "Asignable": false, // Waitress
         "Ser Asignado": false, // Tables
         "Actualizar Ordenes": false,
-        "Ver Ordenes": false,
+        "Ver todas las ordenes": false,
         "Pagar Ordenes": false,
         "Llamar Mesero": false,
         "Pedir Cuenta": false,

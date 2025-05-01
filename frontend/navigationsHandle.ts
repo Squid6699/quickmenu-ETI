@@ -5,6 +5,10 @@ export const handlePressViewOrders = (navigation: NavigationProp<RootStackParamL
   navigation.navigate("Ordenes");
 };
 
+export const handleePressViewAllTables = (navigation: NavigationProp<RootStackParamList>) => {
+  navigation.navigate("Ver todas las mesas");
+};
+
 export const handlePressViewUsers = (navigation: NavigationProp<RootStackParamList>) => {
   navigation.navigate("Usuarios");
 };

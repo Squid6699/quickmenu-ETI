@@ -50,6 +50,7 @@ export type RootStackParamList = {
     "Ver Categorias": undefined;
     "Ver Mesas Asignadas": undefined;
     "Ver Orden de Mesa Asignada": {mesa: Mesa};
+    "Ver todas las mesas": undefined;
 };
 
 export type Mesa = {

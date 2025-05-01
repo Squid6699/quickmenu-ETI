@@ -4,7 +4,7 @@ import ButtonsOptions from "../../components/ButtonOptions";
 import { stylesButtonOptions } from "../../styles/ButtonOptions";
 import { RootStackParamList } from "../../types";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { handlePressCustomize, handlePressViewAssignTables, handlePressViewCategories, handlePressViewMenu, handlePressViewOrders, handlePressViewRoles, handlePressViewUsers } from "../../navigationsHandle";
+import { handleePressViewAllTables, handlePressCustomize, handlePressViewAssignTables, handlePressViewCategories, handlePressViewMenu, handlePressViewRoles, handlePressViewUsers } from "../../navigationsHandle";
 
 
 const Admin = () => {
@@ -20,7 +20,7 @@ const Admin = () => {
                 <ScrollView contentContainerStyle={Style.container}>
                     <View style={Style.container}>
                         <ButtonsOptions title="Usuarios" description="Ver usuarios" onPress={() => handlePressViewUsers(navigation)} iconName="body-outline" />
-                        <ButtonsOptions title="Ordenes" description="Ver ordenes" onPress={() => handlePressViewOrders(navigation)} iconName="receipt" />
+                        <ButtonsOptions title="Ordenes" description="Ver ordenes" onPress={() => handleePressViewAllTables(navigation)} iconName="receipt" />
                         <ButtonsOptions title="Asignar Mesas" description="Asignar Mesas a Meseros" onPress={() => handlePressViewAssignTables(navigation)} iconName="people-outline" />
                         <ButtonsOptions title="Ver Menu" description="Ver menu" onPress={() => handlePressViewMenu(navigation)} iconName="fast-food-outline" />
                         <ButtonsOptions title="Ver Categorias" description="Ver categorias" onPress={() => handlePressViewCategories(navigation)} iconName="copy-outline" />

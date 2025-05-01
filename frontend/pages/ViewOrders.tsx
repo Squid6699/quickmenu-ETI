@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, ImageBackground, RefreshControl, Alert } from "react-native";
-import { ActivityIndicator, Card, Text, List, Button, Appbar } from "react-native-paper";
+import { ActivityIndicator, Card, Text, Button } from "react-native-paper";
 import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCustomColors } from "../hook/useCustomColors";

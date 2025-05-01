@@ -9,6 +9,7 @@ import { routerAddCategory, routerDeleteCategory, routerGetCategory, routerUpdat
 import { routerGetCustomize, routerUpdateCustomize } from "./routes/customize.js";
 import { routerAddUsers, routerDeleteUsers, routerGetUsers, routerUpdateUsers } from "./routes/users.js";
 import { routerAssignedTableAdd, routerAssignedTableDelete, routerAssignedTableUpdate, routerGetAssignedTables, routerGetAssignedTablesWaitress } from "./routes/waitress.js";
+import { routerGetAllTables } from "./routes/tables.js";
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -56,6 +57,9 @@ app.use("/api/", routerGetAssignedTablesWaitress);
 app.use("/api/", routerGetAssignedTables);
 app.use("/api/", routerAssignedTableAdd);
 app.use("/api/", routerAssignedTableDelete);
+
+app.use("/api/", routerGetAllTables);
+
 
 
 
