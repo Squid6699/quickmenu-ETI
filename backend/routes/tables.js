@@ -17,3 +17,12 @@ routerGetAllTables.get("/getAllTables", async (req, res) => {
         return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
     }
 })
+
+/*
+
+SELECT u.id AS idUser, u.username AS username, u.name AS name
+FROM Users u
+JOIN Role r ON u.roleId = r.id
+WHERE JSON_EXTRACT(r.permissions, '$."Ser Asignado"') = TRUE;
+
+*/
