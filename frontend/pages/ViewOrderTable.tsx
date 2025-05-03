@@ -15,6 +15,7 @@ import { FlatList, RefreshControl } from "react-native-gesture-handler";
 import { useState } from "react";
 import { useCustomColors } from "../hook/useCustomColors";
 import { useAuth } from "../hook/useAuth";
+import ModalEditOrderPermission from "../components/ModalEditOrderPermission";
 
 type ViewOrderTableRouteProp = RouteProp<RootStackParamList, "Ver Orden de Mesa Asignada">;
 
@@ -26,7 +27,6 @@ const ViewOrderTable = () => {
     const { colors } = useCustomColors();
     const { permissions } = useAuth();
     const permission = permissions ? JSON.parse(permissions) : null;
-
 
     const API_URL = Platform.OS === "android" ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
 
@@ -57,8 +57,19 @@ const ViewOrderTable = () => {
         setRefreshing(false);
     };
 
+    const [openModalEdit, setOpenModalEdit] = useState(false);
+    const [orderEdit, setOrderEdit] = useState<OrdersType | null>(null);
+
     const handleOpenModalEdit = (item: OrdersType) => {
+        setOpenModalEdit(true);
+        setOrderEdit(item);
         console.log(item, "ORDEN A EDITAR");
+    };
+
+    const handleCloseModalEdit = () => {
+        setOpenModalEdit(false);
+        setOrderEdit(null);
+        refetch();
     };
 
     const { data: OrdersDB, isLoading, isError, error, refetch } = useQuery<OrdersType[]>({ queryKey: ["ordersDB"], queryFn: fetchOrders });
@@ -108,6 +119,7 @@ const ViewOrderTable = () => {
                         <Text style={{ color: colors.iconColor }}>No hay órdenes para esta mesa.</Text>
                     )
                 }
+                <ModalEditOrderPermission isOpen={openModalEdit} onDismiss={handleCloseModalEdit} order={orderEdit} />
             </View>
         </ImageBackground>
     );

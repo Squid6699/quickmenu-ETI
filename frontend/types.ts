@@ -199,3 +199,9 @@ export type AssignedTable = {
     Waitress: string,
     Tables: string
 }
+
+export type AllTables = {
+    id: string,
+    table: string,
+    username: string
+}

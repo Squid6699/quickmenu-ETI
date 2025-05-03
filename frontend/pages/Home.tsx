@@ -6,7 +6,7 @@ import { RootStackParamList } from '../types';
 import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
 import { Text } from 'react-native-paper';
-import { handleAdmin, handleOrder, handlePressMenu, handlePressViewAssignedTables, handlePressViewAssignTables } from '../navigationsHandle';
+import { handleAdmin, handleePressViewAllTables, handleOrder, handlePressMenu, handlePressViewAssignedTables, handlePressViewAssignTables } from '../navigationsHandle';
 import ButtonsOptions from '../components/ButtonOptions';
 
 const Home = () => {
@@ -55,6 +55,15 @@ const Home = () => {
                                 title={"Ver Mesas Asignadas"}
                                 description={"Asignar Mesas a Meseros"}
                                 onPress={() => handlePressViewAssignedTables(navigation)}
+                                iconName="people-outline"
+                            />
+                        )}
+
+                        {(permission && (permission["Ver todas las ordenes"] || permission["admin"])) && (
+                            <ButtonsHome
+                                title={"Ver Ordenes de Mesas"}
+                                description={"Ver Ordenes de Mesas de Todas las Mesas"}
+                                onPress={() => handleePressViewAllTables(navigation)}
                                 iconName="people-outline"
                             />
                         )}
