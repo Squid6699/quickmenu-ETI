@@ -55,3 +55,7 @@ export const handleViewOrderTable = (
 ) => {
   navigation.navigate("Ver Orden de Mesa Asignada", { mesa: item });
 };
+
+export const handlePressViewKitchen = (navigation: NavigationProp<RootStackParamList>) => {
+  navigation.navigate("Cocina");
+};

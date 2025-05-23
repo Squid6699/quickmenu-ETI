@@ -6,7 +6,7 @@ import { RootStackParamList } from '../types';
 import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
 import { Text } from 'react-native-paper';
-import { handleAdmin, handleePressViewAllTables, handleOrder, handlePressMenu, handlePressViewAssignedTables, handlePressViewAssignTables } from '../navigationsHandle';
+import { handleAdmin, handleePressViewAllTables, handleOrder, handlePressMenu, handlePressViewAssignedTables, handlePressViewAssignTables, handlePressViewKitchen } from '../navigationsHandle';
 import ButtonsOptions from '../components/ButtonOptions';
 
 const Home = () => {
@@ -65,6 +65,15 @@ const Home = () => {
                                 description={"Ver Ordenes de Mesas de Todas las Mesas"}
                                 onPress={() => handleePressViewAllTables(navigation)}
                                 iconName="people-outline"
+                            />
+                        )}
+
+                        {(permission && (permission["Ver Cocina"] || permission["admin"])) && (
+                            <ButtonsHome
+                                title={"Cocina"}
+                                description={"Ordenes en cocina"}
+                                onPress={() => handlePressViewKitchen(navigation)}
+                                iconName="restaurant-outline"
                             />
                         )}
 

@@ -53,7 +53,7 @@ const ViewAllTables = () => {
 
     const mesasPlanas = data
         ?.filter(item =>
-            item.username.toLowerCase().includes(searchQuery.toLowerCase())
+            item?.username?.toLowerCase().includes(searchQuery?.toLowerCase())
         )
         .map(item => ({ ...item })) || [];
 

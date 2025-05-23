@@ -1,5 +1,6 @@
 // NO TERMINADO
 //AQUI VAN SE VAN A VER LAS ORDENES DE LAS MESAS ASIGNADAS CUANDO LE DAS CLIC EN VER ORDEN DESDE ViewAssignedTables.tsx
+// AGREGAR BOTON PARA ESTABLECER COMO ENTREGADO
 
 import { ImageBackground, View } from "react-native";
 import { ActivityIndicator, Button, Card, Text } from "react-native-paper";
