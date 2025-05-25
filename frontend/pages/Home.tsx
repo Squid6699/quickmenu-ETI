@@ -6,7 +6,7 @@ import { RootStackParamList } from '../types';
 import { useAuth } from '../hook/useAuth';
 import { backgroundStyle } from '../styles/BackgroundStyles';
 import { Text } from 'react-native-paper';
-import { handleAdmin, handleePressViewAllTables, handleOrder, handlePressMenu, handlePressViewAssignedTables, handlePressViewAssignTables, handlePressViewKitchen } from '../navigationsHandle';
+import { handleAdmin, handleePressViewAllTables, handleOrder, handlePressMenu, handlePressViewAssignedTables, handlePressViewAssignTables, handlePressViewBill, handlePressViewKitchen } from '../navigationsHandle';
 import ButtonsOptions from '../components/ButtonOptions';
 
 const Home = () => {
@@ -79,7 +79,7 @@ const Home = () => {
 
 
                         <ButtonsHome title="Mesero" description="Llamar mesero" onPress={() => Alert.alert('Mesero')} iconName="person" />
-                        <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => Alert.alert('Cuenta')} iconName="wallet" />
+                        <ButtonsHome title="Cuenta" description="Pedir cuenta" onPress={() => handlePressViewBill(navigation)} iconName="wallet" />
 
                         <ButtonsOptions title="Logout" description="Cerrar sesion" onPress={handleLogOut} iconName="log-out-outline" />
                         {permission && permission.admin && <ButtonsOptions title={"Admin"} description="Ver opciones de admin" onPress={() => handleAdmin(navigation)} iconName="settings-outline" />}

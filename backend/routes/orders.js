@@ -4,6 +4,7 @@ import { db } from "../db.js";
 export const routerGetOrders = express.Router();
 export const routerConfirmOrder = express.Router();
 export const routerGetAssignedWaitress = express.Router();
+export const routerGetOrdersReceived = express.Router();
 
 routerGetOrders.get("/getOrders", async (req, res) => {
     const { q } = req.query;
@@ -122,8 +123,47 @@ routerGetAssignedWaitress.get("/getAssignedWaitress", async (req, res) => {
 
         return res.status(200).json({ success: true, msg: "WAITRESS RETRIEVED", data: result[0] });
 
-    }catch (err) {
+    } catch (err) {
         return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
     }
 
+})
+
+routerGetOrdersReceived.get("/getOrdersReceived", async (req, res) => {
+    const { q } = req.query;
+    const customHeader = req.headers['x-frontend-header'];
+
+    if (customHeader !== 'frontend') {
+        return res.status(401).send('Unauthorized');
+    }
+
+    const query = `
+        SELECT
+            OD.id AS idOrderDetails,
+            OD.orderId AS idOrder, 
+            OD.menuId AS menuId, 
+            OD.quantity AS menuQuantity, 
+            OD.price AS FOOD_TOTAL, 
+            OD.status AS FOOD_STATUS, 
+            OD.comments AS FOOD_COMMENTS, 
+            N.name AS menuName, 
+            N.description AS menuDescription, 
+            O.status AS ORDER_STATUS, 
+            W.username AS WAITRESS, 
+            T.username AS 'TABLE', 
+            O.total AS 'TOTAL'
+            FROM orderdetails OD
+            INNER JOIN orders O ON OD.orderID = O.id
+            INNER JOIN menu N ON OD.menuID = N.id
+            LEFT JOIN users W ON O.idWaitress = W.id
+            INNER JOIN users T ON O.idTable = T.id
+        WHERE idTable = ? AND OD.status = 'Entregado';`;
+
+    try {
+        const [result] = await db.execute(query, [q]);
+
+        return res.status(200).json({ success: true, msg: "ORDERS RETRIEVED", data: result });
+    } catch (err) {
+        return res.status(500).json({ msg: "INTERNAL SERVER ERROR" });
+    }
 })

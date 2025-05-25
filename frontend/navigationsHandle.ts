@@ -59,3 +59,7 @@ export const handleViewOrderTable = (
 export const handlePressViewKitchen = (navigation: NavigationProp<RootStackParamList>) => {
   navigation.navigate("Cocina");
 };
+
+export const handlePressViewBill = (navigation: NavigationProp<RootStackParamList>) => {
+  navigation.navigate("Generar cuenta");
+}

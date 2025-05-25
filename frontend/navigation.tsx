@@ -19,6 +19,7 @@ import ViewAssignedTables from "./pages/ViewAssignedTables";
 import ViewOrderTable from "./pages/ViewOrderTable";
 import ViewAllTables from "./pages/ViewAllTables";
 import ViewKitchen from "./pages/ViewKitchen";
+import ViewBill from "./pages/ViewBill";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -47,6 +48,8 @@ export default function Navigation() {
           <Stack.Screen name="Ver Orden de Mesa Asignada" component={ViewOrderTable} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Ver todas las mesas" component={ViewAllTables} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
           <Stack.Screen name="Cocina" component={ViewKitchen} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+          <Stack.Screen name="Generar cuenta" component={ViewBill} options={{ headerShown: true, headerStyle: { backgroundColor: colors.headerColor }, headerTintColor: colors.backgroundColor }} />
+
 
         </>
       ) : (

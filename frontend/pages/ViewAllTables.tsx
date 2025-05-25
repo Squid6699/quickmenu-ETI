@@ -8,7 +8,6 @@ import { ViewUsersStyles } from "../styles/ViewUsersStyles";
 import { useCustomColors } from "../hook/useCustomColors";
 import { useState } from "react";
 import { backgroundStyle } from "../styles/BackgroundStyles";
-import { useAuth } from "../hook/useAuth";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { handleViewOrderTable } from "../navigationsHandle";
 
@@ -16,7 +15,6 @@ const ViewAllTables = () => {
     const Style = ViewUsersStyles();
     const { colors } = useCustomColors();
     const API_URL = Platform.OS === 'android' ? Constants.expoConfig?.extra?.HOST_BACKEND_ANDROID : Constants.expoConfig?.extra?.HOST_BACKEND_IOS;
-    const { user } = useAuth();
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const fetchGetAssinedTables = async () => {
